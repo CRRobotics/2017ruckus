@@ -1,6 +1,7 @@
 package org.team639.robot;
 
 import com.ctre.MotorControl.CANTalon;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Contains references to all of the motors, sensors, pneumatics, etc. Controls access by the rest of the code from a central location
