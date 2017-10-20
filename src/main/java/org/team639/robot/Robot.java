@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot {
+    private OI oi;
 
     private CANTalon leftDrive;
     private CANTalon rightDrive;
@@ -14,11 +15,14 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
-        leftDrive = new CANTalon(1);
-        rightDrive = new CANTalon(3);
+        RobotMap.init();
+        oi = OI.getInstance();
 
-        leftStick = new Joystick(0);
-        rightStick = new Joystick(1);
+        leftDrive = RobotMap.getLeftDrive();
+        rightDrive = RobotMap.getRightDrive();
+
+        leftStick = oi.getLeftDriveStick();
+        rightStick = oi.getRightDriveStick();
     }
 
     @Override
