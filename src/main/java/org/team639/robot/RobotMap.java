@@ -12,6 +12,9 @@ public class RobotMap {
     private static CANTalon leftDrive;
     private static CANTalon rightDrive;
 
+    private static Solenoid gearClawClose;
+    private static Solenoid gearClawRaise;
+
     private RobotMap() {
     }
 
@@ -24,6 +27,9 @@ public class RobotMap {
             leftDrive = new CANTalon(1);
             rightDrive = new CANTalon(3);
 
+            gearClawClose = new Solenoid(1);
+            gearClawRaise = new Solenoid(2);
+
             initialized = true;
         }
     }
@@ -34,5 +40,13 @@ public class RobotMap {
 
     public static CANTalon getRightDrive() {
         return rightDrive;
+    }
+
+    public static Solenoid getGearClawClose() {
+        return gearClawClose;
+    }
+
+    public static Solenoid getGearClawRaise() {
+        return gearClawRaise;
     }
 }

@@ -3,9 +3,13 @@ package org.team639.robot;
 import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import org.team639.robot.subsystems.DriveTrain;
+import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
-    private OI oi;
+    public static GearAcquisition gearAcquisition;
+    public static DriveTrain drive;
 
     private Joystick leftStick;
     private Joystick rightStick;
@@ -16,13 +20,16 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
-        oi = OI.getInstance();
+        OI.init();
 
-        leftStick = oi.getLeftDriveStick();
-        rightStick = oi.getRightDriveStick();
+//        leftStick = OI.getLeftDriveStick();
+//        rightStick = OI.getRightDriveStick();
+//
+//        leftMotor = RobotMap.getLeftDrive();
+//        rightMotor = RobotMap.getRightDrive();
 
-        leftMotor = RobotMap.getLeftDrive();
-        rightMotor = RobotMap.getRightDrive();
+        gearAcquisition = new GearAcquisition();
+        drive = new DriveTrain();
     }
 
     @Override
@@ -62,8 +69,9 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
-        leftMotor.set(leftStick.getY());
-        rightMotor.set((rightStick.getY()) * -1);
+        Scheduler.getInstance().run();
+//        leftMotor.set(leftStick.getY());
+//        rightMotor.set((rightStick.getY()) * -1);
     }
 
     @Override

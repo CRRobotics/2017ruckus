@@ -7,28 +7,35 @@ import edu.wpi.first.wpilibj.Joystick;
  * Manages the interaction between the drive team and the robot
  */
 public class OI {
-    private static OI instance;
 
-    private Joystick leftDriveStick;
-    private Joystick rightDriveStick;
+    private static Joystick leftDriveStick;
+    private static Joystick rightDriveStick;
 
-    public static OI getInstance() {
-        if (instance == null) {
-            instance = new OI();
-        }
-        return instance;
-    }
-
-    private OI() {
+    /**
+     * Initializes all of the Joysticks and button mappings.
+     * THIS MUST BE RUN AT THE BEGINNING OF robotInit in Robot.java!!!
+     */
+    public static void init() {
         leftDriveStick = new Joystick(0);
         rightDriveStick = new Joystick(1);
     }
 
-    public Joystick getLeftDriveStick() {
+    private OI() {
+    }
+
+    /**
+     * Returns the left driver Joystick
+     * @return the left driver Joystick
+     */
+    public static Joystick getLeftDriveStick() {
         return leftDriveStick;
     }
 
-    public Joystick getRightDriveStick() {
+    /**
+     * Returns the right driver Joystick
+     * @return the right driver Joystick
+     */
+    public static Joystick getRightDriveStick() {
         return rightDriveStick;
     }
 }
