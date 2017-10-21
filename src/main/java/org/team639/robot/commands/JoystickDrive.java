@@ -19,7 +19,7 @@ public class JoystickDrive extends Command {
     }
 
     protected void execute() {
-        Robot.drive.tankDrive(leftStick.getY(), -1 * rightStick.getY());
+        Robot.drive.tankDrive(leftStick.getY(), rightStick.getY());
     }
 
     @Override

@@ -17,6 +17,9 @@ public class GearAcquisition extends Subsystem { //Cherry236
         gearClawRaise = RobotMap.getGearClawRaise();
     }
 
+    /**
+     * Sets the default command to run while no others are running
+     */
     @Override
     protected void initDefaultCommand() {
 
