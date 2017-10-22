@@ -12,16 +12,23 @@ public class JoystickDrive extends Command {
 
     public JoystickDrive() {
         super("JoystickDrive");
-        requires(Robot.drive);
+        requires(Robot.driveTrain);
 
         leftStick = OI.getLeftDriveStick();
         rightStick = OI.getRightDriveStick();
     }
 
+    /**
+     * Called repeatedly while the command is running
+     */
     protected void execute() {
-        Robot.drive.tankDrive(leftStick.getY(), rightStick.getY());
+        Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
     }
 
+    /**
+     * Returns whether or not the command is finished
+     * @return whether or not the command is finished
+     */
     @Override
     protected boolean isFinished() {
         return false;
