@@ -3,76 +3,79 @@ package org.team639.robot;
 import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import org.team639.robot.subsystems.DriveTrain;
+import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
-
-    private CANTalon leftDrive;
-    private CANTalon rightDrive;
+    public static GearAcquisition gearAcquisition;
+    public static DriveTrain driveTrain;
 
     private Joystick leftStick;
     private Joystick rightStick;
 
+    private CANTalon leftMotor;
+    private CANTalon rightMotor;
+
     @Override
     public void robotInit() {
-        leftDrive = new CANTalon(1);
-        rightDrive = new CANTalon(3);
+        RobotMap.init();
+        OI.init();
 
-        leftStick = new Joystick(0);
-        rightStick = new Joystick(1);
+//        leftStick = OI.getLeftDriveStick();
+//        rightStick = OI.getRightDriveStick();
+//
+//        leftMotor = RobotMap.getLeftDrive();
+//        rightMotor = RobotMap.getRightDrive();
+
+        gearAcquisition = new GearAcquisition();
+        driveTrain = new DriveTrain();
     }
 
     @Override
     public void disabledInit() {
-
+        super.disabledInit();
     }
 
     @Override
     public void autonomousInit() {
-
+        super.autonomousInit();
     }
 
     @Override
     public void teleopInit() {
-
+        super.teleopInit();
     }
 
     @Override
     public void testInit() {
-
+        super.testInit();
     }
 
     @Override
     public void robotPeriodic() {
-
+        super.robotPeriodic();
     }
 
     @Override
     public void disabledPeriodic() {
-
+        super.disabledPeriodic();
     }
 
     @Override
     public void autonomousPeriodic() {
-
+        super.autonomousPeriodic();
     }
 
     @Override
     public void teleopPeriodic() {
-        double left = leftStick.getAxis(Joystick.AxisType.kY);
-//        double right = rightStick.getAxis(Joystick.AxisType.kY);
-        double off = leftStick.getAxis(Joystick.AxisType.kX);
-
-//        double avg = (left + right) / 2;
-
-//        System.out.println("" + left + " " + right);
-//        leftDrive.set((left + avg) / 2);
-//        rightDrive.set(-1 * ((right + avg) / 2));
-        leftDrive.set((left + off));
-        rightDrive.set(-1 * (left - off));
+        Scheduler.getInstance().run();
+//        leftMotor.set(leftStick.getY());
+//        rightMotor.set((rightStick.getY()) * -1);
     }
 
     @Override
     public void testPeriodic() {
-
+        super.testPeriodic();
     }
 }
