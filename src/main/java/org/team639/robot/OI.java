@@ -24,7 +24,7 @@ public class OI {
         //Joysticks
         leftDriveStick = new Joystick(0);
         rightDriveStick = new Joystick(1);
-        controllerStick = new Joystick(3);
+        controllerStick = new Joystick(2);
 
         //Buttons
         acquisitionCycleTrigger = new JoystickButton(controllerStick, 1);

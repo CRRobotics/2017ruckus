@@ -4,29 +4,26 @@ import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
     public static GearAcquisition gearAcquisition;
     public static DriveTrain driveTrain;
-
-    private Joystick leftStick;
-    private Joystick rightStick;
-
-    private CANTalon leftMotor;
-    private CANTalon rightMotor;
+    public static SendableChooser<Integer> driveMode;
 
     @Override
     public void robotInit() {
         RobotMap.init();
         OI.init();
 
-//        leftStick = OI.getLeftDriveStick();
-//        rightStick = OI.getRightDriveStick();
-//
-//        leftMotor = RobotMap.getLeftDrive();
-//        rightMotor = RobotMap.getRightDrive();
+        driveMode = new SendableChooser<>();
+        driveMode.addDefault("Tank", 0);
+        driveMode.addObject("2 Joystick Arcade", 1);
+        driveMode.addObject("1 Joystick Arcade", 2);
+        SmartDashboard.putData("Drive Mode", driveMode);
 
         gearAcquisition = new GearAcquisition();
         driveTrain = new DriveTrain();

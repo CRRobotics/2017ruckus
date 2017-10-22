@@ -60,14 +60,14 @@ public class GearAcquisition extends Subsystem { //Cherry236
      * Raises the claw
      */
     public void raise() {
-        gearClawRaise.set(true);
+        gearClawRaise.set(false);
     }
 
     /**
      * Lowers the claw
      */
     public void lower() {
-        gearClawRaise.set(false);
+        gearClawRaise.set(true);
     }
 
     /**
