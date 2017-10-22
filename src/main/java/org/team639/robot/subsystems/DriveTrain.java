@@ -50,4 +50,14 @@ public class DriveTrain extends Subsystem {
         setLeftSide(lSpeed);
         setRightSide(rSpeed);
     }
+
+    /**
+     * Performs arcade driving
+     * @param speed The magnitude of speed from -1 to 1
+     * @param turning The turning magnitude from -1 to 1
+     */
+    public void arcadeDrive(double speed, double turning) {
+        setLeftSide(speed / 2 + turning / 3);
+        setRightSide(speed / 2 - turning / 3);
+    }
 }

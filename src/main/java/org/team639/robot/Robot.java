@@ -8,8 +8,8 @@ import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
-    public static final GearAcquisition gearAcquisition = new GearAcquisition();
-    public static final DriveTrain driveTrain = new DriveTrain();
+    public static GearAcquisition gearAcquisition;
+    public static DriveTrain driveTrain;
 
     private Joystick leftStick;
     private Joystick rightStick;
@@ -28,6 +28,8 @@ public class Robot extends IterativeRobot {
 //        leftMotor = RobotMap.getLeftDrive();
 //        rightMotor = RobotMap.getRightDrive();
 
+        gearAcquisition = new GearAcquisition();
+        driveTrain = new DriveTrain();
     }
 
     @Override
