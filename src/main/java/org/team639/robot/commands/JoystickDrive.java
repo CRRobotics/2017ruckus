@@ -26,13 +26,16 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
-        int mode = prefs.getInt("Drive Mode", 0);
+        int mode = Robot.driveMode.getSelected();
         switch (mode) {
             case 0:
                 Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
                 break;
             case 1:
                 Robot.driveTrain.arcadeDrive(leftStick.getY(), rightStick.getX());
+                break;
+            case 2:
+                Robot.driveTrain.arcadeDrive(leftStick.getY(), leftStick.getX());
                 break;
         }
 //        Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
