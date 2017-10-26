@@ -9,11 +9,11 @@ import org.team639.robot.RobotMap;
  */
 public class GearAcquisition extends Subsystem { //Cherry236
 
-    private Solenoid gearClawClose;
+    private Solenoid gearClawOpen;
     private Solenoid gearClawRaise;
 
     public GearAcquisition() {
-        gearClawClose = RobotMap.getGearClawClose();
+        gearClawOpen = RobotMap.getGearClawOpen();
         gearClawRaise = RobotMap.getGearClawRaise();
     }
 
@@ -29,14 +29,14 @@ public class GearAcquisition extends Subsystem { //Cherry236
      * Opens the claw
      */
     public void open() {
-        gearClawClose.set(true);
+        gearClawOpen.set(true);
     }
 
     /**
      * Closes the claw
      */
     public void close() {
-        gearClawClose.set(false);
+        gearClawOpen.set(false);
     }
 
     /**
@@ -44,7 +44,7 @@ public class GearAcquisition extends Subsystem { //Cherry236
      * @return a boolean representing whether or not the claw is open
      */
     public boolean isOpen() {
-        return gearClawClose.get();
+        return gearClawOpen.get();
     }
 
     /**

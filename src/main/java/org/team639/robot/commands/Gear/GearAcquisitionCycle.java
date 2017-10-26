@@ -13,6 +13,7 @@ public class GearAcquisitionCycle extends Command {
 
     public GearAcquisitionCycle() {
         super("GearAcquisitionCycle");
+        System.out.println(Robot.gearAcquisition);
         requires(Robot.gearAcquisition);
 
         time = new Timer();

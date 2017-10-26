@@ -17,7 +17,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         RobotMap.init();
-        OI.init();
 
         driveMode = new SendableChooser<>();
         driveMode.addDefault("Tank", 0);
@@ -26,6 +25,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Drive Mode", driveMode);
 
         gearAcquisition = new GearAcquisition();
+
+        OI.init();
+        System.out.println(gearAcquisition);
         driveTrain = new DriveTrain();
     }
 
