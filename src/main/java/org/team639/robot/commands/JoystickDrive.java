@@ -1,7 +1,6 @@
 package org.team639.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team639.robot.OI;
 import org.team639.robot.Robot;
@@ -10,7 +9,6 @@ public class JoystickDrive extends Command {
 
     private Joystick leftStick;
     private Joystick rightStick;
-    private Preferences prefs;
 
     public JoystickDrive() {
         super("JoystickDrive");
@@ -18,8 +16,6 @@ public class JoystickDrive extends Command {
 
         leftStick = OI.getLeftDriveStick();
         rightStick = OI.getRightDriveStick();
-
-        prefs = Preferences.getInstance();
     }
 
     /**

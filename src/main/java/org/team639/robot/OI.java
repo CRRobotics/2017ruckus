@@ -3,6 +3,7 @@ package org.team639.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.team639.robot.commands.Gear.*;
 
 /**
  * Operator Interface
@@ -15,6 +16,10 @@ public class OI {
     private static Joystick controllerStick;
 
     private static Button acquisitionCycleTrigger;
+    private static Button gearOpenButton;
+    private static Button gearCloseButton;
+    private static Button gearRaiseButton;
+    private static Button gearLowerButton;
 
     /**
      * Initializes all of the Joysticks and button mappings.
@@ -28,8 +33,21 @@ public class OI {
 
         //Buttons
         acquisitionCycleTrigger = new JoystickButton(controllerStick, 1);
+//        gearReleaseButton = new JoystickButton(controllerStick, 10);
+        gearOpenButton = new JoystickButton(controllerStick, 8);
+        gearCloseButton = new JoystickButton(controllerStick, 9);
+        gearLowerButton = new JoystickButton(controllerStick, 6);
+        gearRaiseButton = new JoystickButton(controllerStick, 7);
 
         //Button mappings
+//        acquisitionCycleTrigger.whileHeld(new GearAcquisitionCycle());
+//        acquisitionCycleTrigger.whenReleased(new GearPickup());
+//        gearReleaseButton.whenPressed(new GearRelease());
+        gearCloseButton.whenPressed(new GearClose());
+        gearRaiseButton.whenPressed(new GearRaise());
+        gearLowerButton.whenPressed(new GearLower());
+        gearOpenButton.whenPressed(new GearOpen());
+
     }
 
     private OI() {
