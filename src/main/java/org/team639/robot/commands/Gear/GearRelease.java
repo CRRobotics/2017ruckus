@@ -21,10 +21,10 @@ public class GearRelease extends Command {
 
     @Override
     protected void execute() {
-//        if (!Robot.gearAcquisition.isOpen()) {
+        if (!Robot.gearAcquisition.isOpen()) {
             Robot.gearAcquisition.open();
             time.start();
-//        }
+        }
         if (Robot.gearAcquisition.isOpen() && time.hasPeriodPassed(Constants.OPEN_CLAW_TIME)) {
             time.stop();
             time.reset();
