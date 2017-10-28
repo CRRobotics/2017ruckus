@@ -33,7 +33,6 @@ public class OI {
 
         //Buttons
         acquisitionCycleTrigger = new JoystickButton(controllerStick, 1);
-//        gearReleaseButton = new JoystickButton(controllerStick, 10);
         gearOpenButton = new JoystickButton(controllerStick, 8);
         gearCloseButton = new JoystickButton(controllerStick, 9);
         gearLowerButton = new JoystickButton(controllerStick, 6);
@@ -42,7 +41,6 @@ public class OI {
         //Button mappings
         acquisitionCycleTrigger.whileHeld(new GearAcquisitionCycle());
         acquisitionCycleTrigger.whenReleased(new GearPickup());
-//        gearReleaseButton.whenPressed(new GearRelease());
         gearCloseButton.whenPressed(new GearClose());
         gearRaiseButton.whenPressed(new GearRaise());
         gearLowerButton.whenPressed(new GearLower());
