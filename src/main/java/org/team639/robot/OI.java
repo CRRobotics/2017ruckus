@@ -40,8 +40,8 @@ public class OI {
         gearRaiseButton = new JoystickButton(controllerStick, 7);
 
         //Button mappings
-//        acquisitionCycleTrigger.whileHeld(new GearAcquisitionCycle());
-//        acquisitionCycleTrigger.whenReleased(new GearPickup());
+        acquisitionCycleTrigger.whileHeld(new GearAcquisitionCycle());
+        acquisitionCycleTrigger.whenReleased(new GearPickup());
 //        gearReleaseButton.whenPressed(new GearRelease());
         gearCloseButton.whenPressed(new GearClose());
         gearRaiseButton.whenPressed(new GearRaise());
