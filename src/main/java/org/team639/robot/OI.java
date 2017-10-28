@@ -11,9 +11,9 @@ import org.team639.robot.commands.Gear.*;
  */
 public class OI {
 
-    private static Joystick leftDriveStick;
-    private static Joystick rightDriveStick;
-    private static Joystick controllerStick;
+    private static Joystick leftDriveStick = new Joystick(0);
+    private static Joystick rightDriveStick = new Joystick(1);
+    private static Joystick controllerStick = new Joystick(2);
 
     private static Button acquisitionCycleTrigger;
     private static Button gearOpenButton;
@@ -22,14 +22,14 @@ public class OI {
     private static Button gearLowerButton;
 
     /**
-     * Initializes all of the Joysticks and button mappings.
-     * THIS MUST BE RUN AT THE BEGINNING OF robotInit in Robot.java!!!
+     * Maps all of the buttons.
+     * THIS MUST BE RUN AT THE END OF robotInit in Robot.java!!!
      */
-    public static void init() {
+    public static void mapButtons() {
         //Joysticks
-        leftDriveStick = new Joystick(0);
-        rightDriveStick = new Joystick(1);
-        controllerStick = new Joystick(2);
+//        leftDriveStick = new Joystick(0);
+//        rightDriveStick = new Joystick(1);
+//        controllerStick = new Joystick(2);
 
         //Buttons
         acquisitionCycleTrigger = new JoystickButton(controllerStick, 1);

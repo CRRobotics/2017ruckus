@@ -1,8 +1,6 @@
 package org.team639.robot;
 
-import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,9 +24,10 @@ public class Robot extends IterativeRobot {
 
         gearAcquisition = new GearAcquisition();
 
-        OI.init();
         System.out.println(gearAcquisition);
         driveTrain = new DriveTrain();
+
+        OI.mapButtons();
     }
 
     @Override

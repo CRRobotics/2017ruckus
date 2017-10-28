@@ -7,11 +7,14 @@ import org.team639.robot.RobotMap;
 /**
  * Contains all methods relating to the Gear Acquisition
  */
-public class GearAcquisition extends Subsystem { //Cherry236
+public class GearAcquisition extends Subsystem {
 
     private Solenoid gearClawOpen;
     private Solenoid gearClawRaise;
 
+    /**
+     * Retrieves and assigns Solenoids
+     */
     public GearAcquisition() {
         gearClawOpen = RobotMap.getGearClawOpen();
         gearClawRaise = RobotMap.getGearClawRaise();
@@ -22,7 +25,7 @@ public class GearAcquisition extends Subsystem { //Cherry236
      */
     @Override
     protected void initDefaultCommand() {
-
+        //No default command
     }
 
     /**

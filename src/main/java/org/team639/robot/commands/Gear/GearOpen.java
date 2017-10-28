@@ -3,6 +3,9 @@ package org.team639.robot.commands.Gear;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team639.robot.Robot;
 
+/**
+ * Command that opens the claw
+ */
 public class GearOpen extends Command {
     public GearOpen() {
         requires(Robot.gearAcquisition);
