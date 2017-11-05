@@ -56,4 +56,6 @@ public class RobotMap {
     public static Solenoid getGearClawRaise() {
         return gearClawRaise;
     }
+
+    public static DigitalInput getGearSensor() {  return gearSensor;    }
 }

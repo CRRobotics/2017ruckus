@@ -68,6 +68,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        System.out.println(gearAcquisition.gearDetected());
 //        leftMotor.set(leftStick.getY());
 //        rightMotor.set((rightStick.getY()) * -1);
     }

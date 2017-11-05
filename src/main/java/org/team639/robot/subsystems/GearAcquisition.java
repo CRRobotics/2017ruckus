@@ -1,5 +1,6 @@
 package org.team639.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.RobotMap;
@@ -11,13 +12,14 @@ public class GearAcquisition extends Subsystem {
 
     private Solenoid gearClawOpen;
     private Solenoid gearClawRaise;
-
+    private DigitalInput gearSensor;
     /**
      * Retrieves and assigns Solenoids
      */
     public GearAcquisition() {
         gearClawOpen = RobotMap.getGearClawOpen();
         gearClawRaise = RobotMap.getGearClawRaise();
+        gearSensor = RobotMap.getGearSensor();
     }
 
     /**
@@ -56,7 +58,7 @@ public class GearAcquisition extends Subsystem {
      * @return Whether or not a gear is detected
      */
     public boolean gearDetected() {
-        return false;
+        return gearSensor.get();
     }
 
     /**
