@@ -11,9 +11,10 @@ import org.team639.robot.commands.Gear.*;
  */
 public class OI {
 
-    private static Joystick leftDriveStick = new Joystick(0);
-    private static Joystick rightDriveStick = new Joystick(1);
-    private static Joystick controllerStick = new Joystick(2);
+//    private static Joystick leftDriveStick = new Joystick(0);
+//    private static Joystick rightDriveStick = new Joystick(1);
+//    private static Joystick controllerStick = new Joystick(2);
+    private static Joystick theRadioStick = new Joystick(0);
 
     private static Button acquisitionCycleTrigger;
     private static Button gearOpenButton;
@@ -32,19 +33,19 @@ public class OI {
 //        controllerStick = new Joystick(2);
 
         //Buttons
-        acquisitionCycleTrigger = new JoystickButton(controllerStick, 1);
-        gearOpenButton = new JoystickButton(controllerStick, 8);
-        gearCloseButton = new JoystickButton(controllerStick, 9);
-        gearLowerButton = new JoystickButton(controllerStick, 6);
-        gearRaiseButton = new JoystickButton(controllerStick, 7);
+        acquisitionCycleTrigger = new JoystickButton(theRadioStick, 1);
+//        gearOpenButton = new JoystickButton(controllerStick, 8);
+//        gearCloseButton = new JoystickButton(controllerStick, 9);
+//        gearLowerButton = new JoystickButton(controllerStick, 6);
+//        gearRaiseButton = new JoystickButton(controllerStick, 7);
 
         //Button mappings
         acquisitionCycleTrigger.whileHeld(new GearAcquisitionCycle());
         acquisitionCycleTrigger.whenReleased(new GearPickup());
-        gearCloseButton.whenPressed(new GearClose());
-        gearRaiseButton.whenPressed(new GearRaise());
-        gearLowerButton.whenPressed(new GearLower());
-        gearOpenButton.whenPressed(new GearOpen());
+//        gearCloseButton.whenPressed(new GearClose());
+//        gearRaiseButton.whenPressed(new GearRaise());
+//        gearLowerButton.whenPressed(new GearLower());
+//        gearOpenButton.whenPressed(new GearOpen());
 
     }
 
@@ -55,23 +56,27 @@ public class OI {
      * Returns the left driver Joystick
      * @return the left driver Joystick
      */
-    public static Joystick getLeftDriveStick() {
-        return leftDriveStick;
-    }
+//    public static Joystick getLeftDriveStick() {
+//        return leftDriveStick;
+//    }
+//
+//    /**
+//     * Returns the right driver Joystick
+//     * @return the right driver Joystick
+//     */
+//    public static Joystick getRightDriveStick() {
+//        return rightDriveStick;
+//    }
+//
+//    /**
+//     * Returns the controller Joystick
+//     * @return The controller Joystick
+//     */
+//    public static Joystick getControllerStick() {
+//        return controllerStick;
+//    }
 
-    /**
-     * Returns the right driver Joystick
-     * @return the right driver Joystick
-     */
-    public static Joystick getRightDriveStick() {
-        return rightDriveStick;
-    }
-
-    /**
-     * Returns the controller Joystick
-     * @return The controller Joystick
-     */
-    public static Joystick getControllerStick() {
-        return controllerStick;
+    public static Joystick getStick() {
+        return theRadioStick;
     }
 }

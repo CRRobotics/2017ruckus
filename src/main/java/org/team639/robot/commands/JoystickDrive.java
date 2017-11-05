@@ -9,13 +9,15 @@ public class JoystickDrive extends Command {
 
     private Joystick leftStick;
     private Joystick rightStick;
+    private Joystick stick;
 
     public JoystickDrive() {
         super("JoystickDrive");
         requires(Robot.driveTrain);
 
-        leftStick = OI.getLeftDriveStick();
-        rightStick = OI.getRightDriveStick();
+//        leftStick = OI.getLeftDriveStick();
+//        rightStick = OI.getRightDriveStick();
+        stick = OI.getStick();
     }
 
     /**
@@ -25,13 +27,13 @@ public class JoystickDrive extends Command {
         int mode = Robot.driveMode.getSelected();
         switch (mode) {
             case 0:
-                Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
+                Robot.driveTrain.tankDrive(stick.getY(), stick.getY());
                 break;
             case 1:
-                Robot.driveTrain.arcadeDrive(leftStick.getY(), rightStick.getX());
+                Robot.driveTrain.arcadeDrive(stick.getRawAxis(3), stick.getRawAxis(2));
                 break;
             case 2:
-                Robot.driveTrain.arcadeDrive(leftStick.getY(), leftStick.getX());
+                Robot.driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(3));
                 break;
         }
 //        Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
