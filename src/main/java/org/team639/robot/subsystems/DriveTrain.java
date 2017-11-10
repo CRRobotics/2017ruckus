@@ -18,6 +18,15 @@ public class DriveTrain extends Subsystem {
     }
 
     /**
+     * Defines drive modes
+     */
+    public enum DriveMode {
+        TANK,
+        ARCADE_1_JOYSTICK,
+        ARCADE_2_JOYSTICK
+    }
+
+    /**
      * Sets the default command to run while no others are running
      */
     @Override

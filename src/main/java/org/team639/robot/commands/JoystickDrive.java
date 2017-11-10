@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team639.robot.OI;
 import org.team639.robot.Robot;
+import org.team639.robot.subsystems.DriveTrain;
 
 public class JoystickDrive extends Command {
 
@@ -24,20 +25,18 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
-        int mode = Robot.driveMode.getSelected();
+        DriveTrain.DriveMode mode = Robot.driveMode.getSelected(); //Get drive mode from SmartDashboard
         switch (mode) {
-            case 0:
-                Robot.driveTrain.tankDrive(stick.getY(), stick.getY());
+            case TANK:
+                Robot.driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(3));
                 break;
-            case 1:
+            case ARCADE_1_JOYSTICK:
                 Robot.driveTrain.arcadeDrive(stick.getRawAxis(3), stick.getRawAxis(2));
                 break;
-            case 2:
+            case ARCADE_2_JOYSTICK:
                 Robot.driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(3));
                 break;
         }
-//        Robot.driveTrain.tankDrive(leftStick.getY(), rightStick.getY());
-//        Robot.driveTrain.arcadeDrive(rightStick.getY(), leftStick.getX());
     }
 
     /**

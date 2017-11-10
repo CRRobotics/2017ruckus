@@ -10,16 +10,16 @@ import org.team639.robot.subsystems.GearAcquisition;
 public class Robot extends IterativeRobot {
     public static GearAcquisition gearAcquisition;
     public static DriveTrain driveTrain;
-    public static SendableChooser<Integer> driveMode;
+    public static SendableChooser<DriveTrain.DriveMode> driveMode;
 
     @Override
     public void robotInit() {
         RobotMap.init();
 
         driveMode = new SendableChooser<>();
-        driveMode.addDefault("Tank", 0);
-        driveMode.addObject("2 Joystick Arcade", 1);
-        driveMode.addObject("1 Joystick Arcade", 2);
+        driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
+        driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         gearAcquisition = new GearAcquisition();
