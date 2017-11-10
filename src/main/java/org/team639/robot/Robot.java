@@ -1,5 +1,6 @@
 package org.team639.robot;
 
+import com.ctre.MotorControl.SmartMotorController;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -10,7 +11,9 @@ import org.team639.robot.subsystems.GearAcquisition;
 public class Robot extends IterativeRobot {
     public static GearAcquisition gearAcquisition;
     public static DriveTrain driveTrain;
+
     public static SendableChooser<DriveTrain.DriveMode> driveMode;
+    public static SendableChooser<SmartMotorController.TalonControlMode> talonMode;
 
     @Override
     public void robotInit() {
@@ -22,6 +25,17 @@ public class Robot extends IterativeRobot {
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
         driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
+
+        //Activate and deactivate closed loop drive
+        talonMode = new SendableChooser<>();
+        talonMode.addDefault("Open Loop", SmartMotorController.TalonControlMode.PercentVbus);
+        talonMode.addObject("Closed loop", SmartMotorController.TalonControlMode.Speed);
+        SmartDashboard.putData("Talon Control", talonMode);
+
+        //PID constants
+        SmartDashboard.putNumber("drive p", Constants.DriveTrain.P);
+        SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
+        SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();

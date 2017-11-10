@@ -85,8 +85,8 @@ public class DriveTrain extends Subsystem {
                 leftDrive.set(lSpeed);
                 break;
             case Speed:
-                rightDrive.set( -1 * rSpeed * Constants.SPEED_RANGE);
-                leftDrive.set(lSpeed * Constants.SPEED_RANGE);
+                rightDrive.set( -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -107,5 +107,37 @@ public class DriveTrain extends Subsystem {
      */
     public void arcadeDrive(double speed, double turning) {
         setSpeeds(speed / 2 + turning / 3, speed / 2 - turning / 3);
+    }
+
+    /**
+     * Returns the position of the left encoder
+     * @return The position of the left encoder
+     */
+    public int getLeftEncPos() {
+        return leftDrive.getEncPosition();
+    }
+
+    /**
+     * Reutrns the position of the right encoder
+     * @return The position of the right encoder
+     */
+    public int getRightEncPos() {
+        return rightDrive.getEncPosition();
+    }
+
+    /**
+     * Returns the velocity of the left encoder
+     * @return The velocity of the left encoder
+     */
+    public int getLeftEncVelocity() {
+        return leftDrive.getEncVelocity();
+    }
+
+    /**
+     * Returns the velocity of the right encoder
+     * @return The velocity of the right encoder
+     */
+    public int getRightEncVelocity() {
+        return -1 * rightDrive.getEncVelocity();
     }
 }
