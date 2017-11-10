@@ -16,15 +16,15 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         RobotMap.init();
 
+        //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
         driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
         driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
+        //Initialize subsystems
         gearAcquisition = new GearAcquisition();
-
-        System.out.println(gearAcquisition);
         driveTrain = new DriveTrain();
 
         OI.mapButtons();
@@ -68,9 +68,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        System.out.println(gearAcquisition.gearDetected());
-//        leftMotor.set(leftStick.getY());
-//        rightMotor.set((rightStick.getY()) * -1);
     }
 
     @Override

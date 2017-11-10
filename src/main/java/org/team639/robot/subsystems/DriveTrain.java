@@ -1,7 +1,10 @@
 package org.team639.robot.subsystems;
 
 import com.ctre.MotorControl.CANTalon;
+import com.ctre.MotorControl.SmartMotorController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.JoystickDrive;
 
@@ -12,9 +15,45 @@ public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
 
+    private SmartMotorController.TalonControlMode currentControlMode;
+
     public DriveTrain() {
         leftDrive = RobotMap.getLeftDrive();
         rightDrive = RobotMap.getRightDrive();
+
+        leftDrive.setAllowableClosedLoopErr(0);
+        rightDrive.setAllowableClosedLoopErr(0);
+
+        setCurrentControlMode(SmartMotorController.TalonControlMode.PercentVbus);
+    }
+
+    /**
+     * Returns the current Talon control mode
+     * @return The current Talon control mode
+     */
+    public SmartMotorController.TalonControlMode getCurrentControlMode() {
+        return currentControlMode;
+    }
+
+    /**
+     * Sets the Talon control mode
+     * @param mode The control mode to set the talons to
+     */
+    public void setCurrentControlMode(SmartMotorController.TalonControlMode mode) {
+        currentControlMode = mode;
+        leftDrive.changeControlMode(currentControlMode);
+        rightDrive.changeControlMode(currentControlMode);
+    }
+
+    /**
+     * Sets the PID constants
+     * @param p
+     * @param i
+     * @param d
+     */
+    public void setPID(double p, double i, double d) {
+        rightDrive.setPID(p, i, d);
+        leftDrive.setPID(p, i, d);
     }
 
     /**
@@ -35,19 +74,21 @@ public class DriveTrain extends Subsystem {
     }
 
     /**
-     * Sets the speed of the right side motors
-     * @param speed The speed of the right side motors
+     * Takes to speed values from -1 to 1 and uses them to set the motors
+     * @param lSpeed The value for the left side
+     * @param rSpeed The value for the right side
      */
-    public void setRightSide(double speed) {
-        rightDrive.set(-1 * speed);
-    }
-
-    /**
-     * Sets the speed of the left side motors
-     * @param speed The speed of the left side motors
-     */
-    public void setLeftSide(double speed) {
-        leftDrive.set(speed);
+    public void setSpeeds(double lSpeed, double rSpeed) {
+        switch (currentControlMode) {
+            case PercentVbus:
+                rightDrive.set(-1 * rSpeed);
+                leftDrive.set(lSpeed);
+                break;
+            case Speed:
+                rightDrive.set( -1 * rSpeed * Constants.SPEED_RANGE);
+                leftDrive.set(lSpeed * Constants.SPEED_RANGE);
+                break;
+        }
     }
 
     /**
@@ -56,8 +97,7 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void tankDrive(double lSpeed, double rSpeed) {
-        setLeftSide(lSpeed);
-        setRightSide(rSpeed);
+        setSpeeds(lSpeed, rSpeed);
     }
 
     /**
@@ -66,7 +106,6 @@ public class DriveTrain extends Subsystem {
      * @param turning The turning magnitude from -1 to 1
      */
     public void arcadeDrive(double speed, double turning) {
-        setLeftSide(speed / 2 + turning / 3);
-        setRightSide(speed / 2 - turning / 3);
+        setSpeeds(speed / 2 + turning / 3, speed / 2 - turning / 3);
     }
 }
