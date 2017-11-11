@@ -1,12 +1,10 @@
 package org.team639.robot.subsystems;
 
 import com.ctre.MotorControl.CANTalon;
-import com.ctre.MotorControl.SmartMotorController;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
-import org.team639.robot.commands.JoystickDrive;
+import org.team639.robot.commands.Drive.JoystickDrive;
 
 /**
  * Contains all methods relating to the drivetrain
@@ -15,7 +13,16 @@ public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
 
-    private SmartMotorController.TalonControlMode currentControlMode;
+    private CANTalon.TalonControlMode currentControlMode;
+
+    /**
+     * Defines drive modes
+     */
+    public enum DriveMode {
+        TANK,
+        ARCADE_1_JOYSTICK,
+        ARCADE_2_JOYSTICK
+    }
 
     public DriveTrain() {
         leftDrive = RobotMap.getLeftDrive();
@@ -24,14 +31,14 @@ public class DriveTrain extends Subsystem {
         leftDrive.setAllowableClosedLoopErr(0);
         rightDrive.setAllowableClosedLoopErr(0);
 
-        setCurrentControlMode(SmartMotorController.TalonControlMode.PercentVbus);
+        setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
     }
 
     /**
      * Returns the current Talon control mode
      * @return The current Talon control mode
      */
-    public SmartMotorController.TalonControlMode getCurrentControlMode() {
+    public CANTalon.TalonControlMode getCurrentControlMode() {
         return currentControlMode;
     }
 
@@ -39,7 +46,7 @@ public class DriveTrain extends Subsystem {
      * Sets the Talon control mode
      * @param mode The control mode to set the talons to
      */
-    public void setCurrentControlMode(SmartMotorController.TalonControlMode mode) {
+    public void setCurrentControlMode(CANTalon.TalonControlMode mode) {
         currentControlMode = mode;
         leftDrive.changeControlMode(currentControlMode);
         rightDrive.changeControlMode(currentControlMode);
@@ -54,15 +61,6 @@ public class DriveTrain extends Subsystem {
     public void setPID(double p, double i, double d) {
         rightDrive.setPID(p, i, d);
         leftDrive.setPID(p, i, d);
-    }
-
-    /**
-     * Defines drive modes
-     */
-    public enum DriveMode {
-        TANK,
-        ARCADE_1_JOYSTICK,
-        ARCADE_2_JOYSTICK
     }
 
     /**

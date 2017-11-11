@@ -1,6 +1,5 @@
-package org.team639.robot.commands;
+package org.team639.robot.commands.Drive;
 
-import com.ctre.Drive.Styles;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,6 +9,7 @@ import org.team639.robot.Robot;
 import org.team639.robot.subsystems.DriveTrain;
 
 public class JoystickDrive extends Command {
+    private DriveTrain driveTrain = Robot.getDriveTrain();
 
     private Joystick leftStick;
     private Joystick rightStick;
@@ -17,7 +17,7 @@ public class JoystickDrive extends Command {
 
     public JoystickDrive() {
         super("JoystickDrive");
-        requires(Robot.driveTrain);
+        requires(driveTrain);
 
 //        leftStick = OI.getLeftDriveStick();
 //        rightStick = OI.getRightDriveStick();
@@ -35,22 +35,22 @@ public class JoystickDrive extends Command {
         double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.P);
         double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.I);
         double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.D);
-        Robot.driveTrain.setPID(p,i,d);
+        driveTrain.setPID(p,i,d);
 
-        if (Robot.talonMode.getSelected() != Robot.driveTrain.getCurrentControlMode()) {
-            Robot.driveTrain.setCurrentControlMode(Robot.talonMode.getSelected());
+        if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
+            driveTrain.setCurrentControlMode(Robot.getTalonMode());
         }
 
-        DriveTrain.DriveMode mode = Robot.driveMode.getSelected(); //Get drive mode from SmartDashboard
+        DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:
-                Robot.driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(3));
+                driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(3));
                 break;
             case ARCADE_1_JOYSTICK:
-                Robot.driveTrain.arcadeDrive(stick.getRawAxis(3), stick.getRawAxis(2));
+                driveTrain.arcadeDrive(stick.getRawAxis(3), stick.getRawAxis(2));
                 break;
             case ARCADE_2_JOYSTICK:
-                Robot.driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(3));
+                driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(3));
                 break;
         }
     }

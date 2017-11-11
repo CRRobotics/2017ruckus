@@ -1,5 +1,6 @@
 package org.team639.robot;
 
+import com.ctre.MotorControl.CANTalon;
 import com.ctre.MotorControl.SmartMotorController;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,11 +10,27 @@ import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
-    public static GearAcquisition gearAcquisition;
-    public static DriveTrain driveTrain;
+    private static GearAcquisition gearAcquisition;
+    private static DriveTrain driveTrain;
 
-    public static SendableChooser<DriveTrain.DriveMode> driveMode;
-    public static SendableChooser<SmartMotorController.TalonControlMode> talonMode;
+    private static SendableChooser<DriveTrain.DriveMode> driveMode;
+    private static SendableChooser<CANTalon.TalonControlMode> talonMode;
+
+    public static GearAcquisition getGearAcquisition() {
+        return gearAcquisition;
+    }
+
+    public static DriveTrain getDriveTrain() {
+        return driveTrain;
+    }
+
+    public static DriveTrain.DriveMode getDriveMode() {
+        return driveMode.getSelected();
+    }
+
+    public static CANTalon.TalonControlMode getTalonMode() {
+        return talonMode.getSelected();
+    }
 
     @Override
     public void robotInit() {
@@ -28,8 +45,8 @@ public class Robot extends IterativeRobot {
 
         //Activate and deactivate closed loop drive
         talonMode = new SendableChooser<>();
-        talonMode.addDefault("Open Loop", SmartMotorController.TalonControlMode.PercentVbus);
-        talonMode.addObject("Closed loop", SmartMotorController.TalonControlMode.Speed);
+        talonMode.addDefault("Open Loop", CANTalon.TalonControlMode.PercentVbus);
+        talonMode.addObject("Closed loop", CANTalon.TalonControlMode.Speed);
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants
