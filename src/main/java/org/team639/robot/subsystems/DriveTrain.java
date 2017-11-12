@@ -94,13 +94,13 @@ public class DriveTrain extends Subsystem {
         if (rSpeed < 0.1 && rSpeed > -0.1) rSpeed = 0;
         switch (currentControlMode) {
             case PercentVbus:
-                rightDrive.set(-1 * rSpeed);
-                leftDrive.set(lSpeed);
+                rightDrive.set(rSpeed);
+                leftDrive.set(-1 * lSpeed);
                 break;
             case Speed:
                 System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
-                rightDrive.set( -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
+                rightDrive.set(rSpeed * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set(-1 * lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -111,8 +111,8 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsRaw(double lSpeed, double rSpeed) {
-        rightDrive.set(-1 * rSpeed);
-        leftDrive.set(lSpeed);
+        rightDrive.set(rSpeed);
+        leftDrive.set(-1 * lSpeed);
     }
 
     /**

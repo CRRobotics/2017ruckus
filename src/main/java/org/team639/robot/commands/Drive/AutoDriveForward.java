@@ -68,4 +68,14 @@ public class AutoDriveForward extends Command {
 
         return left;
     }
+
+    @Override
+    protected void interrupted() {
+        end();
+    }
+
+    @Override
+    protected void end() {
+        driveTrain.setSpeedsPercent(0, 0);
+    }
 }

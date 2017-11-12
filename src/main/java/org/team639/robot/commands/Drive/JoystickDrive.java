@@ -42,14 +42,14 @@ public class JoystickDrive extends Command {
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:
-                driveTrain.tankDrive(-1 * stick.getRawAxis(1), -1 * stick.getRawAxis(5));
+                driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(5));
 //                System.out.println(stick.getRawAxis(1) + " " + stick.getRawAxis(5));
                 break;
             case ARCADE_1_JOYSTICK:
-                driveTrain.arcadeDrive(-1 * stick.getRawAxis(5), stick.getRawAxis(4));
+                driveTrain.arcadeDrive(stick.getRawAxis(5), stick.getRawAxis(4));
                 break;
             case ARCADE_2_JOYSTICK:
-                driveTrain.arcadeDrive(-1 * leftStick.getRawAxis(0), leftStick.getRawAxis(5));
+                driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(5));
                 break;
         }
     }
