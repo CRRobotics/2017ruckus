@@ -3,6 +3,7 @@ package org.team639.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.team639.robot.commands.Drive.AutoDriveForward;
 import org.team639.robot.commands.Gear.*;
 
 /**
@@ -17,6 +18,7 @@ public class OI {
     private static Joystick theRadioStick = new Joystick(0);
 
     private static Button acquisitionCycleTrigger;
+    private static Button autoDriveForward;
     private static Button gearOpenButton;
     private static Button gearCloseButton;
     private static Button gearRaiseButton;
@@ -33,7 +35,8 @@ public class OI {
 //        controllerStick = new Joystick(2);
 
         //Buttons
-        acquisitionCycleTrigger = new JoystickButton(theRadioStick, 1);
+        acquisitionCycleTrigger = new JoystickButton(theRadioStick, 6);
+        autoDriveForward = new JoystickButton(theRadioStick, 2);
 //        gearOpenButton = new JoystickButton(controllerStick, 8);
 //        gearCloseButton = new JoystickButton(controllerStick, 9);
 //        gearLowerButton = new JoystickButton(controllerStick, 6);
@@ -42,6 +45,7 @@ public class OI {
         //Button mappings
         acquisitionCycleTrigger.whenPressed(new GearAcquisitionCycle());
         acquisitionCycleTrigger.whenReleased(new GearPickup());
+//        autoDriveForward.whenPressed(new AutoDriveForward(48, 0.5));
 //        gearCloseButton.whenPressed(new GearClose());
 //        gearRaiseButton.whenPressed(new GearRaise());
 //        gearLowerButton.whenPressed(new GearLower());

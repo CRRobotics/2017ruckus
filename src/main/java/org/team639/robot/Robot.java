@@ -45,8 +45,8 @@ public class Robot extends IterativeRobot {
 
         //Activate and deactivate closed loop drive
         talonMode = new SendableChooser<>();
-        talonMode.addDefault("Open Loop", CANTalon.TalonControlMode.PercentVbus);
-        talonMode.addObject("Closed loop", CANTalon.TalonControlMode.Speed);
+        talonMode.addObject("Open Loop", CANTalon.TalonControlMode.PercentVbus);
+        talonMode.addDefault("Closed loop", CANTalon.TalonControlMode.Speed);
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants

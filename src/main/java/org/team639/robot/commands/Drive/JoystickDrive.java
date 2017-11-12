@@ -25,13 +25,6 @@ public class JoystickDrive extends Command {
     }
 
     protected void initialize() {
-
-    }
-
-    /**
-     * Called repeatedly while the command is running
-     */
-    protected void execute() {
         double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.P);
         double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.I);
         double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.D);
@@ -40,17 +33,23 @@ public class JoystickDrive extends Command {
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
             driveTrain.setCurrentControlMode(Robot.getTalonMode());
         }
+    }
 
+    /**
+     * Called repeatedly while the command is running
+     */
+    protected void execute() {
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:
-                driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(3));
+                driveTrain.tankDrive(-1 * stick.getRawAxis(1), -1 * stick.getRawAxis(5));
+//                System.out.println(stick.getRawAxis(1) + " " + stick.getRawAxis(5));
                 break;
             case ARCADE_1_JOYSTICK:
-                driveTrain.arcadeDrive(stick.getRawAxis(3), stick.getRawAxis(2));
+                driveTrain.arcadeDrive(-1 * stick.getRawAxis(5), stick.getRawAxis(4));
                 break;
             case ARCADE_2_JOYSTICK:
-                driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(3));
+                driveTrain.arcadeDrive(-1 * leftStick.getRawAxis(0), leftStick.getRawAxis(5));
                 break;
         }
     }

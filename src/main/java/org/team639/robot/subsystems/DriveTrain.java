@@ -1,6 +1,8 @@
 package org.team639.robot.subsystems;
 
 import com.ctre.MotorControl.CANTalon;
+import com.ctre.MotorControl.SmartMotorController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
@@ -28,10 +30,21 @@ public class DriveTrain extends Subsystem {
         leftDrive = RobotMap.getLeftDrive();
         rightDrive = RobotMap.getRightDrive();
 
-        leftDrive.setAllowableClosedLoopErr(0);
-        rightDrive.setAllowableClosedLoopErr(0);
+        leftDrive.setAllowableClosedLoopErr(10);
+        rightDrive.setAllowableClosedLoopErr(10);
+
+        leftDrive.setPIDSourceType(PIDSourceType.kRate);
+        rightDrive.setPIDSourceType(PIDSourceType.kRate);
+
+        leftDrive.setFeedbackDevice(SmartMotorController.FeedbackDevice.QuadEncoder);
+        rightDrive.setFeedbackDevice(SmartMotorController.FeedbackDevice.QuadEncoder);
+
+        leftDrive.reverseSensor(true);
+        rightDrive.reverseSensor(true);
 
         setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
+
+        setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
     }
 
     /**
@@ -72,21 +85,34 @@ public class DriveTrain extends Subsystem {
     }
 
     /**
-     * Takes to speed values from -1 to 1 and uses them to set the motors
+     * Takes two speed values from -1 to 1 and uses them to set the motors
      * @param lSpeed The value for the left side
      * @param rSpeed The value for the right side
      */
-    public void setSpeeds(double lSpeed, double rSpeed) {
+    public void setSpeedsPercent(double lSpeed, double rSpeed) {
+        if (lSpeed < 0.1 && lSpeed > -0.1) lSpeed = 0;
+        if (rSpeed < 0.1 && rSpeed > -0.1) rSpeed = 0;
         switch (currentControlMode) {
             case PercentVbus:
                 rightDrive.set(-1 * rSpeed);
                 leftDrive.set(lSpeed);
                 break;
             case Speed:
+                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
                 rightDrive.set( -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
                 leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
+    }
+
+    /**
+     * Takes two raw speed values and uses them to set the motors.
+     * @param lSpeed The value for the left side
+     * @param rSpeed The value for the right side
+     */
+    public void setSpeedsRaw(double lSpeed, double rSpeed) {
+        rightDrive.set(-1 * rSpeed);
+        leftDrive.set(lSpeed);
     }
 
     /**
@@ -95,7 +121,7 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void tankDrive(double lSpeed, double rSpeed) {
-        setSpeeds(lSpeed, rSpeed);
+        setSpeedsPercent(lSpeed, rSpeed);
     }
 
     /**
@@ -104,7 +130,7 @@ public class DriveTrain extends Subsystem {
      * @param turning The turning magnitude from -1 to 1
      */
     public void arcadeDrive(double speed, double turning) {
-        setSpeeds(speed / 2 + turning / 3, speed / 2 - turning / 3);
+        setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
     }
 
     /**

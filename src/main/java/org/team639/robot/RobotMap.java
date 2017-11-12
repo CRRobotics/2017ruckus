@@ -29,8 +29,9 @@ public class RobotMap {
      */
     public static void init() {
         if (!initialized) {
-            leftDrive = new CANTalon(1);
-            rightDrive = new CANTalon(3);
+            leftDrive = new CANTalon(3);
+            rightDrive = new CANTalon(1);
+
 
             gearClawOpen = new Solenoid(0);
             gearClawRaise = new Solenoid(1);
