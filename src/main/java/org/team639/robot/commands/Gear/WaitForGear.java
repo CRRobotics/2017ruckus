@@ -5,21 +5,17 @@ import org.team639.robot.Robot;
 import org.team639.robot.subsystems.GearAcquisition;
 
 /**
- * Command that raises the claw
+ * Command to wait until a gear is detected by the sensor
  */
-public class GearRaise extends Command {
+public class WaitForGear extends Command {
     private GearAcquisition gearAcquisition = Robot.getGearAcquisition();
 
-
-    public GearRaise() {
+    public WaitForGear() {
         requires(gearAcquisition);
     }
 
-    protected void initialize() {
-        gearAcquisition.raise();
-    }
-
+    @Override
     protected boolean isFinished() {
-        return true;
+        return gearAcquisition.gearDetected();
     }
 }

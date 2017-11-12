@@ -1,6 +1,22 @@
 package org.team639.robot;
 
 public class Constants {
-    public static final double OPEN_CLAW_TIME = 3;
-    public static final double LOWER_CLAW_TIME = 3;
+    public static class DriveTrain {
+        public static final double SPEED_RANGE = 15000;
+        public static final double P = 0.1;
+        public static final double I = 0;
+        public static final double D = 0;
+
+        public static final double WHEEL_DIAMETER_INCHES = 6;
+        public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;
+
+        public static final int ENC_TICKS_PER_ROTATION = 1024;
+        public static final double TICKS_PER_INCH = ENC_TICKS_PER_ROTATION / WHEEL_CIRCUMFERENCE_INCHES;
+
+        public static final double DRIVE_FORWARD_TOLERANCE = 500;
+    }
+    public static final double OPEN_CLAW_TIME = 0.20;
+    public static final double CLOSE_CLAW_TIME = 0.20;
+
+
 }

@@ -1,8 +1,8 @@
 package org.team639.robot;
 
 import com.ctre.MotorControl.CANTalon;
+import com.ctre.MotorControl.SmartMotorController;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,25 +10,55 @@ import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
 public class Robot extends IterativeRobot {
-    public static GearAcquisition gearAcquisition;
-    public static DriveTrain driveTrain;
-    public static SendableChooser<Integer> driveMode;
+    private static GearAcquisition gearAcquisition;
+    private static DriveTrain driveTrain;
+
+    private static SendableChooser<DriveTrain.DriveMode> driveMode;
+    private static SendableChooser<CANTalon.TalonControlMode> talonMode;
+
+    public static GearAcquisition getGearAcquisition() {
+        return gearAcquisition;
+    }
+
+    public static DriveTrain getDriveTrain() {
+        return driveTrain;
+    }
+
+    public static DriveTrain.DriveMode getDriveMode() {
+        return driveMode.getSelected();
+    }
+
+    public static CANTalon.TalonControlMode getTalonMode() {
+        return talonMode.getSelected();
+    }
 
     @Override
     public void robotInit() {
         RobotMap.init();
 
+        //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
-        driveMode.addDefault("Tank", 0);
-        driveMode.addObject("2 Joystick Arcade", 1);
-        driveMode.addObject("1 Joystick Arcade", 2);
+        driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
+        driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
-        gearAcquisition = new GearAcquisition();
+        //Activate and deactivate closed loop drive
+        talonMode = new SendableChooser<>();
+        talonMode.addObject("Open Loop", CANTalon.TalonControlMode.PercentVbus);
+        talonMode.addDefault("Closed loop", CANTalon.TalonControlMode.Speed);
+        SmartDashboard.putData("Talon Control", talonMode);
 
-        OI.init();
-        System.out.println(gearAcquisition);
+        //PID constants
+        SmartDashboard.putNumber("drive p", Constants.DriveTrain.P);
+        SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
+        SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
+
+        //Initialize subsystems
+        gearAcquisition = new GearAcquisition();
         driveTrain = new DriveTrain();
+
+        OI.mapButtons();
     }
 
     @Override
@@ -69,8 +99,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-//        leftMotor.set(leftStick.getY());
-//        rightMotor.set((rightStick.getY()) * -1);
     }
 
     @Override
