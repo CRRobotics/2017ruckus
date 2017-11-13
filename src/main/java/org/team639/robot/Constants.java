@@ -10,7 +10,7 @@ public class Constants {
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;
 
-        public static final int ENC_TICKS_PER_ROTATION = 1024;
+        public static final int ENC_TICKS_PER_ROTATION = 4096;
         public static final double TICKS_PER_INCH = ENC_TICKS_PER_ROTATION / WHEEL_CIRCUMFERENCE_INCHES;
 
         public static final double DRIVE_FORWARD_TOLERANCE = 500;

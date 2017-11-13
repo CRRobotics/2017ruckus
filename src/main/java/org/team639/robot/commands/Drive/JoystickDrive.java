@@ -21,7 +21,7 @@ public class JoystickDrive extends Command {
 
 //        leftStick = OI.getLeftDriveStick();
 //        rightStick = OI.getRightDriveStick();
-        stick = OI.getStick();
+//        stick = OI.getStick();
     }
 
     protected void initialize() {
@@ -42,14 +42,13 @@ public class JoystickDrive extends Command {
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:
-                driveTrain.tankDrive(stick.getRawAxis(1), stick.getRawAxis(5));
-//                System.out.println(stick.getRawAxis(1) + " " + stick.getRawAxis(5));
+                driveTrain.tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
                 break;
             case ARCADE_1_JOYSTICK:
-                driveTrain.arcadeDrive(stick.getRawAxis(5), stick.getRawAxis(4));
+                driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
                 break;
             case ARCADE_2_JOYSTICK:
-                driveTrain.arcadeDrive(leftStick.getRawAxis(0), leftStick.getRawAxis(5));
+                driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
                 break;
         }
     }

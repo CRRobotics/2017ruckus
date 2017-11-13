@@ -14,7 +14,6 @@ public class RobotMap {
     private static CANTalon leftDrive;
     private static CANTalon rightDrive;
 
-    private static Compressor compressor;
     private static Solenoid gearClawOpen;
     private static Solenoid gearClawRaise;
 

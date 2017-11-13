@@ -19,6 +19,8 @@ public class AutoDriveForward extends Command {
     private double rSpeed;
     private double lSpeed;
     private double startSlow;
+    private double lTickDiff;
+    private double rTickDiff;
 
 
     public AutoDriveForward(double distance, double speed) {
@@ -43,10 +45,10 @@ public class AutoDriveForward extends Command {
     }
 
     protected void execute() {
-        int lTickDiff = Math.abs(targetTicks - driveTrain.getLeftEncPos()) - Math.abs(lStartingTicks);
-        int rTickDiff = Math.abs(targetTicks - driveTrain.getRightEncPos()) - Math.abs(rStartingTicks);
+        lTickDiff = targetTicks + lStartingTicks - driveTrain.getLeftEncPos();
+        rTickDiff = targetTicks - rStartingTicks + driveTrain.getRightEncPos();
 
-        if (Math.abs(lTickDiff) < startSlow || Math.abs(rTickDiff) < startSlow) {
+        if (Math.abs(lTickDiff) <= startSlow || Math.abs(rTickDiff) <= startSlow) {
 
             double lMultiplier = Math.abs(lTickDiff) / (startSlow * 2);
             double rMultiplier = Math.abs(rTickDiff) / (startSlow * 2);
@@ -63,10 +65,10 @@ public class AutoDriveForward extends Command {
 
     @Override
     protected boolean isFinished() {
-        boolean left = (Math.abs(Math.abs(targetTicks - driveTrain.getLeftEncPos()) - Math.abs(lStartingTicks)) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
-        boolean right = (Math.abs(Math.abs(targetTicks - driveTrain.getRightEncPos()) - Math.abs(rStartingTicks)) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
+        boolean left = (Math.abs(lTickDiff) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
+        boolean right = (Math.abs(rTickDiff) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
 
-        return left;
+        return left || right;
     }
 
     @Override
