@@ -61,7 +61,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getLeftDriveY() {
-        return stick.getRawAxis(1);
+        return -1 * stick.getRawAxis(1);
     }
 
     /**
