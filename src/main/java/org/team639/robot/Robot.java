@@ -98,6 +98,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
+        System.out.println("Right Encoder: " + driveTrain.getRightEncPos() + " Left Encoder: " + driveTrain.getLeftEncPos());
         Scheduler.getInstance().run();
     }
 

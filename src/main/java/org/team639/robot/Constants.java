@@ -7,6 +7,11 @@ public class Constants {
         public static final double I = 0;
         public static final double D = 0;
 
+        // PID values for MotionMagic
+        public static final double Pmm = 0.2;
+        public static final double Imm = 0;
+        public static final double Dmm = 20;
+
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;
 
@@ -14,6 +19,7 @@ public class Constants {
         public static final double TICKS_PER_INCH = ENC_TICKS_PER_ROTATION / WHEEL_CIRCUMFERENCE_INCHES;
 
         public static final double DRIVE_FORWARD_TOLERANCE = 500;
+        public static final double TURN_TOLERANCE = 800;
     }
     public static final double OPEN_CLAW_TIME = 0.20;
     public static final double CLOSE_CLAW_TIME = 0.20;

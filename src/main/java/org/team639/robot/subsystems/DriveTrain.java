@@ -63,6 +63,18 @@ public class DriveTrain extends Subsystem {
         currentControlMode = mode;
         leftDrive.changeControlMode(currentControlMode);
         rightDrive.changeControlMode(currentControlMode);
+
+        if( currentControlMode == CANTalon.TalonControlMode.MotionMagic) {
+            leftDrive.setMotionMagicCruiseVelocity(1000);
+            leftDrive.setMotionMagicAcceleration(500);
+            rightDrive.setMotionMagicCruiseVelocity(1000);
+            rightDrive.setMotionMagicAcceleration(500);
+            setPID(Constants.DriveTrain.Pmm, Constants.DriveTrain.Imm, Constants.DriveTrain.Dmm);
+        }
+        else
+        {
+            setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
+        }
     }
 
     /**
@@ -98,7 +110,8 @@ public class DriveTrain extends Subsystem {
                 leftDrive.set(lSpeed);
                 break;
             case Speed:
-                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
+//                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
+ //               System.out.println("Right Stick: " + rSpeed + " Left Stick: " + lSpeed);
                 rightDrive.set(-1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
                 leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
@@ -135,7 +148,7 @@ public class DriveTrain extends Subsystem {
 
     /**
      * Returns the position of the left encoder
-     * @return The position of the left encoder
+     * @return The position of the left encoder. This value moves negative for forward.
      */
     public int getLeftEncPos() {
         return leftDrive.getEncPosition();

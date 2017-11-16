@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.team639.lib.controls.JoystickManager;
 import org.team639.lib.controls.LogitechF310;
-import org.team639.robot.commands.Drive.AutoDriveForward;
+import org.team639.robot.commands.Drive.*;
 import org.team639.robot.commands.Gear.*;
 
 /**
@@ -52,7 +52,10 @@ public class OI {
 //        autoDriveForward.whenPressed(new AutoDriveForward(48, 0.5));
         manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
-        manager.mapButton(LogitechF310.Buttons.B, new AutoDriveForward(48, 0.5), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.B, new AutoDriveToPosition(12), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveToPosition(-12), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.Y, new AutoTurnByAngle(90), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.A, new AutoTurnByAngle(-90), JoystickManager.MappingType.WhenPressed);
 //        gearCloseButton.whenPressed(new GearClose());
 //        gearRaiseButton.whenPressed(new GearRaise());
 //        gearLowerButton.whenPressed(new GearLower());
