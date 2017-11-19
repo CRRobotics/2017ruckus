@@ -12,7 +12,7 @@ import org.team639.robot.subsystems.DriveTrain;
 public class AutoTurnByAngle extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
 
-    private double targetDistance;
+    private double targetAngle;
     private int targetTicks;
     private int lStartingTicks;
     private int rStartingTicks;
@@ -23,16 +23,16 @@ public class AutoTurnByAngle extends Command {
 
     public AutoTurnByAngle(double angle) {
         requires(driveTrain);
-
-        // 28" between wheels so a circumference of 88" or .244" per degree
-        targetDistance = angle * .244;
+        targetAngle = angle;
+ /*       // 28" between wheels so a circumference of 88" or .244" per degree
+        targetDistance = angle * .26;//.244; 0.26 seems to work the best on a hard floor.
         targetTicks = (int)(targetDistance * Constants.DriveTrain.TICKS_PER_INCH);
-
-        // 28" between wheels so a circumference of 88" or .244" per degree
+*/
     }
 
     protected void initialize() {
-        driveTrain.setSpeedsPercent(0, 0);
+        driveTrain.DriveToAngle(targetAngle);
+/*        driveTrain.setSpeedsPercent(0, 0);
         driveTrain.setCurrentControlMode(SmartMotorController.TalonControlMode.MotionMagic);
 
         lStartingTicks = driveTrain.getLeftEncPos();
@@ -41,25 +41,27 @@ public class AutoTurnByAngle extends Command {
         System.out.println("rStartingTicks: " + rStartingTicks);
         System.out.println("targetTicks: " + targetTicks);
 
-        driveTrain.setSpeedsRaw((lStartingTicks - targetTicks) , (rStartingTicks - targetTicks) * -1 );
+        //For a positive angle, drive left forward and right backwards
+        driveTrain.setRaw((lStartingTicks + targetTicks) , (rStartingTicks - targetTicks)); */
     }
 
     protected void execute() {
 
-        lTickDiff = (lStartingTicks - targetTicks - driveTrain.getLeftEncPos());
+/*        lTickDiff = (lStartingTicks + targetTicks - driveTrain.getLeftEncPos());
         rTickDiff = (rStartingTicks - targetTicks - driveTrain.getRightEncPos());
 
         System.out.print(lTickDiff + ", ");
         System.out.println(rTickDiff);
-
+*/
     }
 
     @Override
     protected boolean isFinished() {
-        boolean left = (Math.abs(lTickDiff) < Constants.DriveTrain.TURN_TOLERANCE);
+ /*       boolean left = (Math.abs(lTickDiff) < Constants.DriveTrain.TURN_TOLERANCE);
         boolean right = (Math.abs(rTickDiff) < Constants.DriveTrain.TURN_TOLERANCE);
 
-        return left||right;
+        return left||right;*/
+        return driveTrain.isDoneDriveToAngle();
     }
 
     @Override

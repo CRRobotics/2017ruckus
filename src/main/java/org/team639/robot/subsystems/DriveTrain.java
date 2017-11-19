@@ -16,7 +16,8 @@ public class DriveTrain extends Subsystem {
     private CANTalon rightDrive;
 
     private CANTalon.TalonControlMode currentControlMode;
-
+    private int lFinalPosition;  // Used to store the final position in ticks when moving to a position
+    private int rFinalPosition;  // Used to store the final position in ticks when moving to a position
     /**
      * Defines drive modes
      */
@@ -65,11 +66,13 @@ public class DriveTrain extends Subsystem {
         rightDrive.changeControlMode(currentControlMode);
 
         if( currentControlMode == CANTalon.TalonControlMode.MotionMagic) {
-            leftDrive.setMotionMagicCruiseVelocity(1000);
+            leftDrive.setMotionMagicCruiseVelocity(500);
             leftDrive.setMotionMagicAcceleration(500);
-            rightDrive.setMotionMagicCruiseVelocity(1000);
+            rightDrive.setMotionMagicCruiseVelocity(500);
             rightDrive.setMotionMagicAcceleration(500);
             setPID(Constants.DriveTrain.Pmm, Constants.DriveTrain.Imm, Constants.DriveTrain.Dmm);
+            leftDrive.setF(0.29);
+            rightDrive.setF(0.29);
         }
         else
         {
@@ -119,13 +122,14 @@ public class DriveTrain extends Subsystem {
     }
 
     /**
-     * Takes two raw speed values and uses them to set the motors.
+     * Takes two raw values and uses them to set the Talons.
+     * Used for Position control
      * @param lSpeed The value for the left side
      * @param rSpeed The value for the right side
      */
-    public void setSpeedsRaw(double lSpeed, double rSpeed) {
-        rightDrive.set(rSpeed);
-        leftDrive.set(-1 * lSpeed);
+    public void setRaw(double lVal, double rVal) {
+        rightDrive.set(-1 * rVal);
+        leftDrive.set(lVal);
     }
 
     /**
@@ -151,7 +155,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the left encoder. This value moves negative for forward.
      */
     public int getLeftEncPos() {
-        return leftDrive.getEncPosition();
+        return -1 * leftDrive.getEncPosition();
     }
 
     /**
@@ -167,7 +171,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the left encoder
      */
     public int getLeftEncVelocity() {
-        return leftDrive.getEncVelocity();
+        return -1 * leftDrive.getEncVelocity();
     }
 
     /**
@@ -175,6 +179,45 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the right encoder
      */
     public int getRightEncVelocity() {
-        return -1 * rightDrive.getEncVelocity();
+        return rightDrive.getEncVelocity();
     }
+
+    // Sets the Talons in MotionMagic mode to move a specified distance
+    public void DriveToDistance(double distance)
+    {
+        setSpeedsPercent(0, 0);
+        setCurrentControlMode(SmartMotorController.TalonControlMode.MotionMagic);
+
+        lFinalPosition = getLeftEncPos() + (int)(distance * Constants.DriveTrain.TICKS_PER_INCH);
+        rFinalPosition = getRightEncPos() + (int)(distance * Constants.DriveTrain.TICKS_PER_INCH);
+        setRaw(lFinalPosition , rFinalPosition );
+    }
+
+    public boolean isDoneDriveToDistance()
+    {
+        boolean left = (Math.abs(getlFinalPosition() - getLeftEncPos()) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
+        boolean right = (Math.abs(getrFinalPosition() - getRightEncPos()) < Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE);
+        return left && right;
+    }
+
+    public void DriveToAngle(double angle)
+    {
+        setSpeedsPercent(0, 0);
+        setCurrentControlMode(SmartMotorController.TalonControlMode.MotionMagic);
+
+        lFinalPosition = getLeftEncPos() + (int)(angle * Constants.DriveTrain.ANGLE_TO_INCH * Constants.DriveTrain.TICKS_PER_INCH);
+        rFinalPosition = getRightEncPos() - (int)(angle * Constants.DriveTrain.ANGLE_TO_INCH * Constants.DriveTrain.TICKS_PER_INCH);
+        setRaw(lFinalPosition , rFinalPosition );
+    }
+
+    public boolean isDoneDriveToAngle()
+    {
+        boolean left = (Math.abs(getlFinalPosition() - getLeftEncPos()) < Constants.DriveTrain.TURN_TOLERANCE);
+        boolean right = (Math.abs(getrFinalPosition() - getRightEncPos()) < Constants.DriveTrain.TURN_TOLERANCE);
+        return left && right;
+    }
+
+
+    public int getlFinalPosition() {return lFinalPosition;}
+    public int getrFinalPosition() {return rFinalPosition;}
 }
