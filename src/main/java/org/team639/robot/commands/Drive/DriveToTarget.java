@@ -21,15 +21,12 @@ public class DriveToTarget extends Command {
     }
     private DTTStates CurrentState;
 
-
-
     public DriveToTarget() {
         requires(driveTrain);
     }
 
     protected void initialize() {
         CurrentState = DTTStates._finish;
-
         targetDistance = Robot.visionTable.getNumber("Distance");
         targetAngle = Robot.visionTable.getNumber("XAngleToTarget");
         System.out.print("Angle: " + targetAngle );
@@ -57,7 +54,6 @@ public class DriveToTarget extends Command {
                 }
                 break;
         }
-
     }
 
     @Override

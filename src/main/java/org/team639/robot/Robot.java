@@ -3,6 +3,7 @@ package org.team639.robot;
 import com.ctre.MotorControl.CANTalon;
 import com.ctre.MotorControl.SmartMotorController;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -104,6 +105,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 //        System.out.print("R Encoder: " + driveTrain.getRightEncPos() + " ,L Encoder: " + driveTrain.getLeftEncPos());
 //        System.out.println("R Speed: " + driveTrain.getRightEncVelocity() + " Left Speed: " + driveTrain.getLeftEncVelocity());
+//        System.out.println(Timer.getFPGATimestamp());
         Scheduler.getInstance().run();
     }
 

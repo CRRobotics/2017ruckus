@@ -8,12 +8,19 @@ import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.Drive.JoystickDrive;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+import org.team639.robot.OI;
+
+import static java.lang.Math.*;
+
 /**
  * Contains all methods relating to the drivetrain
  */
 public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
+    AHRS ahrs;
 
     private CANTalon.TalonControlMode currentControlMode;
     private int lFinalPosition;  // Used to store the final position in ticks when moving to a position
@@ -46,6 +53,17 @@ public class DriveTrain extends Subsystem {
         setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
 
         setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
+
+        try {
+          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+            ahrs = new AHRS(SPI.Port.kMXP);
+        } catch (RuntimeException ex ) {
+            System.out.println("Error instantiating navX-MXP:  " + ex.getMessage());
+        }
+
+        ahrs.reset();
     }
 
     /**
@@ -115,8 +133,31 @@ public class DriveTrain extends Subsystem {
             case Speed:
 //                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
  //               System.out.println("Right Stick: " + rSpeed + " Left Stick: " + lSpeed);
-                rightDrive.set(-1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
+
+
+                double LeftX = OI.manager.getLeftDriveX();
+                double LeftY = OI.manager.getLeftDriveY();
+                double DriveAngle = atan2(LeftX,LeftY)*57.296;
+                double RobotAngle = formatAngle(ahrs.getYaw());
+                double AngleError = angle_diff(DriveAngle, RobotAngle);
+                double AngleSpeed = sqrt(LeftX*LeftX + LeftY*LeftY);
+                System.out.print(DriveAngle);
+                System.out.print(", ");
+                System.out.print(RobotAngle);
+                System.out.print(", ");
+                System.out.print(AngleError);
+                System.out.print(", ");
+                System.out.print(AngleSpeed);
+                System.out.print(" ");
+                System.out.println();
+
+                if (AngleError > 5) AngleError = 5;
+                if (AngleError < -5) AngleError = -5;
+                if (abs(AngleError) < 3) AngleError = 0;
+
+
+                rightDrive.set(-1 * (rSpeed - (AngleError * AngleSpeed)/30) * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set(((AngleError * AngleSpeed)/30 + lSpeed) * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -220,4 +261,22 @@ public class DriveTrain extends Subsystem {
 
     public int getlFinalPosition() {return lFinalPosition;}
     public int getrFinalPosition() {return rFinalPosition;}
+
+
+    double mod(double a, int n)
+    {
+        return a - floor(a/n) * n;
+//	return a % n;
+    }
+
+    double angle_diff(double a, double b)
+    {
+        return mod((a-b) + 180, 360) - 180;
+    }
+
+    double formatAngle(double a)
+    {
+        return mod(a + 180, 360) - 180;
+    }
 }
+
