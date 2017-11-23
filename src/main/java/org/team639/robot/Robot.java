@@ -41,9 +41,9 @@ public class Robot extends IterativeRobot {
 
         //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
-        driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
+        driveMode.addObject("Tank", DriveTrain.DriveMode.TANK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
-        driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
@@ -56,6 +56,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("drive p", Constants.DriveTrain.P);
         SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
         SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
+
+        SmartDashboard.putNumber("turn p", .02);
+        SmartDashboard.putNumber("turn i", .005);
+        SmartDashboard.putNumber("turn d", .02);
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();

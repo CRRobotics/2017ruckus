@@ -39,18 +39,18 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
-        DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
+/*        DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:
                 driveTrain.tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
                 break;
-            case ARCADE_1_JOYSTICK:
+            case ARCADE_1_JOYSTICK:*/
                 driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
-                break;
+ /*               break;
             case ARCADE_2_JOYSTICK:
                 driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
                 break;
-        }
+        }*/
     }
 
     /**

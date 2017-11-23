@@ -5,6 +5,7 @@ import com.ctre.MotorControl.SmartMotorController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
+import org.team639.robot.PID;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.Drive.JoystickDrive;
 
@@ -21,6 +22,8 @@ public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
     AHRS ahrs;
+    PID TurnPID;
+
 
     private CANTalon.TalonControlMode currentControlMode;
     private int lFinalPosition;  // Used to store the final position in ticks when moving to a position
@@ -62,6 +65,8 @@ public class DriveTrain extends Subsystem {
         } catch (RuntimeException ex ) {
             System.out.println("Error instantiating navX-MXP:  " + ex.getMessage());
         }
+      //  TurnPID = new PID(.008, 0, 0.1, .2, -.2);
+        TurnPID = new PID(.04, 0, 0.15, .2, -.2);
 
         ahrs.reset();
     }
@@ -141,10 +146,13 @@ public class DriveTrain extends Subsystem {
                 double RobotAngle = formatAngle(ahrs.getYaw());
                 double AngleError = angle_diff(DriveAngle, RobotAngle);
                 double AngleSpeed = sqrt(LeftX*LeftX + LeftY*LeftY);
-                System.out.print(DriveAngle);
+
+                AngleSpeed = TurnPID.Compute(AngleError);
+
+/*                System.out.print(DriveAngle);
                 System.out.print(", ");
                 System.out.print(RobotAngle);
-                System.out.print(", ");
+                System.out.print(", ");*/
                 System.out.print(AngleError);
                 System.out.print(", ");
                 System.out.print(AngleSpeed);
@@ -156,8 +164,8 @@ public class DriveTrain extends Subsystem {
                 if (abs(AngleError) < 3) AngleError = 0;
 
 
-                rightDrive.set(-1 * (rSpeed - (AngleError * AngleSpeed)/30) * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(((AngleError * AngleSpeed)/30 + lSpeed) * Constants.DriveTrain.SPEED_RANGE);
+                rightDrive.set(-1 * (rSpeed - (AngleSpeed)) * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set(((lSpeed + AngleSpeed) ) * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -277,6 +285,10 @@ public class DriveTrain extends Subsystem {
     double formatAngle(double a)
     {
         return mod(a + 180, 360) - 180;
+    }
+
+    public void SetTurnPID(double p, double i, double d){
+ //       TurnPID.SetPID(p, i, d);
     }
 }
 
