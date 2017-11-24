@@ -3,10 +3,11 @@ package org.team639.robot.commands.Drive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.team639.robot.Constants;
-import org.team639.robot.OI;
-import org.team639.robot.Robot;
+import org.team639.lib.controls.LogitechF310;
+import org.team639.robot.*;
 import org.team639.robot.subsystems.DriveTrain;
+import org.team639.lib.controls.LogitechF310.*;
+import static java.lang.Math.sqrt;
 
 public class JoystickDrive extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
@@ -14,6 +15,7 @@ public class JoystickDrive extends Command {
     private Joystick leftStick;
     private Joystick rightStick;
     private Joystick stick;
+    PID TurnPID;
 
     public JoystickDrive() {
         super("JoystickDrive");
@@ -33,6 +35,10 @@ public class JoystickDrive extends Command {
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
             driveTrain.setCurrentControlMode(Robot.getTalonMode());
         }
+
+        //  TurnPID = new PID(.008, 0, 0.1, .2, -.2);
+        TurnPID = new PID(Constants.DriveTrain.Ptta, Constants.DriveTrain.Itta, Constants.DriveTrain.Dtta, .3, -.3, 0.01);
+
     }
 
     /**
@@ -45,7 +51,14 @@ public class JoystickDrive extends Command {
                 driveTrain.tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
                 break;
             case ARCADE_1_JOYSTICK:*/
-                driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
+
+
+                if (OI.manager.getButtonRaw(LogitechF310.Buttons.LB)) {
+                    fieldDrive();
+                }
+                else{
+                    driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
+                }
  /*               break;
             case ARCADE_2_JOYSTICK:
                 driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
@@ -60,5 +73,36 @@ public class JoystickDrive extends Command {
     @Override
     protected boolean isFinished() {
         return false;
+    }
+
+
+    // **********************************************
+    // Uses the left joystick to indicate direction the robot should point (DriveAngle).
+    // How far you push the left stick controls how fast the robot will turn (AngleSpeed).
+    // The right Y joystick indicates how fast the robot should drive.
+    private void fieldDrive(){
+        double p = SmartDashboard.getNumber("turn p", Constants.DriveTrain.Ptta);
+        double i = SmartDashboard.getNumber("turn i", Constants.DriveTrain.Itta);
+        double d = SmartDashboard.getNumber("turn d", Constants.DriveTrain.Dtta);
+
+        TurnPID.SetPID(p,i,d);
+
+        double LeftX = OI.manager.getLeftDriveX();
+        double LeftY = OI.manager.getLeftDriveY();
+        double DriveAngle = Math.atan2(LeftX,LeftY)*57.296;
+        double RobotAngle = AngleUtilities.formatAngle(Robot.ahrs.getYaw());
+        double AngleError = AngleUtilities.angle_diff(DriveAngle, RobotAngle);
+        double AngleSpeed = sqrt(LeftX*LeftX + LeftY*LeftY);
+
+        double AnglePID = TurnPID.Compute(AngleError);
+
+        System.out.print(AngleError);
+        System.out.print(", ");
+        System.out.print(AngleSpeed);
+        System.out.print(" ");
+        System.out.println();
+
+        double speed = OI.manager.getRightDriveY() / 2;
+        driveTrain.setSpeedsPercent(speed + AnglePID*AngleSpeed, speed - AnglePID*AngleSpeed);
     }
 }
