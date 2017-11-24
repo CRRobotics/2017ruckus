@@ -8,21 +8,21 @@ import org.team639.robot.Constants;
 import org.team639.robot.PID;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.Drive.JoystickDrive;
-
+/*
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import org.team639.robot.OI;
 
 import static java.lang.Math.*;
-
+*/
 /**
  * Contains all methods relating to the drivetrain
  */
 public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
-    AHRS ahrs;
-    PID TurnPID;
+ //   AHRS ahrs;
+ //   PID TurnPID;
 
 
     private CANTalon.TalonControlMode currentControlMode;
@@ -57,18 +57,6 @@ public class DriveTrain extends Subsystem {
 
         setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
 
-        try {
-          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
-          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-            ahrs = new AHRS(SPI.Port.kMXP);
-        } catch (RuntimeException ex ) {
-            System.out.println("Error instantiating navX-MXP:  " + ex.getMessage());
-        }
-      //  TurnPID = new PID(.008, 0, 0.1, .2, -.2);
-        TurnPID = new PID(.04, 0, 0.15, .2, -.2);
-
-        ahrs.reset();
     }
 
     /**
@@ -128,8 +116,8 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsPercent(double lSpeed, double rSpeed) {
-        if (lSpeed < 0.1 && lSpeed > -0.1) lSpeed = 0;
-        if (rSpeed < 0.1 && rSpeed > -0.1) rSpeed = 0;
+        if (lSpeed < 0.05 && lSpeed > -0.05) lSpeed = 0;
+        if (rSpeed < 0.05 && rSpeed > -0.05) rSpeed = 0;
         switch (currentControlMode) {
             case PercentVbus:
                 rightDrive.set(-1 * rSpeed);
@@ -139,7 +127,7 @@ public class DriveTrain extends Subsystem {
 //                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
  //               System.out.println("Right Stick: " + rSpeed + " Left Stick: " + lSpeed);
 
-
+/*
                 double LeftX = OI.manager.getLeftDriveX();
                 double LeftY = OI.manager.getLeftDriveY();
                 double DriveAngle = atan2(LeftX,LeftY)*57.296;
@@ -149,10 +137,7 @@ public class DriveTrain extends Subsystem {
 
                 AngleSpeed = TurnPID.Compute(AngleError);
 
-/*                System.out.print(DriveAngle);
-                System.out.print(", ");
-                System.out.print(RobotAngle);
-                System.out.print(", ");*/
+
                 System.out.print(AngleError);
                 System.out.print(", ");
                 System.out.print(AngleSpeed);
@@ -162,10 +147,10 @@ public class DriveTrain extends Subsystem {
                 if (AngleError > 5) AngleError = 5;
                 if (AngleError < -5) AngleError = -5;
                 if (abs(AngleError) < 3) AngleError = 0;
+*/
 
-
-                rightDrive.set(-1 * (rSpeed - (AngleSpeed)) * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(((lSpeed + AngleSpeed) ) * Constants.DriveTrain.SPEED_RANGE);
+                rightDrive.set(-1 * (rSpeed ) * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set((lSpeed ) * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -196,8 +181,16 @@ public class DriveTrain extends Subsystem {
      * @param turning The turning magnitude from -1 to 1
      */
     public void arcadeDrive(double speed, double turning) {
-        setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
+        if (speed < -0.03) {
+            // Driving backwards, reverse the turn direction
+            setSpeedsPercent(speed / 2 - turning / 3, speed / 2 + turning / 3);
+        }
+        else {
+            setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
+        }
     }
+
+
 
     /**
      * Returns the position of the left encoder
@@ -270,25 +263,5 @@ public class DriveTrain extends Subsystem {
     public int getlFinalPosition() {return lFinalPosition;}
     public int getrFinalPosition() {return rFinalPosition;}
 
-
-    double mod(double a, int n)
-    {
-        return a - floor(a/n) * n;
-//	return a % n;
-    }
-
-    double angle_diff(double a, double b)
-    {
-        return mod((a-b) + 180, 360) - 180;
-    }
-
-    double formatAngle(double a)
-    {
-        return mod(a + 180, 360) - 180;
-    }
-
-    public void SetTurnPID(double p, double i, double d){
- //       TurnPID.SetPID(p, i, d);
-    }
 }
 
