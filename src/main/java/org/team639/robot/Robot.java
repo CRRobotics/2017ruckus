@@ -2,7 +2,9 @@ package org.team639.robot;
 
 import com.ctre.MotorControl.CANTalon;
 import com.ctre.MotorControl.SmartMotorController;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -35,6 +37,8 @@ public class Robot extends IterativeRobot {
     }
 
     public static NetworkTable visionTable;
+
+    public static AHRS ahrs;
     @Override
     public void robotInit() {
         RobotMap.init();
@@ -57,9 +61,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
         SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
 
-        SmartDashboard.putNumber("turn p", .02);
-        SmartDashboard.putNumber("turn i", .005);
-        SmartDashboard.putNumber("turn d", .02);
+        SmartDashboard.putNumber("turn p", Constants.DriveTrain.Ptta);
+        SmartDashboard.putNumber("turn i", Constants.DriveTrain.Itta);
+        SmartDashboard.putNumber("turn d", Constants.DriveTrain.Dtta);
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
@@ -68,6 +72,14 @@ public class Robot extends IterativeRobot {
         OI.mapButtons();
         visionTable = NetworkTable.getTable("CameraTracker");
 
+        try {
+          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+            ahrs = new AHRS(SPI.Port.kMXP);
+        } catch (RuntimeException ex ) {
+            System.out.println("Error instantiating navX-MXP:  " + ex.getMessage());
+        }
     }
 
     @Override
