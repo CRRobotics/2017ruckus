@@ -114,6 +114,10 @@ public class LogitechF310 extends JoystickManager {
         return stick.getRawAxis(3) * 2 - 1;
     }
 
+    @Override
+    public boolean getButtonRaw(ButtonType btn){
+        return btns.get(btn).get();
+    }
     /**
      * Maps the specified command to the specified button
      *

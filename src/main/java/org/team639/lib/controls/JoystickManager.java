@@ -59,4 +59,5 @@ public abstract class JoystickManager {
      * @param type The type of mapping
      */
     public abstract void mapButton(ButtonType btn, Command cmd, MappingType type);
+    public abstract boolean getButtonRaw(ButtonType btn);
 }
