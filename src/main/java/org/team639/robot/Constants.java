@@ -13,9 +13,9 @@ public class Constants {
         public static final double Dmm = 20;
 
         // PID values for TurnToAngle
-        public static final double Ptta = 0.004;
+        public static final double Ptta = 0.03;
         public static final double Itta = 0.0;
-        public static final double Dtta = .05;
+        public static final double Dtta = .15;
 
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;
