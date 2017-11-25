@@ -37,7 +37,7 @@ public class JoystickDrive extends Command {
         }
 
         //  TurnPID = new PID(.008, 0, 0.1, .2, -.2);
-        TurnPID = new PID(Constants.DriveTrain.Ptta, Constants.DriveTrain.Itta, Constants.DriveTrain.Dtta, .3, -.3, 0.01);
+        TurnPID = new PID(Constants.DriveTrain.Ptta, Constants.DriveTrain.Itta, Constants.DriveTrain.Dtta, .25, -.25, 0.015, 1.5, 0.11);
 
     }
 
