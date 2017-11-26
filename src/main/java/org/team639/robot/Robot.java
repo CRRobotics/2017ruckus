@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
@@ -33,7 +32,6 @@ public class Robot extends IterativeRobot {
         return talonMode.getSelected();
     }
 
-    public static NetworkTable visionTable;
     @Override
     public void robotInit() {
         RobotMap.init();
@@ -61,8 +59,6 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
 
         OI.mapButtons();
-        visionTable = NetworkTable.getTable("CameraTracker");
-
     }
 
     @Override
@@ -102,8 +98,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
-//        System.out.print("R Encoder: " + driveTrain.getRightEncPos() + " ,L Encoder: " + driveTrain.getLeftEncPos());
-//        System.out.println("R Speed: " + driveTrain.getRightEncVelocity() + " Left Speed: " + driveTrain.getLeftEncVelocity());
+        System.out.println("Right Encoder: " + driveTrain.getRightEncPos() + " Left Encoder: " + driveTrain.getLeftEncPos());
         Scheduler.getInstance().run();
     }
 
