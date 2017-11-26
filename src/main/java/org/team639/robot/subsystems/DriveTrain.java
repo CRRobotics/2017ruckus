@@ -42,9 +42,12 @@ public class DriveTrain extends Subsystem {
         leftDrive.reverseSensor(true);
         rightDrive.reverseSensor(true);
 
+        leftDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+        rightDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+
         setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
 
-        setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
+        setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
     }
 
     /**

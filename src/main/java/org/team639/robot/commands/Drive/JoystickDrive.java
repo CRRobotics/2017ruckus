@@ -25,9 +25,9 @@ public class JoystickDrive extends Command {
     }
 
     protected void initialize() {
-        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.P);
-        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.I);
-        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.D);
+        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
+        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
+        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_D);
         driveTrain.setPID(p,i,d);
 
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {

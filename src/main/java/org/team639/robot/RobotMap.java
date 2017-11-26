@@ -31,7 +31,6 @@ public class RobotMap {
             leftDrive = new CANTalon(3);
             rightDrive = new CANTalon(1);
 
-
             gearClawOpen = new Solenoid(0);
             gearClawRaise = new Solenoid(1);
 

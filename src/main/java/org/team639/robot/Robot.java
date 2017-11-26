@@ -50,9 +50,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants
-        SmartDashboard.putNumber("drive p", Constants.DriveTrain.P);
-        SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
-        SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
+        SmartDashboard.putNumber("drive p", Constants.DriveTrain.DRIVE_P);
+        SmartDashboard.putNumber("drive i", Constants.DriveTrain.DRIVE_I);
+        SmartDashboard.putNumber("drive d", Constants.DriveTrain.DRIVE_I);
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotPeriodic() {
+        System.out.println(driveTrain.getLeftEncPos() + " " + driveTrain.getRightEncPos());
         super.robotPeriodic();
     }
 
