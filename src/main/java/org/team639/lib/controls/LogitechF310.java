@@ -146,4 +146,19 @@ public class LogitechF310 extends JoystickManager {
                 break;
         }
     }
+
+    /**
+     * Returns whether a button is pressed
+     * @param btn The button to retrieve
+     * @return Whether or not the button is pressed.
+     */
+    @Override
+    public boolean getButtonPressed(ButtonType btn) {
+        if (!(btn instanceof Buttons)) {
+            System.out.println("Missing button on LogitechF310. Are you sure you're using the correct enum?");
+            return false;
+        } else {
+            return btns.get(btn).get();
+        }
+    }
 }

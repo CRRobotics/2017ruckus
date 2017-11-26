@@ -90,8 +90,8 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsPercent(double lSpeed, double rSpeed) {
-        if (lSpeed < 0.1 && lSpeed > -0.1) lSpeed = 0;
-        if (rSpeed < 0.1 && rSpeed > -0.1) rSpeed = 0;
+        if (Math.abs(lSpeed) < Constants.JOYSTICK_DEADZONE) lSpeed = 0;
+        if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
         switch (currentControlMode) {
             case PercentVbus:
                 rightDrive.set(-1 * rSpeed);
@@ -111,8 +111,8 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsRaw(double lSpeed, double rSpeed) {
-        rightDrive.set(rSpeed);
-        leftDrive.set(-1 * lSpeed);
+        rightDrive.set(-1 * rSpeed);
+        leftDrive.set(lSpeed);
     }
 
     /**
@@ -138,7 +138,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the left encoder
      */
     public int getLeftEncPos() {
-        return leftDrive.getEncPosition();
+        return -1 * leftDrive.getEncPosition();
     }
 
     /**
@@ -154,7 +154,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the left encoder
      */
     public int getLeftEncVelocity() {
-        return leftDrive.getEncVelocity();
+        return -1 * leftDrive.getEncVelocity();
     }
 
     /**
@@ -162,6 +162,6 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the right encoder
      */
     public int getRightEncVelocity() {
-        return -1 * rightDrive.getEncVelocity();
+        return rightDrive.getEncVelocity();
     }
 }

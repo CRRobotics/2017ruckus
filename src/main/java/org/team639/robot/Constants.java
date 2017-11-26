@@ -15,6 +15,9 @@ public class Constants {
 
         public static final double DRIVE_FORWARD_TOLERANCE = 500;
     }
+
+    public static final double JOYSTICK_DEADZONE = 0.05;
+
     public static final double OPEN_CLAW_TIME = 0.20;
     public static final double CLOSE_CLAW_TIME = 0.20;
 

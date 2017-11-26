@@ -59,4 +59,11 @@ public abstract class JoystickManager {
      * @param type The type of mapping
      */
     public abstract void mapButton(ButtonType btn, Command cmd, MappingType type);
+
+    /**
+     * Returns whether a button is pressed
+     * @param btn The button to retrieve
+     * @return Whether or not the button is pressed.
+     */
+    public abstract boolean getButtonPressed(ButtonType btn);
 }
