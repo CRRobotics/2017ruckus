@@ -2,6 +2,7 @@ package org.team639.robot.subsystems;
 
 import com.ctre.MotorControl.CANTalon;
 import com.ctre.MotorControl.SmartMotorController;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
@@ -14,6 +15,8 @@ import org.team639.robot.commands.Drive.JoystickDrive;
 public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
+
+    private AHRS ahrs;
 
     private CANTalon.TalonControlMode currentControlMode;
 
@@ -48,6 +51,9 @@ public class DriveTrain extends Subsystem {
         setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
 
         setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
+
+        ahrs = RobotMap.getAhrs();
+        ahrs.reset();
     }
 
     /**
@@ -166,5 +172,16 @@ public class DriveTrain extends Subsystem {
      */
     public int getRightEncVelocity() {
         return rightDrive.getEncVelocity();
+    }
+
+    /**
+     * Gets the current yaw of the robot from 0-180 degrees, with 90 being directly downfield. This assumes that the robot starts facing downfield.
+     * @return The current yaw of the robot
+     */
+    public double getRobotYaw() {
+        double angle = ahrs.getYaw();
+        angle += 90;
+        if (angle < 0) angle = 360 - angle;
+        return ahrs.getYaw();
     }
 }
