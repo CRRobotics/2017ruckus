@@ -15,7 +15,7 @@ public class Constants {
         public static final int ENC_TICKS_PER_ROTATION = 4096;
         public static final double TICKS_PER_INCH = ENC_TICKS_PER_ROTATION / WHEEL_CIRCUMFERENCE_INCHES;
 
-        public static final double DRIVE_FORWARD_TOLERANCE = 500;
+        public static final double DRIVE_FORWARD_TOLERANCE = 200;
     }
 
     public static final double JOYSTICK_DEADZONE = 0.05;

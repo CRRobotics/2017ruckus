@@ -53,6 +53,11 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("drive p", Constants.DriveTrain.DRIVE_P);
         SmartDashboard.putNumber("drive i", Constants.DriveTrain.DRIVE_I);
         SmartDashboard.putNumber("drive d", Constants.DriveTrain.DRIVE_I);
+        SmartDashboard.putNumber("rate", 0.1);
+        SmartDashboard.putNumber("tolerance", 200);
+        SmartDashboard.putNumber("min", 0.2);
+        SmartDashboard.putNumber("max", 0.5);
+
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
@@ -83,7 +88,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotPeriodic() {
-        System.out.println(driveTrain.getLeftEncPos() + " " + driveTrain.getRightEncPos());
+//        System.out.println(driveTrain.getLeftEncPos() + " " + driveTrain.getRightEncPos());
         super.robotPeriodic();
     }
 
