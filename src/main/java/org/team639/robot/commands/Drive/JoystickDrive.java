@@ -25,9 +25,9 @@ public class JoystickDrive extends Command {
     }
 
     protected void initialize() {
-        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
-        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
-        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_D);
+        double p = Constants.DriveTrain.DRIVE_P;
+        double i = Constants.DriveTrain.DRIVE_I;
+        double d = Constants.DriveTrain.DRIVE_D;
         driveTrain.setPID(p,i,d);
 
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
@@ -39,6 +39,7 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
+        System.out.println("In JoystickDrive.execute()");
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:

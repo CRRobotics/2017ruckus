@@ -101,7 +101,7 @@ public class DriveTrain extends Subsystem {
                 leftDrive.set(lSpeed);
                 break;
             case Speed:
-                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
+//                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
                 rightDrive.set(-1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
                 leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;

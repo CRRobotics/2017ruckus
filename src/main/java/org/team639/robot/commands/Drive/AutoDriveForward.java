@@ -90,7 +90,7 @@ public class AutoDriveForward extends Command {
     protected boolean isFinished() {
         boolean left = (Math.abs(lTickDiff) < SmartDashboard.getNumber("tolerance", Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE));
         boolean right = (Math.abs(rTickDiff) < SmartDashboard.getNumber("tolerance", Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE));
-
+        if (done) System.out.println(done);
         return done;
     }
 
