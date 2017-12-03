@@ -53,6 +53,7 @@ public class OI {
         manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
         manager.mapButton(LogitechF310.Buttons.B, new AutoDriveForward(18, 0.3), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(32, 0.3), JoystickManager.MappingType.WhenPressed);
 //        gearCloseButton.whenPressed(new GearClose());
 //        gearRaiseButton.whenPressed(new GearRaise());
 //        gearLowerButton.whenPressed(new GearLower());

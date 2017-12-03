@@ -46,7 +46,7 @@ public class PID {
 
         double output = kP * error;
         output += totalError;
-        output += kD * (lastError - error);
+        output += kD * (error - lastError);
 
         if (output < 0) {
             if (output < lastOutput - rate) output = lastOutput - rate;
