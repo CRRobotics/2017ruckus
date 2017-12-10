@@ -89,8 +89,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotPeriodic() {
-//        System.out.println(driveTrain.getLeftEncPos() + " " + driveTrain.getRightEncPos());
         super.robotPeriodic();
+        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override
@@ -106,7 +106,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-//        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override

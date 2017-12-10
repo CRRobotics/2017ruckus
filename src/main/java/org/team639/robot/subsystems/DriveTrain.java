@@ -180,9 +180,10 @@ public class DriveTrain extends Subsystem {
      */
     public double getRobotYaw() {
         double angle = ahrs.getYaw();
+        angle *= -1;
         angle += 90;
-        if (angle < 0) angle = 360 - angle;
-        return ahrs.getYaw();
+        if (angle < 0) angle = 360 + angle;
+        return angle;
     }
 
     /**

@@ -1,8 +1,6 @@
 package org.team639.robot.commands.Drive;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.robot.Constants;
 import org.team639.robot.OI;
 import org.team639.robot.Robot;
@@ -11,17 +9,9 @@ import org.team639.robot.subsystems.DriveTrain;
 public class JoystickDrive extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
 
-    private Joystick leftStick;
-    private Joystick rightStick;
-    private Joystick stick;
-
     public JoystickDrive() {
         super("JoystickDrive");
         requires(driveTrain);
-
-//        leftStick = OI.getLeftDriveStick();
-//        rightStick = OI.getRightDriveStick();
-//        stick = OI.getStick();
     }
 
     protected void initialize() {
@@ -39,7 +29,6 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
-//        System.out.println("In JoystickDrive.execute()");
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:

@@ -46,8 +46,9 @@ public class AutoTurnToAngle extends Command {
 
     protected void execute() {
         double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
-        System.out.println(error);
+//        System.out.println(error);
         double val = pid.compute(error);
+//        System.out.println(val);
         done = (val == 0);
 //        done = true;
         driveTrain.setSpeedsPercent(-1 * val, val);

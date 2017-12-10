@@ -7,8 +7,6 @@ public class Constants {
         public static final double DRIVE_I = 0;
         public static final double DRIVE_D = 0;
 
-//        public static final double AUTO_FORWARD_P =
-
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;
 
