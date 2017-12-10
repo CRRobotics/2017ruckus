@@ -39,7 +39,7 @@ public class JoystickDrive extends Command {
      * Called repeatedly while the command is running
      */
     protected void execute() {
-        System.out.println("In JoystickDrive.execute()");
+//        System.out.println("In JoystickDrive.execute()");
         DriveTrain.DriveMode mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         switch (mode) {
             case TANK:

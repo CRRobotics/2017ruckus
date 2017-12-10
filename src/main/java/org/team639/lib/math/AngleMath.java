@@ -15,7 +15,7 @@ public class AngleMath {
         start %= 360;
         end %= 360;
 
-        double first = end - start;
+        double first = start - end;
         double second = (360 - Math.abs(first));
         if (first > 0) second *= -1;
         return Math.abs(first) < Math.abs(second) ? first : second;

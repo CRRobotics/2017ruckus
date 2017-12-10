@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.team639.lib.controls.JoystickManager;
 import org.team639.lib.controls.LogitechF310;
 import org.team639.robot.commands.Drive.AutoDriveForward;
+import org.team639.robot.commands.Drive.AutoTurnToAngle;
 import org.team639.robot.commands.Gear.*;
 
 /**
@@ -52,8 +53,9 @@ public class OI {
 //        autoDriveForward.whenPressed(new AutoDriveForward(48, 0.5));
         manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
-        manager.mapButton(LogitechF310.Buttons.B, new AutoDriveForward(18, 0.3), JoystickManager.MappingType.WhenPressed);
-        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(32, 0.3), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.B, new AutoDriveForward(18, 0.3), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(32, 0.3), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.A, new AutoTurnToAngle(0), JoystickManager.MappingType.WhenPressed);
 //        gearCloseButton.whenPressed(new GearClose());
 //        gearRaiseButton.whenPressed(new GearRaise());
 //        gearLowerButton.whenPressed(new GearLower());
@@ -63,32 +65,4 @@ public class OI {
 
     private OI() {
     }
-
-    /**
-     * Returns the left driver Joystick
-     * @return the left driver Joystick
-     */
-//    public static Joystick getLeftDriveStick() {
-//        return leftDriveStick;
-//    }
-//
-//    /**
-//     * Returns the right driver Joystick
-//     * @return the right driver Joystick
-//     */
-//    public static Joystick getRightDriveStick() {
-//        return rightDriveStick;
-//    }
-//
-//    /**
-//     * Returns the controller Joystick
-//     * @return The controller Joystick
-//     */
-//    public static Joystick getControllerStick() {
-//        return controllerStick;
-//    }
-
-//    public static Joystick getStick() {
-//        return theRadioStick;
-//    }
 }

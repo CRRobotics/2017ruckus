@@ -53,7 +53,7 @@ public class DriveTrain extends Subsystem {
         setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
 
         ahrs = RobotMap.getAhrs();
-        ahrs.reset();
+        ahrs.zeroYaw();
     }
 
     /**
@@ -183,5 +183,13 @@ public class DriveTrain extends Subsystem {
         angle += 90;
         if (angle < 0) angle = 360 - angle;
         return ahrs.getYaw();
+    }
+
+    /**
+     * Checks if the NavX is connected.
+     * @return If the NavX is connected.
+     */
+    public boolean isNavXPresent() {
+        return ahrs.isConnected();
     }
 }

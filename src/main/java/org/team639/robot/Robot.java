@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
 
         //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
-        driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("Tank", DriveTrain.DriveMode.TANK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
-        driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
+        driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("tolerance", 200);
         SmartDashboard.putNumber("min", 0.2);
         SmartDashboard.putNumber("max", 0.5);
+        SmartDashboard.putNumber("iCap", 0.2);
 
 
         //Initialize subsystems
@@ -105,6 +106,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+//        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override

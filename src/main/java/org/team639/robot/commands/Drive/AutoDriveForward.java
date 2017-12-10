@@ -67,9 +67,9 @@ public class AutoDriveForward extends Command {
         rTickDiff = targetTicks + rStartingTicks - driveTrain.getRightEncPos();
 
         double val = pid.compute(lTickDiff);
-        System.out.println(val);
+//        System.out.println(val);
         driveTrain.setSpeedsPercent(val, val);
-        if (val == 0) done = true;
+        done = (val == 0);
 
 //        if (Math.abs(lTickDiff) <= startSlow || Math.abs(rTickDiff) <= startSlow) {
 //
@@ -90,7 +90,7 @@ public class AutoDriveForward extends Command {
     protected boolean isFinished() {
         boolean left = (Math.abs(lTickDiff) < SmartDashboard.getNumber("tolerance", Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE));
         boolean right = (Math.abs(rTickDiff) < SmartDashboard.getNumber("tolerance", Constants.DriveTrain.DRIVE_FORWARD_TOLERANCE));
-        if (done) System.out.println(done);
+//        if (done) System.out.println(done);
         return done;
     }
 
