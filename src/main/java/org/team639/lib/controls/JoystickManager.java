@@ -12,7 +12,9 @@ public abstract class JoystickManager {
         CancelWhenPressed
     }
 
-    public interface ButtonType {}
+    protected interface ButtonType {}
+
+    protected interface ControllerAxisType {}
 
     /**
      * Returns the Y axis value of the left drive Joystick with forward being 1 and backward being -1
@@ -39,20 +41,6 @@ public abstract class JoystickManager {
     public abstract double getRightDriveX();
 
     /**
-     * Returns the 1st axis value of the controller Joystick from 1 to -1
-     *
-     * @return The 1st axis value of the controller Joystick
-     */
-    public abstract double getControllerAxis1();
-
-    /**
-     * Returns the 2nd axis value of the controller Joystick from 1 to -1
-     *
-     * @return The 2nd axis value of the controller Joystick
-     */
-    public abstract double getControllerAxis2();
-
-    /**
      * Maps the specified command to the specified button
      * @param btn The location of the button
      * @param cmd The command to map
@@ -66,4 +54,35 @@ public abstract class JoystickManager {
      * @return Whether or not the button is pressed.
      */
     public abstract boolean getButtonPressed(ButtonType btn);
+
+    /**
+     * Returns the value from the specified controller axis from -1 to 1
+     * @param axis The controller axis to return
+     * @return the value from the specified controller axis
+     */
+    public abstract double getControllerAxis(ControllerAxisType axis);
+
+    /**
+     * Returns the angle of the left drive joystick, with 90 degrees being straight ahead.
+     * @return The angle of the left drive joystick
+     */
+    public double getLeftDriveAngle() {
+        double x = getLeftDriveX();
+        double y = getLeftDriveY();
+        double angle = Math.atan2(y,x);
+        angle = Math.toDegrees(angle);
+        return angle;
+    }
+
+    /**
+     * Returns the angle of the right drive joystick, with 90 degrees being straight ahead.
+     * @return The angle of the right drive joystick
+     */
+    public double getRightDriveAngle() {
+        double x = getRightDriveX();
+        double y = getRightDriveY();
+        double angle = Math.atan2(y,x);
+        angle = Math.toDegrees(angle);
+        return angle;
+    }
 }

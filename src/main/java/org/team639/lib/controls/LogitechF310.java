@@ -24,6 +24,11 @@ public class LogitechF310 extends JoystickManager {
         RightJoyPress
     }
 
+    public enum ControllerAxis implements ControllerAxisType {
+        LeftTrigger,
+        RightTrigger
+    }
+
     /**
      * Constructs a new Logitech F310 using port 0
      */
@@ -95,26 +100,6 @@ public class LogitechF310 extends JoystickManager {
     }
 
     /**
-     * Returns the 1st axis value of the controller Joystick from 1 to -1
-     *
-     * @return The 1st axis value of the controller Joystick
-     */
-    @Override
-    public double getControllerAxis1() {
-        return stick.getRawAxis(2) * 2 - 1;
-    }
-
-    /**
-     * Returns the 2nd axis value of the controller Joystick from 1 to -1
-     *
-     * @return The 2nd axis value of the controller Joystick
-     */
-    @Override
-    public double getControllerAxis2() {
-        return stick.getRawAxis(3) * 2 - 1;
-    }
-
-    /**
      * Maps the specified command to the specified button
      *
      * @param btn The location of the button
@@ -160,5 +145,30 @@ public class LogitechF310 extends JoystickManager {
         } else {
             return btns.get(btn).get();
         }
+    }
+
+    /**
+     * Returns the value from the specified controller axis from -1 to 1
+     *
+     * @param axis The controller axis to return
+     * @return the value from the specified controller axis
+     */
+    @Override
+    public double getControllerAxis(ControllerAxisType axis) {
+        if (!(axis instanceof ControllerAxis)) {
+            System.out.println("Invalid controller axis requested");
+            return 0;
+        }
+        ControllerAxis a = (ControllerAxis)axis;
+        double val = 0;
+        switch (a) {
+            case LeftTrigger:
+                val = stick.getRawAxis(2);
+                break;
+            case RightTrigger:
+                val = stick.getRawAxis(3);
+                break;
+        }
+        return val;
     }
 }
