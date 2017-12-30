@@ -29,6 +29,7 @@ public class AutoDriveForward extends Command {
     private PID pid;
 
     public AutoDriveForward(double distance, double speed) {
+        super("AutoDriveForward");
         requires(driveTrain);
 
         if (distance < 0) speed *= -1;

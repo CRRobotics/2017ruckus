@@ -11,6 +11,7 @@ public class WaitForGear extends Command {
     private GearAcquisition gearAcquisition = Robot.getGearAcquisition();
 
     public WaitForGear() {
+        super("WaitForGear");
         requires(gearAcquisition);
     }
 

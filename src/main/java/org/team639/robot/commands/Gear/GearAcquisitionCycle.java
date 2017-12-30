@@ -9,6 +9,7 @@ import org.team639.robot.Constants;
  */
 public class GearAcquisitionCycle extends CommandGroup {
      public GearAcquisitionCycle() {
+         super("GearAcquisitionCycle");
          addSequential(new GearOpen());
          addSequential(new WaitCommand(Constants.OPEN_CLAW_TIME));
          addSequential(new GearLower());

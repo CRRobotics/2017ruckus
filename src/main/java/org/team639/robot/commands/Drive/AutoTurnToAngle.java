@@ -20,6 +20,7 @@ public class AutoTurnToAngle extends Command {
     private PID pid;
 
     public AutoTurnToAngle(double angle) {
+        super("AutoTurnToAngle");
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
         this.angle = angle % 360;
