@@ -39,6 +39,8 @@ public class Robot extends IterativeRobot {
         //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
         driveMode.addObject("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("Field Oriented 1 joystick", DriveTrain.DriveMode.FIELD_1_JOYSTICK);
+        driveMode.addObject("Field Oriented 2 joysticks", DriveTrain.DriveMode.FIELD_2_JOYSTICK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
         driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
@@ -49,7 +51,7 @@ public class Robot extends IterativeRobot {
         talonMode.addDefault("Closed loop", CANTalon.TalonControlMode.Speed);
         SmartDashboard.putData("Talon Control", talonMode);
 
-        //PID constants
+        //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
         SmartDashboard.putNumber("drive p", Constants.DriveTrain.DRIVE_P);
         SmartDashboard.putNumber("drive i", Constants.DriveTrain.DRIVE_I);
         SmartDashboard.putNumber("drive d", Constants.DriveTrain.DRIVE_I);

@@ -16,6 +16,18 @@ public class Constants {
         public static final double DRIVE_FORWARD_TOLERANCE = 200;
     }
 
+    public static class Auto {
+        //Turn To Angle constants
+        public static final double TTA_P = 0.0001;
+        public static final double TTA_I = 0;
+        public static final double TTA_D = 0;
+        public static final double TTA_MIN = 0.2;
+        public static final double TTA_MAX = 0.5;
+        public static final double TTA_RATE = 0.1;
+        public static final double TTA_I_CAP = 0.2;
+        public static final double TTA_TOLERANCE = 2;
+    }
+
     public static final double JOYSTICK_DEADZONE = 0.05;
 
     public static final double OPEN_CLAW_TIME = 0.20;
