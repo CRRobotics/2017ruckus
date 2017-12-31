@@ -12,6 +12,7 @@ public class GearRaise extends Command {
 
 
     public GearRaise() {
+        super("GearRaise");
         requires(gearAcquisition);
     }
 

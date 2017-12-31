@@ -12,6 +12,7 @@ public class GearClose extends Command {
 
 
     public GearClose() {
+        super("GearClose");
         requires(gearAcquisition);
     }
 

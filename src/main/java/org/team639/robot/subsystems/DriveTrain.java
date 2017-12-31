@@ -2,6 +2,7 @@ package org.team639.robot.subsystems;
 
 import com.ctre.MotorControl.CANTalon;
 import com.ctre.MotorControl.SmartMotorController;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
@@ -15,6 +16,8 @@ public class DriveTrain extends Subsystem {
     private CANTalon leftDrive;
     private CANTalon rightDrive;
 
+    private AHRS ahrs;
+
     private CANTalon.TalonControlMode currentControlMode;
 
     /**
@@ -23,7 +26,9 @@ public class DriveTrain extends Subsystem {
     public enum DriveMode {
         TANK,
         ARCADE_1_JOYSTICK,
-        ARCADE_2_JOYSTICK
+        ARCADE_2_JOYSTICK,
+        FIELD_1_JOYSTICK,
+        FIELD_2_JOYSTICK
     }
 
     public DriveTrain() {
@@ -42,9 +47,15 @@ public class DriveTrain extends Subsystem {
         leftDrive.reverseSensor(true);
         rightDrive.reverseSensor(true);
 
+        leftDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+        rightDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+
         setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
 
-        setPID(Constants.DriveTrain.P, Constants.DriveTrain.I, Constants.DriveTrain.D);
+        setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
+
+        ahrs = RobotMap.getAhrs();
+        ahrs.zeroYaw();
     }
 
     /**
@@ -90,16 +101,16 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsPercent(double lSpeed, double rSpeed) {
-        if (lSpeed < 0.1 && lSpeed > -0.1) lSpeed = 0;
-        if (rSpeed < 0.1 && rSpeed > -0.1) rSpeed = 0;
+        if (Math.abs(lSpeed) < Constants.JOYSTICK_DEADZONE) lSpeed = 0;
+        if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
         switch (currentControlMode) {
             case PercentVbus:
                 rightDrive.set(-1 * rSpeed);
                 leftDrive.set(lSpeed);
                 break;
             case Speed:
-                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
-                rightDrive.set( -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
+//                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
+                rightDrive.set(-1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
                 leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
@@ -130,6 +141,7 @@ public class DriveTrain extends Subsystem {
      * @param turning The turning magnitude from -1 to 1
      */
     public void arcadeDrive(double speed, double turning) {
+//        if (speed < 0) turning *= -1;
         setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
     }
 
@@ -138,7 +150,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the left encoder
      */
     public int getLeftEncPos() {
-        return leftDrive.getEncPosition();
+        return -1 * leftDrive.getEncPosition();
     }
 
     /**
@@ -154,7 +166,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the left encoder
      */
     public int getLeftEncVelocity() {
-        return leftDrive.getEncVelocity();
+        return -1 * leftDrive.getEncVelocity();
     }
 
     /**
@@ -162,6 +174,26 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the right encoder
      */
     public int getRightEncVelocity() {
-        return -1 * rightDrive.getEncVelocity();
+        return rightDrive.getEncVelocity();
+    }
+
+    /**
+     * Gets the current yaw of the robot from 0-180 degrees, with 90 being directly downfield. This assumes that the robot starts facing downfield.
+     * @return The current yaw of the robot
+     */
+    public double getRobotYaw() {
+        double angle = ahrs.getYaw();
+        angle *= -1;
+        angle += 90;
+        if (angle < 0) angle = 360 + angle;
+        return angle;
+    }
+
+    /**
+     * Checks if the NavX is connected.
+     * @return If the NavX is connected.
+     */
+    public boolean isNavXPresent() {
+        return ahrs.isConnected();
     }
 }

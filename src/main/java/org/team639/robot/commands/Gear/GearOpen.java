@@ -12,6 +12,7 @@ public class GearOpen extends Command {
 
 
     public GearOpen() {
+        super("GearOpen");
         requires(gearAcquisition);
     }
 

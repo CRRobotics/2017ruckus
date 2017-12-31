@@ -9,6 +9,7 @@ import org.team639.robot.Constants;
  */
 public class GearPickup extends CommandGroup {
     public GearPickup() {
+        super("GearPickup");
         addSequential(new GearClose());
         addSequential(new WaitCommand(Constants.CLOSE_CLAW_TIME));
         addSequential(new GearRaise());

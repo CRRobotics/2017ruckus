@@ -1,8 +1,10 @@
 package org.team639.robot;
 
 import com.ctre.MotorControl.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -14,11 +16,12 @@ public class RobotMap {
     private static CANTalon leftDrive;
     private static CANTalon rightDrive;
 
-    private static Compressor compressor;
     private static Solenoid gearClawOpen;
     private static Solenoid gearClawRaise;
 
     private static DigitalInput gearSensor;
+
+    private static AHRS ahrs;
 
     private RobotMap() {
     }
@@ -32,13 +35,14 @@ public class RobotMap {
             leftDrive = new CANTalon(3);
             rightDrive = new CANTalon(1);
 
-
             gearClawOpen = new Solenoid(0);
             gearClawRaise = new Solenoid(1);
 
             gearSensor = new DigitalInput(0);
 
             initialized = true;
+
+            ahrs = new AHRS(SPI.Port.kMXP);
         }
     }
 
@@ -58,5 +62,11 @@ public class RobotMap {
         return gearClawRaise;
     }
 
-    public static DigitalInput getGearSensor() {  return gearSensor;    }
+    public static DigitalInput getGearSensor() {
+        return gearSensor;
+    }
+
+    public static AHRS getAhrs() {
+        return ahrs;
+    }
 }

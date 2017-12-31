@@ -38,9 +38,11 @@ public class Robot extends IterativeRobot {
 
         //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
-        driveMode.addDefault("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("Tank", DriveTrain.DriveMode.TANK);
+        driveMode.addObject("Field Oriented 1 joystick", DriveTrain.DriveMode.FIELD_1_JOYSTICK);
+        driveMode.addObject("Field Oriented 2 joysticks", DriveTrain.DriveMode.FIELD_2_JOYSTICK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
-        driveMode.addObject("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
+        driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
@@ -49,10 +51,16 @@ public class Robot extends IterativeRobot {
         talonMode.addDefault("Closed loop", CANTalon.TalonControlMode.Speed);
         SmartDashboard.putData("Talon Control", talonMode);
 
-        //PID constants
-        SmartDashboard.putNumber("drive p", Constants.DriveTrain.P);
-        SmartDashboard.putNumber("drive i", Constants.DriveTrain.I);
-        SmartDashboard.putNumber("drive d", Constants.DriveTrain.D);
+        //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
+        SmartDashboard.putNumber("drive p", 0.03);
+        SmartDashboard.putNumber("drive i", 0);
+        SmartDashboard.putNumber("drive d", 0.15);
+        SmartDashboard.putNumber("rate", 0.015);
+        SmartDashboard.putNumber("tolerance", 2);
+        SmartDashboard.putNumber("min", 0.11);
+        SmartDashboard.putNumber("max", 0.25);
+        SmartDashboard.putNumber("iCap", 0.2);
+
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
@@ -84,6 +92,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotPeriodic() {
         super.robotPeriodic();
+//        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override
