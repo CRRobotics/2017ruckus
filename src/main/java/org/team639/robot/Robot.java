@@ -52,13 +52,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
-        SmartDashboard.putNumber("drive p", Constants.DriveTrain.DRIVE_P);
-        SmartDashboard.putNumber("drive i", Constants.DriveTrain.DRIVE_I);
-        SmartDashboard.putNumber("drive d", Constants.DriveTrain.DRIVE_I);
-        SmartDashboard.putNumber("rate", 0.1);
-        SmartDashboard.putNumber("tolerance", 200);
-        SmartDashboard.putNumber("min", 0.2);
-        SmartDashboard.putNumber("max", 0.5);
+        SmartDashboard.putNumber("drive p", 0.03);
+        SmartDashboard.putNumber("drive i", 0);
+        SmartDashboard.putNumber("drive d", 0.15);
+        SmartDashboard.putNumber("rate", 0.015);
+        SmartDashboard.putNumber("tolerance", 2);
+        SmartDashboard.putNumber("min", 0.11);
+        SmartDashboard.putNumber("max", 0.25);
         SmartDashboard.putNumber("iCap", 0.2);
 
 
@@ -92,7 +92,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotPeriodic() {
         super.robotPeriodic();
-        System.out.println(driveTrain.getRobotYaw());
+//        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override

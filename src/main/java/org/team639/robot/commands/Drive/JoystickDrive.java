@@ -12,6 +12,10 @@ import org.team639.robot.subsystems.DriveTrain;
 
 import static org.team639.robot.Constants.DriveTrain.*;
 
+/**
+ * Controls DriveTrain with Joysticks
+ * Default DriveTrain command
+ */
 public class JoystickDrive extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
 
@@ -28,14 +32,15 @@ public class JoystickDrive extends Command {
         double dD = DRIVE_D;
         driveTrain.setPID(dP,dI,dD);
 
-        double p = SmartDashboard.getNumber("drive p", DRIVE_P);
-        double i = SmartDashboard.getNumber("drive i", DRIVE_I);
-        double d = SmartDashboard.getNumber("drive d", DRIVE_I);
-        double rate = SmartDashboard.getNumber("rate", 0.1);
-        double tolerance = SmartDashboard.getNumber("tolerance", 200);
-        double min = SmartDashboard.getNumber("min", 0.2);
-        double max = SmartDashboard.getNumber("max", 0.5);
-        double iCap = SmartDashboard.getNumber("iCap", 0.2);
+        // Field oriented drive turning PID constants from Constants.DriveTrain, prefixed with FOT_
+        double p = FOT_P;
+        double i = FOT_I;
+        double d = FOT_D;
+        double rate = FOT_RATE;
+        double tolerance = FOT_TOLERANCE;
+        double min = FOT_MIN;
+        double max = FOT_MAX;
+        double iCap = FOT_I_CAP;
         turnPID = new PID(p, i, d, min, max, rate, tolerance, iCap);
 
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
@@ -53,7 +58,7 @@ public class JoystickDrive extends Command {
         double speed;
         double angle;
         if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
-            mode = DriveTrain.DriveMode.FIELD_1_JOYSTICK;
+            mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
         } else {
             mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
         }
@@ -71,14 +76,15 @@ public class JoystickDrive extends Command {
                 x = OI.manager.getRightDriveX();
                 y = OI.manager.getRightDriveY();
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getRightDriveAngle() : 500;
-                speed = Math.sqrt(Math.pow(y, 2) * Math.pow(x, 2));
-                fieldOrientedDrive(angle, speed);
+                speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
+                fieldOrientedDrive(angle, speed, 1);
                 break;
             case FIELD_2_JOYSTICK:
                 x = OI.manager.getLeftDriveX();
                 y = OI.manager.getLeftDriveY();
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getLeftDriveAngle() : 500;
-                fieldOrientedDrive(angle, OI.manager.getRightDriveY());
+                speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
+                fieldOrientedDrive(angle, OI.manager.getRightDriveY(), speed);
                 break;
         }
     }
@@ -95,17 +101,19 @@ public class JoystickDrive extends Command {
     /**
      * Drives the robot in a field oriented manner
      * @param angle The angle to drive in. Angles greater than 360 represent no turning.
-     * @param speed The speed to drive at.
+     * @param moveSpeed The speed to drive at.
      */
-    private void fieldOrientedDrive(double angle, double speed) {
+    private void fieldOrientedDrive(double angle, double moveSpeed, double turnSpeed) {
         double output;
-        if (speed > 1) speed = 1;
-        if (angle > 360) {
+        if (moveSpeed > 1) moveSpeed = 1;
+        if (turnSpeed > 1) turnSpeed = 1;
+        if (angle < 360) {
             double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
             output = turnPID.compute(error);
         } else {
             output = 0;
         }
-        driveTrain.setSpeedsPercent(speed / 2 - output, speed / 2 + output);
+//        System.out.printf("error: %f, output: %f, angle: %f, speed: %f, l: %f, R: %f\n", AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle), output, angle, moveSpeed, moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
+        driveTrain.setSpeedsPercent(moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
     }
 }

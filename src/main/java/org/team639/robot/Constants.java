@@ -14,6 +14,16 @@ public class Constants {
         public static final double TICKS_PER_INCH = ENC_TICKS_PER_ROTATION / WHEEL_CIRCUMFERENCE_INCHES;
 
         public static final double DRIVE_FORWARD_TOLERANCE = 200;
+
+        // field oriented drive turning constants
+        public static final double FOT_P = 0.03;
+        public static final double FOT_I = 0;
+        public static final double FOT_D = 0.15;
+        public static final double FOT_MIN = 0.11;
+        public static final double FOT_MAX = 0.25;
+        public static final double FOT_RATE = 0.015;
+        public static final double FOT_I_CAP = 0.2;
+        public static final double FOT_TOLERANCE = 2;
     }
 
     public static class Auto {

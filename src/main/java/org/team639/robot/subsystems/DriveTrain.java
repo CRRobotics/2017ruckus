@@ -141,7 +141,7 @@ public class DriveTrain extends Subsystem {
      * @param turning The turning magnitude from -1 to 1
      */
     public void arcadeDrive(double speed, double turning) {
-        if (speed < 0) turning *= -1;
+//        if (speed < 0) turning *= -1;
         setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
     }
 

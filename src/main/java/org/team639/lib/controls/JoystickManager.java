@@ -83,6 +83,7 @@ public abstract class JoystickManager {
         double y = getRightDriveY();
         double angle = Math.atan2(y,x);
         angle = Math.toDegrees(angle);
+        if (angle < 0) angle = 360 + angle;
         return angle;
     }
 }
