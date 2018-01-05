@@ -1,6 +1,6 @@
 package org.team639.robot.commands.Drive;
 
-import com.ctre.MotorControl.SmartMotorController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.lib.math.PID;
@@ -48,7 +48,7 @@ public class AutoDriveForward extends Command {
         done = false;
 
         driveTrain.setSpeedsPercent(0, 0);
-        driveTrain.setCurrentControlMode(SmartMotorController.TalonControlMode.Speed);
+        driveTrain.setCurrentControlMode(ControlMode.Velocity);
 
         lStartingTicks = driveTrain.getLeftEncPos();
         rStartingTicks = driveTrain.getRightEncPos();

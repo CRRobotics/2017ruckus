@@ -1,11 +1,7 @@
 package org.team639.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.team639.lib.controls.JoystickManager;
 import org.team639.lib.controls.LogitechF310;
-import org.team639.robot.commands.Drive.AutoDriveForward;
 import org.team639.robot.commands.Drive.AutoTurnToAngle;
 import org.team639.robot.commands.Gear.*;
 

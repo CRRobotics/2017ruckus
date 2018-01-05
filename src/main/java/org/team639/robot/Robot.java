@@ -1,7 +1,6 @@
 package org.team639.robot;
 
-import com.ctre.MotorControl.CANTalon;
-import com.ctre.MotorControl.SmartMotorController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,7 +13,7 @@ public class Robot extends IterativeRobot {
     private static DriveTrain driveTrain;
 
     private static SendableChooser<DriveTrain.DriveMode> driveMode;
-    private static SendableChooser<CANTalon.TalonControlMode> talonMode;
+    private static SendableChooser<ControlMode> talonMode;
 
     public static GearAcquisition getGearAcquisition() {
         return gearAcquisition;
@@ -28,7 +27,7 @@ public class Robot extends IterativeRobot {
         return driveMode.getSelected();
     }
 
-    public static CANTalon.TalonControlMode getTalonMode() {
+    public static ControlMode getTalonMode() {
         return talonMode.getSelected();
     }
 
@@ -47,8 +46,8 @@ public class Robot extends IterativeRobot {
 
         //Activate and deactivate closed loop drive
         talonMode = new SendableChooser<>();
-        talonMode.addObject("Open Loop", CANTalon.TalonControlMode.PercentVbus);
-        talonMode.addDefault("Closed loop", CANTalon.TalonControlMode.Speed);
+        talonMode.addObject("Open Loop", ControlMode.PercentOutput);
+        talonMode.addDefault("Closed loop", ControlMode.Velocity);
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
