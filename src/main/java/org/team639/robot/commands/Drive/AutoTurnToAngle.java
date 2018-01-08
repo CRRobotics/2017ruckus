@@ -18,7 +18,6 @@ public class AutoTurnToAngle extends Command {
     private DriveTrain driveTrain;
 
     private double angle;
-    private int direction;
     private boolean done;
 
     private PID pid;
@@ -28,7 +27,6 @@ public class AutoTurnToAngle extends Command {
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
         this.angle = angle % 360;
-        direction = AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle);
     }
 
     protected void initialize() {
