@@ -1,14 +1,14 @@
 package org.team639.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.robot.subsystems.DriveTrain;
 import org.team639.robot.subsystems.GearAcquisition;
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
     private static GearAcquisition gearAcquisition;
     private static DriveTrain driveTrain;
 
@@ -37,17 +37,17 @@ public class Robot extends IterativeRobot {
 
         //Allows drivers to select drive modes
         driveMode = new SendableChooser<>();
+        driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         driveMode.addObject("Tank", DriveTrain.DriveMode.TANK);
         driveMode.addObject("Field Oriented 1 joystick", DriveTrain.DriveMode.FIELD_1_JOYSTICK);
         driveMode.addObject("Field Oriented 2 joysticks", DriveTrain.DriveMode.FIELD_2_JOYSTICK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
-        driveMode.addDefault("1 Joystick Arcade", DriveTrain.DriveMode.ARCADE_1_JOYSTICK);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
         talonMode = new SendableChooser<>();
-        talonMode.addObject("Open Loop", ControlMode.PercentOutput);
         talonMode.addDefault("Closed loop", ControlMode.Velocity);
+        talonMode.addObject("Open Loop", ControlMode.PercentOutput);
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
@@ -91,7 +91,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotPeriodic() {
         super.robotPeriodic();
-//        System.out.println(driveTrain.getRobotYaw());
     }
 
     @Override
