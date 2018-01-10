@@ -164,7 +164,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the left encoder
      */
     public int getLeftEncPos() {
-        return -1 * leftDrive.getSelectedSensorPosition(0);
+        return leftDrive.getSelectedSensorPosition(0);
     }
 
     /**
@@ -172,7 +172,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the right encoder
      */
     public int getRightEncPos() {
-        return rightDrive.getSelectedSensorPosition(0);
+        return -1 * rightDrive.getSelectedSensorPosition(0);
     }
 
     /**
@@ -180,7 +180,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the left encoder
      */
     public int getLeftEncVelocity() {
-        return -1 * leftDrive.getSelectedSensorVelocity(0);
+        return leftDrive.getSelectedSensorVelocity(0);
     }
 
     /**
@@ -188,7 +188,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the right encoder
      */
     public int getRightEncVelocity() {
-        return rightDrive.getSelectedSensorVelocity(0);
+        return -1 * rightDrive.getSelectedSensorVelocity(0);
     }
 
     /**

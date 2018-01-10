@@ -2,6 +2,7 @@ package org.team639.robot;
 
 import org.team639.lib.controls.JoystickManager;
 import org.team639.lib.controls.LogitechF310;
+import org.team639.robot.commands.Drive.AutoDriveForward;
 import org.team639.robot.commands.Drive.AutoTurnToAngle;
 import org.team639.robot.commands.Gear.*;
 
@@ -23,7 +24,7 @@ public class OI {
         manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
 //        manager.mapButton(LogitechF310.Buttons.B, new AutoDriveForward(18, 0.3), JoystickManager.MappingType.WhenPressed);
-//        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(32, 0.3), JoystickManager.MappingType.WhenPressed);
+        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(32, 0.3), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.A, new AutoTurnToAngle(0), JoystickManager.MappingType.WhenPressed);
 
     }
