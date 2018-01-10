@@ -31,7 +31,7 @@ public class AutoDriveForward extends Command {
     private double targetLeft;
     private double targetRight;
 
-    private double angle = driveTrain.getRobotYaw();
+    private double angle;
 
     private PID pid;
     private PID turnPID;
@@ -54,6 +54,8 @@ public class AutoDriveForward extends Command {
 
     protected void initialize() {
         done = false;
+
+        angle = driveTrain.getRobotYaw();
 
         targetLeft = driveTrain.getLeftEncPos() + targetTicks;
         targetRight = driveTrain.getRightEncPos() + targetTicks;

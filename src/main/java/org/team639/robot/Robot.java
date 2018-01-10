@@ -60,6 +60,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("max", 0.5);
         SmartDashboard.putNumber("iCap", 0.2);
 
+//        SmartDashboard.putNumber("distance", 64);
+
 
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
