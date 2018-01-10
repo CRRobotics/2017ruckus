@@ -1,6 +1,6 @@
 package org.team639.robot.commands.Drive;
 
-import com.ctre.MotorControl.SmartMotorController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team639.lib.math.AngleMath;
 import org.team639.lib.math.PID;
@@ -42,7 +42,7 @@ public class AutoTurnToAngle extends Command {
         pid = new PID(TTA_P, TTA_I, TTA_D, TTA_MIN, TTA_MAX, TTA_RATE, TTA_TOLERANCE, TTA_I_CAP);
 
         driveTrain.setSpeedsPercent(0, 0);
-        driveTrain.setCurrentControlMode(SmartMotorController.TalonControlMode.Speed);
+        driveTrain.setCurrentControlMode(ControlMode.Velocity);
 
     }
 
