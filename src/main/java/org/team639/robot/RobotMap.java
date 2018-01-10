@@ -1,8 +1,7 @@
 package org.team639.robot;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -13,8 +12,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotMap {
     private static boolean initialized = false;
 
-    private static CANTalon leftDrive;
-    private static CANTalon rightDrive;
+    private static TalonSRX leftDrive;
+    private static TalonSRX rightDrive;
 
     private static Solenoid gearClawOpen;
     private static Solenoid gearClawRaise;
@@ -32,8 +31,8 @@ public class RobotMap {
      */
     public static void init() {
         if (!initialized) {
-            leftDrive = new CANTalon(3);
-            rightDrive = new CANTalon(1);
+            leftDrive = new TalonSRX(3);
+            rightDrive = new TalonSRX(1);
 
             gearClawOpen = new Solenoid(0);
             gearClawRaise = new Solenoid(1);
@@ -46,11 +45,11 @@ public class RobotMap {
         }
     }
 
-    public static CANTalon getLeftDrive() {
+    public static TalonSRX getLeftDrive() {
         return leftDrive;
     }
 
-    public static CANTalon getRightDrive() {
+    public static TalonSRX getRightDrive() {
         return rightDrive;
     }
 

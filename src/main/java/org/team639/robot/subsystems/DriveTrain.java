@@ -1,9 +1,10 @@
 package org.team639.robot.subsystems;
 
-import com.ctre.MotorControl.CANTalon;
-import com.ctre.MotorControl.SmartMotorController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
@@ -13,12 +14,12 @@ import org.team639.robot.commands.Drive.JoystickDrive;
  * Contains all methods relating to the drivetrain
  */
 public class DriveTrain extends Subsystem {
-    private CANTalon leftDrive;
-    private CANTalon rightDrive;
+    private TalonSRX leftDrive;
+    private TalonSRX rightDrive;
 
     private AHRS ahrs;
 
-    private CANTalon.TalonControlMode currentControlMode;
+    private ControlMode currentControlMode;
 
     /**
      * Defines drive modes
@@ -35,22 +36,29 @@ public class DriveTrain extends Subsystem {
         leftDrive = RobotMap.getLeftDrive();
         rightDrive = RobotMap.getRightDrive();
 
-        leftDrive.setAllowableClosedLoopErr(10);
-        rightDrive.setAllowableClosedLoopErr(10);
+//        leftDrive.setAllowableClosedLoopErr(10);
+//        rightDrive.setAllowableClosedLoopErr(10);
+        // TODO: Not entirely sure what this number actually represents.
+        leftDrive.configAllowableClosedloopError(0,10,10);
+        rightDrive.configAllowableClosedloopError(0,10,10);
 
-        leftDrive.setPIDSourceType(PIDSourceType.kRate);
-        rightDrive.setPIDSourceType(PIDSourceType.kRate);
+        // TODO: Not sure what to replace these with. Maybe they aren't necessary?
+//        leftDrive.setPIDSourceType(PIDSourceType.kRate);
+//        rightDrive.setPIDSourceType(PIDSourceType.kRate);
 
-        leftDrive.setFeedbackDevice(SmartMotorController.FeedbackDevice.QuadEncoder);
-        rightDrive.setFeedbackDevice(SmartMotorController.FeedbackDevice.QuadEncoder);
+        leftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        rightDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
-        leftDrive.reverseSensor(true);
-        rightDrive.reverseSensor(true);
+        leftDrive.setSensorPhase(true);// leftDrive.reverseSensor(true);
+        rightDrive.setSensorPhase(true);// rightDrive.reverseSensor(true);
 
-        leftDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
-        rightDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+//        leftDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+//        rightDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
+        // TODO: These set the rate of sensor data reporting. I'm not entirely sure I'm using the right StatusFrameEnhanced.
+        leftDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
+        rightDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
 
-        setCurrentControlMode(CANTalon.TalonControlMode.PercentVbus);
+        setCurrentControlMode(ControlMode.Velocity);
 
         setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
 
@@ -62,7 +70,7 @@ public class DriveTrain extends Subsystem {
      * Returns the current Talon control mode
      * @return The current Talon control mode
      */
-    public CANTalon.TalonControlMode getCurrentControlMode() {
+    public ControlMode getCurrentControlMode() {
         return currentControlMode;
     }
 
@@ -70,10 +78,10 @@ public class DriveTrain extends Subsystem {
      * Sets the Talon control mode
      * @param mode The control mode to set the talons to
      */
-    public void setCurrentControlMode(CANTalon.TalonControlMode mode) {
+    public void setCurrentControlMode(ControlMode mode) {
         currentControlMode = mode;
-        leftDrive.changeControlMode(currentControlMode);
-        rightDrive.changeControlMode(currentControlMode);
+//        leftDrive.changeControlMode(currentControlMode);
+//        rightDrive.changeControlMode(currentControlMode);
     }
 
     /**
@@ -83,8 +91,14 @@ public class DriveTrain extends Subsystem {
      * @param d
      */
     public void setPID(double p, double i, double d) {
-        rightDrive.setPID(p, i, d);
-        leftDrive.setPID(p, i, d);
+//        rightDrive.setPID(p, i, d);
+        rightDrive.config_kP(0, p, 10);
+        rightDrive.config_kI(0, i, 10);
+        rightDrive.config_kD(0, d, 10);
+//        leftDrive.setPID(p, i, d);
+        leftDrive.config_kP(0, p, 10);
+        leftDrive.config_kI(0, i, 10);
+        leftDrive.config_kD(0, d, 10);
     }
 
     /**
@@ -104,14 +118,14 @@ public class DriveTrain extends Subsystem {
         if (Math.abs(lSpeed) < Constants.JOYSTICK_DEADZONE) lSpeed = 0;
         if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
         switch (currentControlMode) {
-            case PercentVbus:
-                rightDrive.set(-1 * rSpeed);
-                leftDrive.set(lSpeed);
+            case PercentOutput:
+                rightDrive.set(currentControlMode, -1 * rSpeed);
+                leftDrive.set(currentControlMode, lSpeed);
                 break;
-            case Speed:
+            case Velocity:
 //                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
-                rightDrive.set(-1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(lSpeed * Constants.DriveTrain.SPEED_RANGE);
+                rightDrive.set(currentControlMode, -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
+                leftDrive.set(currentControlMode, lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 break;
         }
     }
@@ -122,8 +136,8 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsRaw(double lSpeed, double rSpeed) {
-        rightDrive.set(-1 * rSpeed);
-        leftDrive.set(lSpeed);
+        rightDrive.set(currentControlMode, -1 * rSpeed);
+        leftDrive.set(currentControlMode, lSpeed);
     }
 
     /**
@@ -150,7 +164,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the left encoder
      */
     public int getLeftEncPos() {
-        return -1 * leftDrive.getEncPosition();
+        return -1 * leftDrive.getSelectedSensorPosition(0);
     }
 
     /**
@@ -158,7 +172,7 @@ public class DriveTrain extends Subsystem {
      * @return The position of the right encoder
      */
     public int getRightEncPos() {
-        return rightDrive.getEncPosition();
+        return rightDrive.getSelectedSensorPosition(0);
     }
 
     /**
@@ -166,7 +180,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the left encoder
      */
     public int getLeftEncVelocity() {
-        return -1 * leftDrive.getEncVelocity();
+        return -1 * leftDrive.getSelectedSensorVelocity(0);
     }
 
     /**
@@ -174,7 +188,7 @@ public class DriveTrain extends Subsystem {
      * @return The velocity of the right encoder
      */
     public int getRightEncVelocity() {
-        return rightDrive.getEncVelocity();
+        return rightDrive.getSelectedSensorVelocity(0);
     }
 
     /**
