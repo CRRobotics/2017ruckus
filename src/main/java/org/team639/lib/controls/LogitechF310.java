@@ -37,6 +37,7 @@ public class LogitechF310 extends JoystickManager {
         initBtns();
     }
 
+
     /**
      * Constructs a new Logitech F310 using the specified port
      * @param port The USB port of the gamepad
@@ -66,7 +67,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getLeftDriveY() {
-        return -1 * stick.getRawAxis(1);
+        return -1 * stick.getRawAxis(1) * getScale();
     }
 
     /**
@@ -76,7 +77,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getRightDriveY() {
-        return -1 * stick.getRawAxis(5);
+        return -1 * stick.getRawAxis(5) * getScale();
     }
 
     /**
@@ -86,7 +87,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getLeftDriveX() {
-        return stick.getRawAxis(0);
+        return stick.getRawAxis(0) * getScale();
     }
 
     /**
@@ -96,7 +97,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getRightDriveX() {
-        return stick.getRawAxis(4);
+        return stick.getRawAxis(4) * getScale();
     }
 
     /**

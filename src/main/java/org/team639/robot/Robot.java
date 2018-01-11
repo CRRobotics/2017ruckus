@@ -93,7 +93,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         super.robotPeriodic();
-        System.out.println("Left: " + driveTrain.getLeftEncPos() + ", Right: "  + driveTrain.getRightEncPos());
+//        System.out.println("Left: " + driveTrain.getLeftEncPos() + ", Right: "  + driveTrain.getRightEncPos());
+        System.out.println("Robot yaw: " + driveTrain.getRobotYaw());
     }
 
     @Override

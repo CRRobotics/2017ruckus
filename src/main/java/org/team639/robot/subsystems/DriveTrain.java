@@ -210,4 +210,8 @@ public class DriveTrain extends Subsystem {
     public boolean isNavXPresent() {
         return ahrs.isConnected();
     }
+
+    public void zeroRobotYaw() {
+        ahrs.zeroYaw();
+    }
 }

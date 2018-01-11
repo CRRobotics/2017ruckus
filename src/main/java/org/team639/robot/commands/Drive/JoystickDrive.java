@@ -57,6 +57,8 @@ public class JoystickDrive extends Command {
         double y;
         double speed;
         double angle;
+
+        OI.manager.setScale(1 - OI.manager.getControllerAxis(LogitechF310.ControllerAxis.RightTrigger));
         if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
             mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
         } else {
