@@ -1,5 +1,6 @@
 package org.team639.robot;
 
+import org.team639.lib.controls.DoubleLogitechAttack3;
 import org.team639.lib.controls.JoystickManager;
 import org.team639.lib.controls.LogitechF310;
 import org.team639.robot.commands.Drive.AutoDriveForward;
@@ -13,7 +14,7 @@ import org.team639.robot.commands.Gear.*;
  */
 public class OI {
 
-    public static final JoystickManager manager = new LogitechF310(0);
+    public static final JoystickManager manager = new LogitechF310(0); // new DoubleLogitechAttack3(); // new LogitechF310(0);
 
     /**
      * Maps all of the buttons.
@@ -21,11 +22,11 @@ public class OI {
      */
     public static void mapButtons() {
         //Button mappings
-        manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
-        manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
-        manager.mapButton(LogitechF310.Buttons.B, new ZeroYaw(), JoystickManager.MappingType.WhenPressed);
-        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(96, 0.3), JoystickManager.MappingType.WhenPressed);
-        manager.mapButton(LogitechF310.Buttons.A, new AutoTurnToAngle(0), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.RB, new GearAcquisitionCycle(), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.RB, new GearPickup(), JoystickManager.MappingType.WhenReleased);
+//        manager.mapButton(LogitechF310.Buttons.B, new ZeroYaw(), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.X, new AutoDriveForward(96, 0.3), JoystickManager.MappingType.WhenPressed);
+//        manager.mapButton(LogitechF310.Buttons.A, new AutoTurnToAngle(0), JoystickManager.MappingType.WhenPressed);
     }
 
     private OI() {
