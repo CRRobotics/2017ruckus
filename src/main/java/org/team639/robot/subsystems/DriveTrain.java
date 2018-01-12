@@ -29,7 +29,8 @@ public class DriveTrain extends Subsystem {
         ARCADE_1_JOYSTICK,
         ARCADE_2_JOYSTICK,
         FIELD_1_JOYSTICK,
-        FIELD_2_JOYSTICK
+        FIELD_2_JOYSTICK,
+        NAVX_ARCADE
     }
 
     public DriveTrain() {

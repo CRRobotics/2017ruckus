@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
         driveMode.addObject("Field Oriented 1 joystick", DriveTrain.DriveMode.FIELD_1_JOYSTICK);
         driveMode.addObject("Field Oriented 2 joysticks", DriveTrain.DriveMode.FIELD_2_JOYSTICK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
+        driveMode.addObject("navx arcade", DriveTrain.DriveMode.NAVX_ARCADE);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
@@ -51,14 +52,17 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Talon Control", talonMode);
 
         //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
-        SmartDashboard.putNumber("drive p", 0.0001);
+        SmartDashboard.putNumber("drive p", 0.1);
         SmartDashboard.putNumber("drive i", 0);
         SmartDashboard.putNumber("drive d", 0.);
         SmartDashboard.putNumber("rate", 0.1);
-        SmartDashboard.putNumber("tolerance", 200);
+        SmartDashboard.putNumber("tolerance", 2);
         SmartDashboard.putNumber("min", 0.11);
         SmartDashboard.putNumber("max", 0.5);
         SmartDashboard.putNumber("iCap", 0.2);
+
+        SmartDashboard.putNumber("turn speed", 1);
+        SmartDashboard.putNumber("multiply by", 1);
 
 //        SmartDashboard.putNumber("distance", 64);
 
@@ -94,7 +98,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         super.robotPeriodic();
 //        System.out.println("Left: " + driveTrain.getLeftEncPos() + ", Right: "  + driveTrain.getRightEncPos());
-        System.out.println("Robot yaw: " + driveTrain.getRobotYaw());
+//        System.out.println("Robot yaw: " + driveTrain.getRobotYaw());
     }
 
     @Override

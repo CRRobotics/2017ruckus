@@ -21,7 +21,11 @@ public class LogitechF310 extends JoystickManager {
         LB,
         RB,
         LeftJoyPress,
-        RightJoyPress
+        RightJoyPress,
+        POVUp,
+        POVDown,
+        POVRight,
+        POVLeft
     }
 
     public enum ControllerAxis implements ControllerAxisType {
@@ -57,6 +61,30 @@ public class LogitechF310 extends JoystickManager {
         btns.put(Buttons.RB, new JoystickButton(stick, 6));
         btns.put(Buttons.LeftJoyPress, new JoystickButton(stick, 9));
         btns.put(Buttons.RightJoyPress, new JoystickButton(stick, 10));
+        btns.put(Buttons.POVUp, new Button() {
+            @Override
+            public boolean get() {
+                return stick.getPOV() == 0;
+            }
+        });
+        btns.put(Buttons.POVRight, new Button() {
+            @Override
+            public boolean get() {
+                return stick.getPOV() == 90;
+            }
+        });
+        btns.put(Buttons.POVLeft, new Button() {
+            @Override
+            public boolean get() {
+                return stick.getPOV() == 270;
+            }
+        });
+        btns.put(Buttons.POVDown, new Button() {
+            @Override
+            public boolean get() {
+                return stick.getPOV() == 180;
+            }
+        });
     }
 
 

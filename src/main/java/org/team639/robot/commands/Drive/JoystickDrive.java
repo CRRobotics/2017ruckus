@@ -20,10 +20,12 @@ public class JoystickDrive extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
 
     private PID turnPID;
+    private double arcadeAngle;
 
     public JoystickDrive() {
         super("JoystickDrive");
         requires(driveTrain);
+        arcadeAngle = driveTrain.getRobotYaw();
     }
 
     protected void initialize() {
@@ -41,11 +43,20 @@ public class JoystickDrive extends Command {
         double min = FOT_MIN;
         double max = FOT_MAX;
         double iCap = FOT_I_CAP;
+//        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
+//        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
+//        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
+//        double rate = SmartDashboard.getNumber("rate", 0.1);
+//        double tolerance = SmartDashboard.getNumber("tolerance", 2);
+//        double min = SmartDashboard.getNumber("min", 0.2);
+//        double max = SmartDashboard.getNumber("max", 0.5);
         turnPID = new PID(p, i, d, min, max, rate, tolerance, iCap);
 
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
             driveTrain.setCurrentControlMode(Robot.getTalonMode());
         }
+
+        arcadeAngle = driveTrain.getRobotYaw();
     }
 
     /**
@@ -59,11 +70,11 @@ public class JoystickDrive extends Command {
         double angle;
 
         OI.manager.setScale(1 - OI.manager.getControllerAxis(LogitechF310.ControllerAxis.RightTrigger));
-//        if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
-//            mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
-//        } else {
+        if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
+            mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
+        } else {
             mode = Robot.getDriveMode(); //Get drive mode from SmartDashboard
-//        }
+        }
         switch (mode) {
             case TANK:
                 driveTrain.tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
@@ -87,6 +98,14 @@ public class JoystickDrive extends Command {
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getLeftDriveAngle() : 500;
                 speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
                 fieldOrientedDrive(angle, OI.manager.getRightDriveY(), speed);
+                break;
+            case NAVX_ARCADE:
+                x = OI.manager.getRightDriveX();
+                if (Math.abs(x) < Constants.JOYSTICK_DEADZONE) x = 0;
+                arcadeAngle -= x * SmartDashboard.getNumber("multiply by", 0.01);
+                arcadeAngle %= 360;
+                System.out.println("angle: " + arcadeAngle);
+                fieldOrientedDrive(arcadeAngle, OI.manager.getRightDriveY(), SmartDashboard.getNumber("turn speed", 0.25));
                 break;
         }
     }
