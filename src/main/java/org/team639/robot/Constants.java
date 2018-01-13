@@ -4,10 +4,12 @@ public class Constants {
     public static class DriveTrain {
 
 
-        public static final double SPEED_RANGE = 15000;
-        public static final double DRIVE_P = 0.1;
+        public static final double SPEED_RANGE = 3400;
+        public static final double DRIVE_P = 1.6;
         public static final double DRIVE_I = 0;
         public static final double DRIVE_D = 0;
+        public static final double DRIVE_F = 0.25;
+        public static final double ARCADE_RATE = 0.03;
 
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double WHEEL_CIRCUMFERENCE_INCHES = Math.PI * WHEEL_DIAMETER_INCHES;

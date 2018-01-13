@@ -22,6 +22,9 @@ public class JoystickDrive extends Command {
     private PID turnPID;
     private double arcadeAngle;
 
+    private double lastSetpointSpeed = 0;
+    private double lastSetpointTurning = 0;
+
     public JoystickDrive() {
         super("JoystickDrive");
         requires(driveTrain);
@@ -29,11 +32,6 @@ public class JoystickDrive extends Command {
     }
 
     protected void initialize() {
-        double dP = DRIVE_P;
-        double dI = DRIVE_I;
-        double dD = DRIVE_D;
-        driveTrain.setPID(dP,dI,dD);
-
         // Field oriented drive turning PID constants from Constants.DriveTrain, prefixed with FOT_
         double p = FOT_P;
         double i = FOT_I;
@@ -77,13 +75,13 @@ public class JoystickDrive extends Command {
         }
         switch (mode) {
             case TANK:
-                driveTrain.tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
+                tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
                 break;
             case ARCADE_1_JOYSTICK:
-                driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
+                arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
                 break;
             case ARCADE_2_JOYSTICK:
-                driveTrain.arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
+                arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
                 break;
             case FIELD_1_JOYSTICK:
                 x = OI.manager.getRightDriveX();
@@ -136,5 +134,35 @@ public class JoystickDrive extends Command {
         }
 //        System.out.printf("error: %f, output: %f, angle: %f, speed: %f, l: %f, R: %f\n", AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle), output, angle, moveSpeed, moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
         driveTrain.setSpeedsPercent(moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
+    }
+
+    /**
+     * Performs arcade driving
+     * @param speed The magnitude of speed from -1 to 1
+     * @param turning The turning magnitude from -1 to 1
+     */
+    public void arcadeDrive(double speed, double turning) {
+        speed /= 2;
+        turning /= 3;
+
+        if (Math.abs(speed - lastSetpointSpeed) > ARCADE_RATE) {
+            speed = speed < lastSetpointSpeed ? lastSetpointSpeed - ARCADE_RATE : lastSetpointSpeed + ARCADE_RATE;
+        }
+        if (Math.abs(turning - lastSetpointTurning) > Constants.DriveTrain.ARCADE_RATE) {
+            turning = turning < lastSetpointTurning ? lastSetpointTurning - ARCADE_RATE : lastSetpointTurning + ARCADE_RATE;
+        }
+        lastSetpointSpeed = speed;
+        lastSetpointTurning = turning;
+        driveTrain.setSpeedsPercent(speed + turning, speed - turning);
+    }
+
+
+    /**
+     * Takes to speed values from -1 to 1 and uses them for tank driving
+     * @param lSpeed The value for the left side
+     * @param rSpeed The value for the right side
+     */
+    public void tankDrive(double lSpeed, double rSpeed) {
+        driveTrain.setSpeedsPercent(lSpeed, rSpeed);
     }
 }

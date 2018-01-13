@@ -2,10 +2,12 @@ package org.team639.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.Drive.JoystickDrive;
@@ -16,6 +18,15 @@ import org.team639.robot.commands.Drive.JoystickDrive;
 public class DriveTrain extends Subsystem {
     private TalonSRX leftDrive;
     private TalonSRX rightDrive;
+
+    private double kP;
+    private double kI;
+    private double kD;
+    private double kF;
+
+    private double rampRate = 0;
+
+
 
     private AHRS ahrs;
 
@@ -40,8 +51,8 @@ public class DriveTrain extends Subsystem {
 //        leftDrive.setAllowableClosedLoopErr(10);
 //        rightDrive.setAllowableClosedLoopErr(10);
         // TODO: Not entirely sure what this number actually represents.
-        leftDrive.configAllowableClosedloopError(0,10,10);
-        rightDrive.configAllowableClosedloopError(0,10,10);
+        leftDrive.configAllowableClosedloopError(0,50,10);
+        rightDrive.configAllowableClosedloopError(0,50,10);
 
         // TODO: Not sure what to replace these with. Maybe they aren't necessary?
 //        leftDrive.setPIDSourceType(PIDSourceType.kRate);
@@ -59,9 +70,12 @@ public class DriveTrain extends Subsystem {
         leftDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
         rightDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
 
+        leftDrive.setNeutralMode(NeutralMode.Brake);
+        rightDrive.setNeutralMode(NeutralMode.Brake);
+
         setCurrentControlMode(ControlMode.Velocity);
 
-        setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D);
+        setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D, Constants.DriveTrain.DRIVE_F);
 
         ahrs = RobotMap.getAhrs();
         ahrs.zeroYaw();
@@ -91,15 +105,22 @@ public class DriveTrain extends Subsystem {
      * @param i
      * @param d
      */
-    public void setPID(double p, double i, double d) {
+    public void setPID(double p, double i, double d, double f) {
+        kP = p;
+        kI = i;
+        kD = d;
+        kF = f;
 //        rightDrive.setPID(p, i, d);
-        rightDrive.config_kP(0, p, 10);
-        rightDrive.config_kI(0, i, 10);
-        rightDrive.config_kD(0, d, 10);
+        rightDrive.config_kP(0, kP, 10);
+        rightDrive.config_kI(0, kI, 10);
+        rightDrive.config_kD(0, kD, 10);
+        rightDrive.config_kF(0, kF, 10);
 //        leftDrive.setPID(p, i, d);
-        leftDrive.config_kP(0, p, 10);
-        leftDrive.config_kI(0, i, 10);
-        leftDrive.config_kD(0, d, 10);
+        leftDrive.config_kP(0, kP, 10);
+        leftDrive.config_kI(0, kI, 10);
+        leftDrive.config_kD(0, kD, 10);
+        leftDrive.config_kF(0, kF, 10);
+
     }
 
     /**
@@ -120,13 +141,19 @@ public class DriveTrain extends Subsystem {
         if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
         switch (currentControlMode) {
             case PercentOutput:
-                rightDrive.set(currentControlMode, -1 * rSpeed);
-                leftDrive.set(currentControlMode, lSpeed);
+//                rightDrive.set(currentControlMode, -1 * rSpeed);
+//                leftDrive.set(currentControlMode, lSpeed);
+                setSpeedsRaw(lSpeed, rSpeed);
                 break;
             case Velocity:
 //                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
-                rightDrive.set(currentControlMode, -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
-                leftDrive.set(currentControlMode, lSpeed * Constants.DriveTrain.SPEED_RANGE);
+                SmartDashboard.putNumber("right setpoint", -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
+                SmartDashboard.putNumber("left setpoint", lSpeed * Constants.DriveTrain.SPEED_RANGE);
+//                rightDrive.set(currentControlMode, -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
+//                leftDrive.set(currentControlMode, lSpeed * Constants.DriveTrain.SPEED_RANGE);
+                double ls = lSpeed * Constants.DriveTrain.SPEED_RANGE;
+                double rs = rSpeed * Constants.DriveTrain.SPEED_RANGE;
+                setSpeedsRaw(ls, rs);
                 break;
         }
     }
@@ -137,28 +164,14 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsRaw(double lSpeed, double rSpeed) {
+
+
         rightDrive.set(currentControlMode, -1 * rSpeed);
         leftDrive.set(currentControlMode, lSpeed);
     }
 
-    /**
-     * Takes to speed values from -1 to 1 and uses them for tank driving
-     * @param lSpeed The value for the left side
-     * @param rSpeed The value for the right side
-     */
-    public void tankDrive(double lSpeed, double rSpeed) {
-        setSpeedsPercent(lSpeed, rSpeed);
-    }
 
-    /**
-     * Performs arcade driving
-     * @param speed The magnitude of speed from -1 to 1
-     * @param turning The turning magnitude from -1 to 1
-     */
-    public void arcadeDrive(double speed, double turning) {
-//        if (speed < 0) turning *= -1;
-        setSpeedsPercent(speed / 2 + turning / 3, speed / 2 - turning / 3);
-    }
+
 
     /**
      * Returns the position of the left encoder
@@ -214,5 +227,31 @@ public class DriveTrain extends Subsystem {
 
     public void zeroRobotYaw() {
         ahrs.zeroYaw();
+    }
+
+    public double getkP() {
+        return kP;
+    }
+
+    public double getkI() {
+        return kI;
+    }
+
+    public double getkD() {
+        return kD;
+    }
+
+    public double getkF() {
+        return kF;
+    }
+
+    public double getRampRate() {
+        return rampRate;
+    }
+
+    public void setRampRate(double rampRate) {
+        this.rampRate = rampRate;
+        leftDrive.configClosedloopRamp(rampRate, 10);
+        rightDrive.configClosedloopRamp(rampRate, 10);
     }
 }

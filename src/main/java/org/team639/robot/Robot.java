@@ -12,6 +12,9 @@ public class Robot extends TimedRobot {
     private static GearAcquisition gearAcquisition;
     private static DriveTrain driveTrain;
 
+//    private double lMax = 0;
+//    private double rMax = 0;
+
     private static SendableChooser<DriveTrain.DriveMode> driveMode;
     private static SendableChooser<ControlMode> talonMode;
 
@@ -54,7 +57,8 @@ public class Robot extends TimedRobot {
         //PID constants -- Caution! May be used for multiple different operations and should be adjusted correctly for each.
         SmartDashboard.putNumber("drive p", 0.1);
         SmartDashboard.putNumber("drive i", 0);
-        SmartDashboard.putNumber("drive d", 0.);
+        SmartDashboard.putNumber("drive d", 0);
+        SmartDashboard.putNumber("drive f", 0);
         SmartDashboard.putNumber("rate", 0.1);
         SmartDashboard.putNumber("tolerance", 2);
         SmartDashboard.putNumber("min", 0.11);
@@ -63,6 +67,9 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("turn speed", 1);
         SmartDashboard.putNumber("multiply by", 1);
+//        SmartDashboard.putNumber("r max", rMax);
+//        SmartDashboard.putNumber("l max", lMax);
+
 
 //        SmartDashboard.putNumber("distance", 64);
 
@@ -70,6 +77,8 @@ public class Robot extends TimedRobot {
         //Initialize subsystems
         gearAcquisition = new GearAcquisition();
         driveTrain = new DriveTrain();
+
+        SmartDashboard.putNumber("rampRate", driveTrain.getRampRate());
 
         OI.mapButtons();
     }
@@ -97,8 +106,30 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         super.robotPeriodic();
+//        double left = driveTrain.getLeftEncVelocity();
+//        double right = driveTrain.getRightEncVelocity();
+//        if (lMax < left) {
+//            lMax = left;
+//            SmartDashboard.putNumber("l max", lMax);
+//        }
+//
+//        if (rMax < right) {
+//            rMax = right;
+//            SmartDashboard.putNumber("r max", rMax);
+//        }
 //        System.out.println("Left: " + driveTrain.getLeftEncPos() + ", Right: "  + driveTrain.getRightEncPos());
 //        System.out.println("Robot yaw: " + driveTrain.getRobotYaw());
+        SmartDashboard.putNumber("left velocity", driveTrain.getLeftEncVelocity());
+        SmartDashboard.putNumber("right velocity", driveTrain.getRightEncVelocity());
+//        SmartDashboard.putNumber("closed loop error", RobotMap.getRightDrive().getClosedLoopError(0));
+//        SmartDashboard.putNumber("drive p", 0);
+//        SmartDashboard.putNumber("drive i", 0);
+//        SmartDashboard.putNumber("drive d", 0.);
+//        SmartDashboard.putNumber("rate", 0.1);
+//        SmartDashboard.putNumber("tolerance", 2);
+//        SmartDashboard.putNumber("min", 0.11);
+//        SmartDashboard.putNumber("max", 0.5);
+//        SmartDashboard.putNumber("iCap", 0.2);
     }
 
     @Override
