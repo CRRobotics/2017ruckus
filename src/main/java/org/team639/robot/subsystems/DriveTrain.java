@@ -40,17 +40,13 @@ public class DriveTrain extends Subsystem {
         ARCADE_1_JOYSTICK,
         ARCADE_2_JOYSTICK,
         FIELD_1_JOYSTICK,
-        FIELD_2_JOYSTICK,
-        NAVX_ARCADE
+        FIELD_2_JOYSTICK
     }
 
     public DriveTrain() {
         leftDrive = RobotMap.getLeftDrive();
         rightDrive = RobotMap.getRightDrive();
 
-//        leftDrive.setAllowableClosedLoopErr(10);
-//        rightDrive.setAllowableClosedLoopErr(10);
-        // TODO: Not entirely sure what this number actually represents.
         leftDrive.configAllowableClosedloopError(0,50,10);
         rightDrive.configAllowableClosedloopError(0,50,10);
 
@@ -61,12 +57,9 @@ public class DriveTrain extends Subsystem {
         leftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
         rightDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
-        leftDrive.setSensorPhase(true);// leftDrive.reverseSensor(true);
-        rightDrive.setSensorPhase(true);// rightDrive.reverseSensor(true);
+        leftDrive.setSensorPhase(true);
+        rightDrive.setSensorPhase(true);
 
-//        leftDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
-//        rightDrive.setStatusFrameRateMs(SmartMotorController.StatusFrameRate.QuadEncoder, 1);
-        // TODO: These set the rate of sensor data reporting. I'm not entirely sure I'm using the right StatusFrameEnhanced.
         leftDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
         rightDrive.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 1, 10);
 

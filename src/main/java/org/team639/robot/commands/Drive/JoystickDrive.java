@@ -13,8 +13,8 @@ import org.team639.robot.subsystems.DriveTrain;
 import static org.team639.robot.Constants.DriveTrain.*;
 
 /**
- * Controls DriveTrain with Joysticks
- * Default DriveTrain command
+ * Controls DriveTrain with Joysticks.
+ * Default DriveTrain command.
  */
 public class JoystickDrive extends Command {
     private DriveTrain driveTrain = Robot.getDriveTrain();
@@ -58,7 +58,7 @@ public class JoystickDrive extends Command {
     }
 
     /**
-     * Called repeatedly while the command is running
+     * Called repeatedly while the command is running.
      */
     protected void execute() {
         DriveTrain.DriveMode mode;
@@ -67,7 +67,9 @@ public class JoystickDrive extends Command {
         double speed;
         double angle;
 
-        OI.manager.setScale(1 - OI.manager.getControllerAxis(LogitechF310.ControllerAxis.RightTrigger));
+        double scale = 1 - OI.manager.getControllerAxis(LogitechF310.ControllerAxis.RightTrigger);
+        if (scale < 0.2) scale = 0.2;
+        OI.manager.setScale(scale);
         if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
             mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
         } else {
@@ -75,13 +77,13 @@ public class JoystickDrive extends Command {
         }
         switch (mode) {
             case TANK:
-                tankDrive(OI.manager.getLeftDriveY(), OI.manager.getRightDriveY());
+                tankDrive(OI.manager.getLeftDriveY() * scale, OI.manager.getRightDriveY() * scale);
                 break;
             case ARCADE_1_JOYSTICK:
-                arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getRightDriveX());
+                arcadeDrive(OI.manager.getRightDriveY() * scale, OI.manager.getRightDriveX() * scale);
                 break;
             case ARCADE_2_JOYSTICK:
-                arcadeDrive(OI.manager.getRightDriveY(), OI.manager.getLeftDriveX());
+                arcadeDrive(OI.manager.getRightDriveY() * scale, OI.manager.getLeftDriveX() * scale);
                 break;
             case FIELD_1_JOYSTICK:
                 x = OI.manager.getRightDriveX();
@@ -95,15 +97,7 @@ public class JoystickDrive extends Command {
                 y = OI.manager.getLeftDriveY();
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getLeftDriveAngle() : 500;
                 speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
-                fieldOrientedDrive(angle, OI.manager.getRightDriveY(), speed);
-                break;
-            case NAVX_ARCADE:
-                x = OI.manager.getRightDriveX();
-                if (Math.abs(x) < Constants.JOYSTICK_DEADZONE) x = 0;
-                arcadeAngle -= x * SmartDashboard.getNumber("multiply by", 0.01);
-                arcadeAngle %= 360;
-                System.out.println("angle: " + arcadeAngle);
-                fieldOrientedDrive(arcadeAngle, OI.manager.getRightDriveY(), SmartDashboard.getNumber("turn speed", 0.25));
+                fieldOrientedDrive(angle, OI.manager.getRightDriveY() * scale, speed);
                 break;
         }
     }

@@ -45,7 +45,6 @@ public class Robot extends TimedRobot {
         driveMode.addObject("Field Oriented 1 joystick", DriveTrain.DriveMode.FIELD_1_JOYSTICK);
         driveMode.addObject("Field Oriented 2 joysticks", DriveTrain.DriveMode.FIELD_2_JOYSTICK);
         driveMode.addObject("2 Joystick Arcade", DriveTrain.DriveMode.ARCADE_2_JOYSTICK);
-        driveMode.addObject("navx arcade", DriveTrain.DriveMode.NAVX_ARCADE);
         SmartDashboard.putData("Drive Mode", driveMode);
 
         //Activate and deactivate closed loop drive
@@ -65,8 +64,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("max", 0.5);
         SmartDashboard.putNumber("iCap", 0.2);
 
-        SmartDashboard.putNumber("turn speed", 1);
-        SmartDashboard.putNumber("multiply by", 1);
 //        SmartDashboard.putNumber("r max", rMax);
 //        SmartDashboard.putNumber("l max", lMax);
 

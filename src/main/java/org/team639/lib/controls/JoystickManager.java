@@ -95,6 +95,5 @@ public abstract class JoystickManager {
 
     public void setScale(double scale) {
         this.scale = scale;
-        if(this.scale < 0.2) this.scale = .2;
     }
 }
