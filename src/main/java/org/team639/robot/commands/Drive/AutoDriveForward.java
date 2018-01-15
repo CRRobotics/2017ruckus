@@ -39,6 +39,7 @@ public class AutoDriveForward extends Command {
         super("AutoDriveForward");
         requires(driveTrain);
 
+        speed = Math.abs(speed);
         if (distance < 0) speed *= -1;
 
         lSpeed = speed;
@@ -49,7 +50,7 @@ public class AutoDriveForward extends Command {
         targetDistance = distance;
         targetTicks = (int)(targetDistance * Constants.DriveTrain.TICKS_PER_INCH);
 
-        pid = new PID(0,0,0,0,0,0,0, 0.2); //placeholder should remove
+//        pid = new PID(0,0,0,0,0,0,0, 0.2); //placeholder should remove
     }
 
     protected void initialize() {
