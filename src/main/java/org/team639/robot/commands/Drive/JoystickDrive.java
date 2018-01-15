@@ -53,6 +53,8 @@ public class JoystickDrive extends Command {
         if (Robot.getTalonMode() != driveTrain.getCurrentControlMode()) {
             driveTrain.setCurrentControlMode(Robot.getTalonMode());
         }
+        driveTrain.setRampRate(0);
+        driveTrain.setPID(DRIVE_P, DRIVE_I, DRIVE_D, DRIVE_F);
 
         arcadeAngle = driveTrain.getRobotYaw();
     }

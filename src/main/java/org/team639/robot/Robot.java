@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("drive d", 0);
         SmartDashboard.putNumber("drive f", 0);
         SmartDashboard.putNumber("rate", 0.1);
-        SmartDashboard.putNumber("tolerance", 2);
+        SmartDashboard.putNumber("tolerance", 200);
         SmartDashboard.putNumber("min", 0.11);
         SmartDashboard.putNumber("max", 0.5);
         SmartDashboard.putNumber("iCap", 0.2);
@@ -127,6 +127,8 @@ public class Robot extends TimedRobot {
 //        SmartDashboard.putNumber("min", 0.11);
 //        SmartDashboard.putNumber("max", 0.5);
 //        SmartDashboard.putNumber("iCap", 0.2);
+
+        SmartDashboard.putBoolean("Closed loop", driveTrain.getCurrentControlMode() == ControlMode.Velocity);
     }
 
     @Override

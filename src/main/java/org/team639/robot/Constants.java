@@ -2,7 +2,7 @@ package org.team639.robot;
 
 public class Constants {
     public static class DriveTrain {
-
+        public static final double MIN_DRIVE_PERCENT = 0.11; // TODO: Verify that this is correct.
 
         public static final double SPEED_RANGE = 3400;
         public static final double DRIVE_P = 1.6;

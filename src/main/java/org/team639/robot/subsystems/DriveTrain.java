@@ -69,6 +69,7 @@ public class DriveTrain extends Subsystem {
         setCurrentControlMode(ControlMode.Velocity);
 
         setPID(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D, Constants.DriveTrain.DRIVE_F);
+        setRampRate(rampRate);
 
         ahrs = RobotMap.getAhrs();
         ahrs.zeroYaw();
@@ -130,20 +131,19 @@ public class DriveTrain extends Subsystem {
      * @param rSpeed The value for the right side
      */
     public void setSpeedsPercent(double lSpeed, double rSpeed) {
-        if (Math.abs(lSpeed) < Constants.JOYSTICK_DEADZONE) lSpeed = 0;
-        if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
+//        if (Math.abs(lSpeed) < Constants.JOYSTICK_DEADZONE) lSpeed = 0;
+//        if (Math.abs(rSpeed) < Constants.JOYSTICK_DEADZONE) rSpeed = 0;
+
+        // Limits speeds to the range [-1, 1]
+        if (Math.abs(lSpeed) > 1) lSpeed = lSpeed < 0 ? -1 : 1;
+        if (Math.abs(rSpeed) > 1) rSpeed = rSpeed < 0 ? -1 : 1;
         switch (currentControlMode) {
             case PercentOutput:
-//                rightDrive.set(currentControlMode, -1 * rSpeed);
-//                leftDrive.set(currentControlMode, lSpeed);
                 setSpeedsRaw(lSpeed, rSpeed);
                 break;
             case Velocity:
-//                System.out.println("Right: " + getRightEncVelocity() + " Left: " + getLeftEncVelocity());
                 SmartDashboard.putNumber("right setpoint", -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
                 SmartDashboard.putNumber("left setpoint", lSpeed * Constants.DriveTrain.SPEED_RANGE);
-//                rightDrive.set(currentControlMode, -1 * rSpeed * Constants.DriveTrain.SPEED_RANGE);
-//                leftDrive.set(currentControlMode, lSpeed * Constants.DriveTrain.SPEED_RANGE);
                 double ls = lSpeed * Constants.DriveTrain.SPEED_RANGE;
                 double rs = rSpeed * Constants.DriveTrain.SPEED_RANGE;
                 setSpeedsRaw(ls, rs);
