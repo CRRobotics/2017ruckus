@@ -4,9 +4,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team639.robot.Robot;
 
 public class AutoTurnToRelativeAngle extends Command {
-    int angle;
-    public AutoTurnToRelativeAngle(int angle){
+    private double speed;
+    private int angle;
+
+    public AutoTurnToRelativeAngle(int angle, double speed){
         this.angle = angle;
+        this.speed = speed;
     }
 
 
@@ -15,7 +18,7 @@ public class AutoTurnToRelativeAngle extends Command {
      */
     @Override
     protected void initialize() {
-        new AutoTurnToAngle(Robot.getDriveTrain().getRobotYaw() + angle).start();
+        new AutoTurnToAngle(Robot.getDriveTrain().getRobotYaw() + angle, speed).start();
     }
 
 
