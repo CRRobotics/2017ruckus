@@ -25,6 +25,9 @@ public class JoystickDrive extends Command {
     private double lastSetpointSpeed = 0;
     private double lastSetpointTurning = 0;
 
+    private double lastSetpointRight = 0;
+    private double lastSetpointLeft = 0;
+
     public JoystickDrive() {
         super("JoystickDrive");
         requires(driveTrain);
@@ -71,7 +74,8 @@ public class JoystickDrive extends Command {
 
         double scale = 1 - OI.manager.getControllerAxis(LogitechF310.ControllerAxis.RightTrigger);
         if (scale < 0.2) scale = 0.2;
-        OI.manager.setScale(scale);
+//        System.out.println(scale);
+//        OI.manager.setScale(scale);
         if (OI.manager.getButtonPressed(LogitechF310.Buttons.LB)) {
             mode = DriveTrain.DriveMode.FIELD_2_JOYSTICK;
         } else {
@@ -159,6 +163,18 @@ public class JoystickDrive extends Command {
      * @param rSpeed The value for the right side
      */
     public void tankDrive(double lSpeed, double rSpeed) {
+        lSpeed /= 2;
+        rSpeed /= 2;
+        //RAMPING
+        if (Math.abs(lSpeed - lastSetpointLeft) > ARCADE_RATE) {
+            lSpeed = lSpeed < lastSetpointLeft ? lastSetpointLeft - ARCADE_RATE : lastSetpointLeft + ARCADE_RATE;
+        }
+        if (Math.abs(rSpeed - lastSetpointRight) > Constants.DriveTrain.ARCADE_RATE) {
+            rSpeed = rSpeed < lastSetpointRight ? lastSetpointRight - ARCADE_RATE : lastSetpointRight + ARCADE_RATE;
+        }
+
+        lastSetpointRight = rSpeed;
+        lastSetpointLeft = lSpeed;
         driveTrain.setSpeedsPercent(lSpeed, rSpeed);
     }
 }

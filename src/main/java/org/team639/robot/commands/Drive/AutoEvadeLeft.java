@@ -6,8 +6,8 @@ public class AutoEvadeLeft extends CommandGroup {
     public AutoEvadeLeft() {
         super( "AutoEvadeRight");
         addSequential(new AutoTurnToRelativeAngle(45, 1));
-        addSequential(new AutoDriveForward(35, .3));
+        addSequential(new AutoDriveForward(35, 1));
         addSequential(new AutoTurnToRelativeAngle(-45, 1));
-        addSequential(new AutoDriveForward(60, .3));
+        addSequential(new AutoDriveForward(60, 1));
     }
 }

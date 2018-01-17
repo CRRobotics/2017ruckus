@@ -118,6 +118,8 @@ public class Robot extends TimedRobot {
 //        System.out.println("Robot yaw: " + driveTrain.getRobotYaw());
         SmartDashboard.putNumber("left velocity", driveTrain.getLeftEncVelocity());
         SmartDashboard.putNumber("right velocity", driveTrain.getRightEncVelocity());
+
+        SmartDashboard.putNumber("Angle", driveTrain.getRobotYaw());
 //        SmartDashboard.putNumber("closed loop error", RobotMap.getRightDrive().getClosedLoopError(0));
 //        SmartDashboard.putNumber("drive p", 0);
 //        SmartDashboard.putNumber("drive i", 0);

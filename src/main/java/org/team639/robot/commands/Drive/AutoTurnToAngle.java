@@ -2,8 +2,10 @@ package org.team639.robot.commands.Drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.lib.math.AngleMath;
 import org.team639.lib.math.PID;
+import org.team639.robot.Constants;
 import org.team639.robot.Robot;
 import org.team639.robot.subsystems.DriveTrain;
 
@@ -50,7 +52,7 @@ public class AutoTurnToAngle extends Command {
 //        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
 //        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
 //        double rate = SmartDashboard.getNumber("rate", 0.1);
-//        double tolerance = SmartDashboard.getNumber("tolerance", 200);
+//        double tolerance = TTA_TOLERANCE; // SmartDashboard.getNumber("tolerance", 2);
 //        double min = SmartDashboard.getNumber("min", 0.2);
 //        double max = SmartDashboard.getNumber("max", 0.5);
 //        double iCap = SmartDashboard.getNumber("iCap", 0.2);
@@ -64,12 +66,15 @@ public class AutoTurnToAngle extends Command {
 
     protected void execute() {
         double error = Math.abs(AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle));
+        SmartDashboard.putNumber("angle error", error);
         if (Math.abs(error) < startSlow) {
+            System.out.println("slowing down");
             double multiplier = Math.abs(error) / (startSlow * 2); // TODO: Should this be multiplied by 2?
             if (multiplier > 1) multiplier = 1;
             if (multiplier < minSpeed) multiplier = minSpeed;
             driveTrain.setSpeedsPercent(lSpeed * multiplier, rSpeed * multiplier);
         } else {
+            System.out.println("full speed");
             driveTrain.setSpeedsPercent(lSpeed, rSpeed);
         }
 //        double val = pid.compute(error);
@@ -79,7 +84,7 @@ public class AutoTurnToAngle extends Command {
 
     @Override
     protected boolean isFinished() {
-        return AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle) < TTA_TOLERANCE;
+        return Math.abs(AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle)) < TTA_TOLERANCE;
     }
 
     @Override

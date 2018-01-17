@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class JoystickManager {
 
-    private double scale = 1;
-
     public enum MappingType {
         WhenPressed,
         WhileHeld,
@@ -87,13 +85,5 @@ public abstract class JoystickManager {
         angle = Math.toDegrees(angle);
         if (angle < 0) angle = 360 + angle;
         return angle;
-    }
-
-    public double getScale() {
-        return scale;
-    }
-
-    public void setScale(double scale) {
-        this.scale = scale;
     }
 }

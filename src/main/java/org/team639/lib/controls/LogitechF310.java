@@ -95,7 +95,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getLeftDriveY() {
-        return -1 * stick.getRawAxis(1) * getScale();
+        return -1 * stick.getRawAxis(1);
     }
 
     /**
@@ -105,7 +105,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getRightDriveY() {
-        return -1 * stick.getRawAxis(5) * getScale();
+        return -1 * stick.getRawAxis(5);
     }
 
     /**
@@ -115,7 +115,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getLeftDriveX() {
-        return stick.getRawAxis(0) * getScale();
+        return stick.getRawAxis(0);
     }
 
     /**
@@ -125,7 +125,7 @@ public class LogitechF310 extends JoystickManager {
      */
     @Override
     public double getRightDriveX() {
-        return stick.getRawAxis(4) * getScale();
+        return stick.getRawAxis(4);
     }
 
     /**
