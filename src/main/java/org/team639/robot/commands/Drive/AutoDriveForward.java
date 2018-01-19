@@ -45,7 +45,7 @@ public class AutoDriveForward extends Command {
         lSpeed = speed;
         rSpeed = speed;
         startSlow = Math.abs(Constants.DriveTrain.ENC_TICKS_PER_ROTATION * speed); // TODO: This value may need to be changed.
-        minSpeed = speed / MIN_DRIVE_PERCENT;
+        minSpeed = MIN_DRIVE_PERCENT / speed;
 
         targetDistance = distance;
         targetTicks = (int)(targetDistance * Constants.DriveTrain.TICKS_PER_INCH);
