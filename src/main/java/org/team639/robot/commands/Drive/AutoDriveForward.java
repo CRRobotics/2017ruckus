@@ -65,44 +65,44 @@ public class AutoDriveForward extends Command {
         driveTrain.setCurrentControlMode(ControlMode.Velocity);
         driveTrain.setRampRate(1); // TODO: Maybe change this.
 
-//        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
-//        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
-//        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
-//        double rate = SmartDashboard.getNumber("rate", 0.1);
-//        double tolerance = SmartDashboard.getNumber("tolerance", 200);
-//        double min = SmartDashboard.getNumber("min", 0.2);
-//        double max = SmartDashboard.getNumber("max", 0.5);
-//        pid = new PID(p, i, d, min, max, rate, tolerance, 0.2);
+        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
+        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
+        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
+        double rate = SmartDashboard.getNumber("rate", 0.1);
+        double tolerance = SmartDashboard.getNumber("tolerance", 200);
+        double min = SmartDashboard.getNumber("min", 0.2);
+        double max = SmartDashboard.getNumber("max", 0.5);
+        pid = new PID(p, i, d, min, max, rate, tolerance, 0.2);
 //
-//        turnPID = new PID(FOT_P, FOT_I, FOT_D, FOT_MIN, FOT_MAX, FOT_RATE, FOT_TOLERANCE, FOT_I_CAP);
+        turnPID = new PID(FOT_P, FOT_I, FOT_D, FOT_MIN, FOT_MAX, FOT_RATE, FOT_TOLERANCE, FOT_I_CAP);
     }
 
     protected void execute() {
         lTickDiff = Math.abs(targetLeft - driveTrain.getLeftEncPos());
         rTickDiff = Math.abs(targetRight - driveTrain.getRightEncPos());
 
-//        double val = pid.compute(lTickDiff);
-//        System.out.println(lTickDiff + ", " + val);
+        double val = pid.compute(lTickDiff);
+        System.out.println(lTickDiff + ", " + val);
 //
-//        double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
-//        double output = turnPID.compute(error);
+        double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
+        double output = turnPID.compute(error);
 ////        System.out.println((val - output) + ", " + (val + output));
-//        driveTrain.setSpeedsPercent(val - output, val + output);
-//        done = (val == 0);
+        driveTrain.setSpeedsPercent(val - output, val + output);
+        done = (val == 0);
 
-        if (Math.abs(lTickDiff) <= startSlow) {
-
-            double multiplier = Math.abs(lTickDiff) / (startSlow * 2); // TODO: Should this be multiplied by 2?
-//            double rMultiplier = Math.abs(rTickDiff) / (startSlow * 2);
-            if (multiplier > 1) multiplier = 1;
-//            if (rMultiplier > 1) rMultiplier = 1;
-            if (multiplier < minSpeed) multiplier = minSpeed;
-//            if (rMultiplier < 0.2) rMultiplier = 0.2;
-
-            driveTrain.setSpeedsPercent(lSpeed * multiplier, rSpeed * multiplier);
-        } else {
-            driveTrain.setSpeedsPercent(lSpeed, rSpeed);
-        }
+//        if (Math.abs(lTickDiff) <= startSlow) {
+//
+//            double multiplier = Math.abs(lTickDiff) / (startSlow * 2); // TODO: Should this be multiplied by 2?
+////            double rMultiplier = Math.abs(rTickDiff) / (startSlow * 2);
+//            if (multiplier > 1) multiplier = 1;
+////            if (rMultiplier > 1) rMultiplier = 1;
+//            if (multiplier < minSpeed) multiplier = minSpeed;
+////            if (rMultiplier < 0.2) rMultiplier = 0.2;
+//
+//            driveTrain.setSpeedsPercent(lSpeed * multiplier, rSpeed * multiplier);
+//        } else {
+//            driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//        }
     }
 
     @Override

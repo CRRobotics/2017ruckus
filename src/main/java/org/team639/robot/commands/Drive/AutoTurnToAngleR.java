@@ -39,8 +39,8 @@ public class AutoTurnToAngleR extends Command {
 //        int direction = AngleMath.shortestDirection(driveTrain.getRobotYaw(), pAngle);
         lSpeed = -1 * speed;
         rSpeed = speed;
-        maxTolerance = 15;
-        minTolerance = 3;
+        maxTolerance = 20;
+        minTolerance = 10;
 
 //        startSlow = 360 * speed; // TODO: This needs to be adjusted
 //        minSpeed = speed / MIN_DRIVE_PERCENT;
@@ -70,14 +70,16 @@ public class AutoTurnToAngleR extends Command {
                 rSpeed *= AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle);
                 driveTrain.setSpeedsPercent(lSpeed, rSpeed);
             }
-            else if(Math.abs(AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle)) > minTolerance)
-            {
-                lSpeed *= AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle);
-                rSpeed *= AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle);
+            else if(Math.abs(AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle)) > minTolerance) {
+                double multiplier = Math.abs(AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle)) - minTolerance;
+                multiplier /= maxTolerance;
+                lSpeed *= AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle) * multiplier;
+                rSpeed *= AngleMath.shortestDirection(driveTrain.getRobotYaw(), angle) * multiplier;
                 driveTrain.setSpeedsPercent(lSpeed, rSpeed);
             }
-            else
-                driveTrain.setSpeedsPercent(0,0);
+            else {
+                driveTrain.setSpeedsPercent(0, 0);
+            }
 //        double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
 //        SmartDashboard.putNumber("angle error", error);
 //        if (Math.abs(error) < startSlow) {
@@ -91,7 +93,7 @@ public class AutoTurnToAngleR extends Command {
 //            driveTrain.setSpeedsPercent(lSpeed, rSpeed);
 //        }
 //        double val = pid.compute(error);
-        done = (AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle) <= maxTolerance);
+        done = (AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle) <= minTolerance);
 //        driveTrain.setSpeedsPercent(-1 * val, val);
     }
 
