@@ -1,0 +1,30 @@
+package org.team639.lib.sensor;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+
+/**
+ * A MaxSonar EZ4 ultrasonic distance sensor communicating through an analog port.
+ */
+public class MaxSonarEZ4Analog implements DistanceSensor {
+
+    AnalogInput input;
+
+    /**
+     * Constructs a new MaxSonarEZ4Analog
+     * @param channel The analog channel to listen on.
+     */
+    public MaxSonarEZ4Analog(int channel) {
+        input = new AnalogInput(channel);
+    }
+
+    /**
+     * Returns the distance registered in inches. Returns -1 if out of range.
+     *
+     * @return the distance sensor in inches or -1 if out of range.
+     */
+    @Override
+    public double getDistanceInches() {
+        double distance = input.getVoltage() * 512 / 5;
+        return distance;
+    }
+}

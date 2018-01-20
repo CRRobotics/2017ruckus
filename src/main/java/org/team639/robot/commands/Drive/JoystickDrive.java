@@ -158,7 +158,7 @@ public class JoystickDrive extends Command {
 
 
     /**
-     * Takes to speed values from -1 to 1 and uses them for tank driving
+     * Takes two speed values from -1 to 1 and uses them for tank driving
      * @param lSpeed The value for the left side
      * @param rSpeed The value for the right side
      */

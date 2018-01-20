@@ -120,6 +120,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("right velocity", driveTrain.getRightEncVelocity());
 
         SmartDashboard.putNumber("Angle", driveTrain.getRobotYaw());
+
+        SmartDashboard.putNumber("Ultrasonic", RobotMap.getUltrasonic().getDistanceInches());
 //        SmartDashboard.putNumber("closed loop error", RobotMap.getRightDrive().getClosedLoopError(0));
 //        SmartDashboard.putNumber("drive p", 0);
 //        SmartDashboard.putNumber("drive i", 0);
