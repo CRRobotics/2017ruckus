@@ -43,15 +43,15 @@ public class AutoTurnToAngle extends Command {
     //anthony is a pretty cool guy
     protected void initialize() {
 ////        done = false;
-//        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
-//        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
-//        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
-//        double rate = SmartDashboard.getNumber("rate", 0.1);
-//        double tolerance = TTA_TOLERANCE; // SmartDashboard.getNumber("tolerance", 2);
-//        double min = SmartDashboard.getNumber("min", 0.2);
-//        double max = SmartDashboard.getNumber("max", 0.5);
-//        double iCap = SmartDashboard.getNumber("iCap", 0.2);
-    pid = new PID(TTA_P, TTA_I, TTA_D, TTA_MIN, TTA_MAX, TTA_RATE, TTA_TOLERANCE, TTA_I_CAP);
+        double p = SmartDashboard.getNumber("drive p", Constants.DriveTrain.DRIVE_P);
+        double i = SmartDashboard.getNumber("drive i", Constants.DriveTrain.DRIVE_I);
+        double d = SmartDashboard.getNumber("drive d", Constants.DriveTrain.DRIVE_I);
+        double rate = SmartDashboard.getNumber("rate", 0.1);
+        double tolerance = TTA_TOLERANCE; // SmartDashboard.getNumber("tolerance", 2);
+        double min = SmartDashboard.getNumber("min", 0.2);
+        double max = SmartDashboard.getNumber("max", 0.5);
+        double iCap = SmartDashboard.getNumber("iCap", 0.2);
+        pid = new PID(p, i, d, min, max, rate, TTA_TOLERANCE, iCap);
 
 
         driveTrain.setSpeedsPercent(0, 0);
