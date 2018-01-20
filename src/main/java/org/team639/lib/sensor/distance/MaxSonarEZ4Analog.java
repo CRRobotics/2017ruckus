@@ -1,4 +1,4 @@
-package org.team639.lib.sensor;
+package org.team639.lib.sensor.distance;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -18,9 +18,9 @@ public class MaxSonarEZ4Analog implements DistanceSensor {
     }
 
     /**
-     * Returns the distance registered in inches. Returns -1 if out of range.
+     * Returns the distance registered in inches.
      *
-     * @return the distance sensor in inches or -1 if out of range.
+     * @return the distance registered in inches.
      */
     @Override
     public double getDistanceInches() {

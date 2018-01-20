@@ -1,4 +1,4 @@
-package org.team639.lib.sensor;
+package org.team639.lib.sensor.distance;
 
 /**
  * Represents a distance sensor
@@ -6,8 +6,8 @@ package org.team639.lib.sensor;
 public interface DistanceSensor {
 
     /**
-     * Returns the distance registered in inches. Returns -1 if out of range.
-     * @return the distance sensor in inches or -1 if out of range.
+     * Returns the distance registered in inches.
+     * @return the distance registered in inches.
      */
     double getDistanceInches();
 }
