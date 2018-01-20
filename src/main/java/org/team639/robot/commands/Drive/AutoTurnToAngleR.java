@@ -39,8 +39,8 @@ public class AutoTurnToAngleR extends Command {
 //        int direction = AngleMath.shortestDirection(driveTrain.getRobotYaw(), pAngle);
         lSpeed = -1 * speed;
         rSpeed = speed;
-        maxTolerance = 20;
-        minTolerance = 10;
+        maxTolerance = 15;
+        minTolerance = 5;
 
 //        startSlow = 360 * speed; // TODO: This needs to be adjusted
 //        minSpeed = speed / MIN_DRIVE_PERCENT;
