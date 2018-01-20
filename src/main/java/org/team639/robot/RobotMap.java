@@ -43,9 +43,9 @@ public class RobotMap {
             gearSensor = new DigitalInput(0);
             sonar = new MaxSonarEZ4(0);
 
-            initialized = true;
-
             ahrs = new AHRS(SPI.Port.kMXP);
+
+            initialized = true;
         }
     }
 
