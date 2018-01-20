@@ -32,7 +32,7 @@ public class OI {
         manager.mapButton(LogitechF310.Buttons.POVDown, new AutoTurnToAngle(270, 1), JoystickManager.MappingType.WhenPressed);
         manager.mapButton(LogitechF310.Buttons.POVLeft, new AutoTurnToAngle(180, 1), JoystickManager.MappingType.WhenPressed);
     //    manager.mapButton(LogitechF310.Buttons.B)
-
+//add dynamic button functions like approach if turn to the angle your already facing
     }
 
     private OI() {

@@ -2,9 +2,11 @@ package org.team639.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import org.team639.lib.sensor.MaxSonarEZ4;
 
 /**
  * Contains references to all of the motors, sensors, pneumatics, etc. Controls access by the rest of the code from a central location
@@ -19,6 +21,7 @@ public class RobotMap {
     private static Solenoid gearClawRaise;
 
     private static DigitalInput gearSensor;
+    private static MaxSonarEZ4 sonar;
 
     private static AHRS ahrs;
 
@@ -38,6 +41,7 @@ public class RobotMap {
             gearClawRaise = new Solenoid(1);
 
             gearSensor = new DigitalInput(0);
+            sonar = new MaxSonarEZ4(0);
 
             initialized = true;
 
@@ -64,6 +68,7 @@ public class RobotMap {
     public static DigitalInput getGearSensor() {
         return gearSensor;
     }
+    public static MaxSonarEZ4 getSonar() { return sonar; }
 
     public static AHRS getAhrs() {
         return ahrs;
