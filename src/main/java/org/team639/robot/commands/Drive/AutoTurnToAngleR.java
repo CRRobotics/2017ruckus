@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team639.lib.math.AngleMath;
 import org.team639.robot.Robot;
 import org.team639.robot.subsystems.DriveTrain;
-import org.team639.lib.sensor.MaxSonarEZ4;
 
 
 /**
