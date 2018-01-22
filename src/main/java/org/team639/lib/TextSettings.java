@@ -14,8 +14,8 @@ public class TextSettings {
      */
     public static void main(String[] args)
     {
-        System.out.println(""+getDouble("MIN_DRIVE_PERCENT"));
-        System.out.println(""+getDouble("MIN_DRIVE_PERCEN"));
+        System.out.println(getDouble("MIN_DRIVE_PERCENT"));
+        System.out.println(getDouble("MIN_DRIVE_PERCEN"));
     }
 
     /**
@@ -29,7 +29,7 @@ public class TextSettings {
 
             output = new FileOutputStream("config.properties");
 
-            //drving constants
+            //driving constants
             prop.setProperty("MIN_DRIVE_PERCENT", "" + 0.11);
             prop.setProperty("SPEED_RANGE", "" + 3400);
             prop.setProperty("DRIVE_P", "" + 1.6);
@@ -103,7 +103,8 @@ public class TextSettings {
 
             // load a properties file
             prop.load(input);
-            num = Double.parseDouble(prop.getProperty(key));
+            if(prop.getProperty(key)!= null)
+                num = Double.parseDouble(prop.getProperty(key));
 
         } catch (IOException ex) { ex.printStackTrace(); }
         if (input != null) {
