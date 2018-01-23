@@ -19,8 +19,13 @@ public class Sharp_GP2Y0A21YK0F_IR implements DistanceSensor {
      * @return the distance registered in inches.
      */
     @Override
+//    public double getDistanceInches() {
+//        double distance = (input.getVoltage() * ((80-10)/(0.55-0.25))-48.3)*0.3937;
+//        return distance;
+//    }
+
     public double getDistanceInches() {
-        double distance = (input.getVoltage() * ((80-10)/(0.55-0.25))-48.3)*0.3937;
+        double distance = (Math.pow(input.getVoltage(), -1.243) * 27.07)*0.3937;
         return distance;
     }
 }
