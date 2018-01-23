@@ -5,7 +5,9 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import org.team639.lib.sensor.distance.DistanceSensor;
 import org.team639.lib.sensor.distance.MaxSonarEZ4Analog;
+import org.team639.lib.sensor.distance.Sharp_GP2Y0A21YK0F_IR;
 
 /**
  * Contains references to all of the motors, sensors, pneumatics, etc. Controls access by the rest of the code from a central location
@@ -20,7 +22,7 @@ public class RobotMap {
     private static Solenoid gearClawRaise;
 
     private static DigitalInput gearSensor;
-    private static MaxSonarEZ4Analog sonar;
+    private static DistanceSensor sonar;
 
     private static AHRS ahrs;
 
@@ -40,7 +42,7 @@ public class RobotMap {
             gearClawRaise = new Solenoid(1);
 
             gearSensor = new DigitalInput(0);
-            sonar = new MaxSonarEZ4Analog(0);
+            sonar = new Sharp_GP2Y0A21YK0F_IR(0);
 
             ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -67,7 +69,8 @@ public class RobotMap {
     public static DigitalInput getGearSensor() {
         return gearSensor;
     }
-    public static MaxSonarEZ4Analog getSonar() { return sonar; }
+
+    public static DistanceSensor getSonar() { return sonar; }
 
     public static AHRS getAhrs() {
         return ahrs;

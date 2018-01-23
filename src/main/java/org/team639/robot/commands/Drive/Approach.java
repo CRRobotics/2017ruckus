@@ -2,6 +2,7 @@ package org.team639.robot.commands.Drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
+import org.team639.lib.sensor.distance.DistanceSensor;
 import org.team639.lib.sensor.distance.MaxSonarEZ4Analog;
 import org.team639.robot.Robot;
 import org.team639.robot.RobotMap;
@@ -13,7 +14,7 @@ public class Approach extends Command {
     private DriveTrain driveTrain;
 
     private boolean done;
-    private MaxSonarEZ4Analog sonar;
+    private DistanceSensor sonar;
     private double lSpeed;
     private double rSpeed;
     private double gSpeed;
