@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team639.lib.sensor.distance.DistanceSensor;
 import org.team639.robot.Constants;
 import org.team639.robot.RobotMap;
 import org.team639.robot.commands.Drive.JoystickDrive;
@@ -19,14 +20,14 @@ public class DriveTrain extends Subsystem {
     private TalonSRX leftDrive;
     private TalonSRX rightDrive;
 
+    private DistanceSensor frontSonar;
+
     private double kP;
     private double kI;
     private double kD;
     private double kF;
 
     private double rampRate = 0;
-
-
 
     private AHRS ahrs;
 
@@ -47,12 +48,10 @@ public class DriveTrain extends Subsystem {
         leftDrive = RobotMap.getLeftDrive();
         rightDrive = RobotMap.getRightDrive();
 
+        frontSonar = RobotMap.getFrontSonar();
+
         leftDrive.configAllowableClosedloopError(0,50,10);
         rightDrive.configAllowableClosedloopError(0,50,10);
-
-        // TODO: Not sure what to replace these with. Maybe they aren't necessary?
-//        leftDrive.setPIDSourceType(PIDSourceType.kRate);
-//        rightDrive.setPIDSourceType(PIDSourceType.kRate);
 
         leftDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
         rightDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
@@ -94,10 +93,11 @@ public class DriveTrain extends Subsystem {
     }
 
     /**
-     * Sets the PID constants
-     * @param p
-     * @param i
-     * @param d
+     * Sets the PID constants.
+     * @param p The P constant.
+     * @param i The I constant.
+     * @param d The D constant.
+     * @param f The F constant.
      */
     public void setPID(double p, double i, double d, double f) {
         kP = p;
@@ -218,33 +218,68 @@ public class DriveTrain extends Subsystem {
         return ahrs.isConnected();
     }
 
+    /**
+     * Zeroes the robot yaw.
+     */
     public void zeroRobotYaw() {
         ahrs.zeroYaw();
     }
 
+    /**
+     * Returns the P constant of the drivetrain.
+     * @return the P constant of the drivetrain.
+     */
     public double getkP() {
         return kP;
     }
 
+    /**
+     * Returns the I constant of the drivetrain.
+     * @return the I constant of the drivetrain.
+     */
     public double getkI() {
         return kI;
     }
 
+    /**
+     * Returns the D constant of the drivetrain.
+     * @return the D constant of the drivetrain.
+     */
     public double getkD() {
         return kD;
     }
 
+    /**
+     * Returns the F constant of the drivetrain.
+     * @return the F constant of the drivetrain.
+     */
     public double getkF() {
         return kF;
     }
 
+    /**
+     * Returns the ramp rate of the drivetrain.
+     * @return the ramp rate of the drivetrain.
+     */
     public double getRampRate() {
         return rampRate;
     }
 
+    /**
+     * Sets the ramp rate of the drivetrain
+     * @param rampRate The new ramp rate.
+     */
     public void setRampRate(double rampRate) {
         this.rampRate = rampRate;
         leftDrive.configClosedloopRamp(rampRate, 10);
         rightDrive.configClosedloopRamp(rampRate, 10);
+    }
+
+    /**
+     * Returns the distance detected by the distance sensor on the front of the robot.
+     * @return the distance detected by the distance sensor on the front of the robot.
+     */
+    public double getFrontDistance() {
+        return frontSonar.getDistanceInches();
     }
 }

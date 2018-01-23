@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("drive d", 0);
         SmartDashboard.putNumber("drive f", 0);
         SmartDashboard.putNumber("rate", 0.1);
-        SmartDashboard.putNumber("tolerance", 200);
+        SmartDashboard.putNumber("tolerance", 1);
         SmartDashboard.putNumber("min", 0.11);
         SmartDashboard.putNumber("max", 0.5);
         SmartDashboard.putNumber("iCap", 0.2);
@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
         driveTrain = new DriveTrain();
 
         SmartDashboard.putNumber("rampRate", driveTrain.getRampRate());
+        SmartDashboard.putBoolean("running", true);
 
         OI.mapButtons();
     }
@@ -121,7 +122,7 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("Angle", driveTrain.getRobotYaw());
 
-        SmartDashboard.putNumber("ultrasonic", RobotMap.getSonar().getDistanceInches());
+        SmartDashboard.putNumber("ultrasonic", RobotMap.getFrontSonar().getDistanceInches());
 
 //        SmartDashboard.putNumber("closed loop error", RobotMap.getRightDrive().getClosedLoopError(0));
 //        SmartDashboard.putNumber("drive p", 0);

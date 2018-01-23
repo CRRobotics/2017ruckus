@@ -3,7 +3,6 @@ package org.team639.robot.commands.Drive;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team639.lib.sensor.distance.DistanceSensor;
-import org.team639.lib.sensor.distance.MaxSonarEZ4Analog;
 import org.team639.robot.Robot;
 import org.team639.robot.RobotMap;
 import org.team639.robot.subsystems.DriveTrain;
@@ -27,7 +26,7 @@ public class Approach extends Command {
         super("AutoTurnToAngle");
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
-        sonar = RobotMap.getSonar();
+        sonar = RobotMap.getFrontSonar();
         gSpeed = Math.abs(speed);
         lSpeed = gSpeed;
         rSpeed = gSpeed;
