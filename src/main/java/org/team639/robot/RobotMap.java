@@ -67,6 +67,7 @@ public class RobotMap {
     public static DigitalInput getGearSensor() {
         return gearSensor;
     }
+
     public static MaxSonarEZ4Analog getSonar() { return sonar; }
 
     public static AHRS getAhrs() {

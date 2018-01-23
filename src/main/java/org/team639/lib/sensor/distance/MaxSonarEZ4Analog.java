@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
  */
 public class MaxSonarEZ4Analog implements DistanceSensor {
 
-    AnalogInput input;
+    private AnalogInput input;
+    private double lastDistance;
 
     /**
      * Constructs a new MaxSonarEZ4Analog
@@ -25,6 +26,10 @@ public class MaxSonarEZ4Analog implements DistanceSensor {
     @Override
     public double getDistanceInches() {
         double distance = input.getVoltage() * 512 / 5;
+        if (distance > lastDistance) {
+            distance = input.getVoltage() * 512 / 5;
+        }
+        lastDistance = distance;
         return distance;
     }
 }
