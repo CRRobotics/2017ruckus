@@ -27,7 +27,7 @@ public class DriveToDistanceAwayFront extends Command {
     private PID turnPID;
 
     public DriveToDistanceAwayFront(double distance) {
-        super("AutoDriveForward");
+        super("DriveToDistanceAwayFront");
         requires(driveTrain);
 
         targetDistance = distance;

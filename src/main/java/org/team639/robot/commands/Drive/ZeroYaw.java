@@ -6,6 +6,7 @@ import org.team639.robot.Robot;
 public class ZeroYaw extends Command {
 
     public ZeroYaw() {
+        super("ZeroYaw");
         requires(Robot.getDriveTrain());
     }
 
