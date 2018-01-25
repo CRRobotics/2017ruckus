@@ -5,7 +5,6 @@ import org.team639.robot.Robot;
 
 /**
  * A command that interrupts all other drive commands, returning control to the human driver.
- * Created by Jack Greenberg <theProgrammerJack@gmail.com> on 1/24/2018.
  */
 public class ReturnControlToDriver extends Command {
 
