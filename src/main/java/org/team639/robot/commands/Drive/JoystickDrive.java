@@ -1,7 +1,6 @@
 package org.team639.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team639.lib.controls.LogitechF310;
 import org.team639.lib.math.AngleMath;
 import org.team639.lib.math.PID;
@@ -83,27 +82,27 @@ public class JoystickDrive extends Command {
         }
         switch (mode) {
             case TANK:
-                tankDrive(OI.manager.getLeftDriveY() * scale, OI.manager.getRightDriveY() * scale);
+                tankDrive(OI.manager.getLeftStickY() * scale, OI.manager.getRightStickY() * scale);
                 break;
             case ARCADE_1_JOYSTICK:
-                arcadeDrive(OI.manager.getRightDriveY() * scale, OI.manager.getRightDriveX() * scale);
+                arcadeDrive(OI.manager.getLeftStickY() * scale, OI.manager.getLeftStickX() * scale);
                 break;
             case ARCADE_2_JOYSTICK:
-                arcadeDrive(OI.manager.getRightDriveY() * scale, OI.manager.getLeftDriveX() * scale);
+                arcadeDrive(OI.manager.getLeftStickY() * scale, OI.manager.getRightStickX() * scale);
                 break;
             case FIELD_1_JOYSTICK:
-                x = OI.manager.getRightDriveX();
-                y = OI.manager.getRightDriveY();
+                x = OI.manager.getRightStickX();
+                y = OI.manager.getRightStickY();
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getRightDriveAngle() : 500;
                 speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
                 fieldOrientedDrive(angle, speed, 1);
                 break;
             case FIELD_2_JOYSTICK:
-                x = OI.manager.getLeftDriveX();
-                y = OI.manager.getLeftDriveY();
+                x = OI.manager.getLeftStickX();
+                y = OI.manager.getLeftStickY();
                 angle = Math.abs(x) >= Constants.JOYSTICK_DEADZONE || Math.abs(y) >= Constants.JOYSTICK_DEADZONE ? OI.manager.getLeftDriveAngle() : 500;
                 speed = Math.sqrt(Math.pow(y, 2) + Math.pow(x, 2));
-                fieldOrientedDrive(angle, OI.manager.getRightDriveY() * scale, speed);
+                fieldOrientedDrive(angle, OI.manager.getRightStickY() * scale, speed);
                 break;
         }
     }
@@ -134,6 +133,8 @@ public class JoystickDrive extends Command {
         }
 //        System.out.printf("error: %f, output: %f, angle: %f, speed: %f, l: %f, R: %f\n", AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle), output, angle, moveSpeed, moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
         driveTrain.setSpeedsPercent(moveSpeed / 2 - output * turnSpeed, moveSpeed / 2 + output * turnSpeed);
+        if(Math.abs(moveSpeed) > 0 || Math.abs(turnSpeed) > 0)
+            new ReturnControlToDriver();
     }
 
     /**
@@ -154,6 +155,8 @@ public class JoystickDrive extends Command {
         lastSetpointSpeed = speed;
         lastSetpointTurning = turning;
         driveTrain.setSpeedsPercent(speed + turning, speed - turning);
+        if(Math.abs(speed) > 0 || Math.abs(turning) > 0)
+            new ReturnControlToDriver();
     }
 
 
@@ -176,5 +179,7 @@ public class JoystickDrive extends Command {
         lastSetpointRight = rSpeed;
         lastSetpointLeft = lSpeed;
         driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+        if(Math.abs(lSpeed) > 0 || Math.abs(rSpeed) > 0)
+            new ReturnControlToDriver();
     }
 }

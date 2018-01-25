@@ -51,10 +51,17 @@ public class Approach extends Command {
     protected void execute() {
         if(sonar.getDistanceInches() > distance + slow)
             driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//        account for MIN_DRIVE_PERCENT
+//        else if(sonar.getDistanceInches() > distance + tolerance) {
+//            double multiplier = (sonar.getDistanceInches() - (distance + tolerance))/slow;
+//            lSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+//            rSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+//            driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//        }
         else if(sonar.getDistanceInches() > distance + tolerance) {
             double multiplier = (sonar.getDistanceInches() - (distance + tolerance))/slow;
-            lSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
-            rSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+            lSpeed = gSpeed * multiplier;
+            rSpeed = gSpeed * multiplier;
             driveTrain.setSpeedsPercent(lSpeed, rSpeed);
         }
 

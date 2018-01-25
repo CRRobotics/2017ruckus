@@ -24,7 +24,7 @@ public class DoubleLogitechAttack3 extends JoystickManager {
      * @return The Y axis value of the left drive Joystick
      */
     @Override
-    public double getLeftDriveY() {
+    public double getLeftStickY() {
         return -1 * leftStick.getRawAxis(1);
     }
 
@@ -34,7 +34,7 @@ public class DoubleLogitechAttack3 extends JoystickManager {
      * @return The Y axis value of the right drive Joystick
      */
     @Override
-    public double getRightDriveY() {
+    public double getRightStickY() {
         return -1 * rightStick.getRawAxis(1);
     }
 
@@ -44,7 +44,7 @@ public class DoubleLogitechAttack3 extends JoystickManager {
      * @return The X axis value of the left drive Joystick
      */
     @Override
-    public double getLeftDriveX() {
+    public double getLeftStickX() {
         return leftStick.getRawAxis(0);
     }
 
@@ -54,7 +54,7 @@ public class DoubleLogitechAttack3 extends JoystickManager {
      * @return The X axis value of the left drive Joystick
      */
     @Override
-    public double getRightDriveX() {
+    public double getRightStickX() {
         return rightStick.getRawAxis(0);
     }
 

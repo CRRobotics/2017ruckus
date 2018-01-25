@@ -24,6 +24,7 @@ public class AutoTurnToAngleR extends Command {
     private double rSpeed;
     private double maxTol;
     private double minTol;
+    private int sign;
 
 
     public AutoTurnToAngleR(double pAngle, double speed) {
@@ -37,6 +38,7 @@ public class AutoTurnToAngleR extends Command {
         rSpeed = gSpeed;
         maxTol = 15;
         minTol = 3;
+        sign = shortestDirection(driveTrain.getRobotYaw(), angle);
 
     }
 
@@ -52,20 +54,31 @@ public class AutoTurnToAngleR extends Command {
     }
 
     protected void execute() {
+        sign = shortestDirection(driveTrain.getRobotYaw(), angle);
             if(Math.abs(shortestAngle(driveTrain.getRobotYaw(), angle)) > maxTol) {
-                lSpeed *= shortestDirection(driveTrain.getRobotYaw(), angle);
-                rSpeed *= shortestDirection(driveTrain.getRobotYaw(), angle);
+                lSpeed *= sign;
+                rSpeed *= sign;
                 lSpeed *= -1;
                 driveTrain.setSpeedsPercent(lSpeed, rSpeed);
             }
+//            account for MIN_DRIVE_PERCENT
+//            else if(Math.abs(shortestAngle(driveTrain.getRobotYaw(), angle)) > minTol) {
+//                double multiplier = (Math.abs(shortestAngle(driveTrain.getRobotYaw(), angle)) - minTol) / maxTol;
+//                lSpeed -= MIN_DRIVE_PERCENT;
+//                rSpeed -= MIN_DRIVE_PERCENT;
+//                lSpeed *= multiplier;
+//                rSpeed *= multiplier;
+//                lSpeed += MIN_DRIVE_PERCENT;
+//                rSpeed += MIN_DRIVE_PERCENT;
+//                lSpeed *= sign;
+//                rSpeed *= sign;
+//                lSpeed *= -1;
+//                driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//            }
             else if(Math.abs(shortestAngle(driveTrain.getRobotYaw(), angle)) > minTol) {
                 double multiplier = (Math.abs(shortestAngle(driveTrain.getRobotYaw(), angle)) - minTol) / maxTol;
-                lSpeed -= MIN_DRIVE_PERCENT;
-                rSpeed -= MIN_DRIVE_PERCENT;
-                lSpeed *= shortestDirection(driveTrain.getRobotYaw(), angle) * multiplier;
-                rSpeed *= shortestDirection(driveTrain.getRobotYaw(), angle)* multiplier;
-                lSpeed += MIN_DRIVE_PERCENT;
-                rSpeed += MIN_DRIVE_PERCENT;
+                lSpeed *= multiplier * sign;
+                rSpeed *= multiplier * sign;
                 lSpeed *= -1;
                 driveTrain.setSpeedsPercent(lSpeed, rSpeed);
             }
