@@ -23,7 +23,7 @@ public class Approach extends Command {
 
 
     public Approach(double pdistance, double speed) {
-        super("AutoTurnToAngle");
+        super("Approach");
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
         sonar = RobotMap.getFrontSonar();
@@ -32,8 +32,8 @@ public class Approach extends Command {
         rSpeed = gSpeed;
         distance = pdistance;
         tolerance = 1;
-        tolerance = pdistance < tolerance ? pdistance : tolerance;
-        slow = tolerance * 3;
+        distance = pdistance < tolerance ? tolerance*2 : distance;
+        slow = 12;
 
 
     }

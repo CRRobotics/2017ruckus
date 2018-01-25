@@ -27,7 +27,7 @@ public class AutoTurnToAngleR extends Command {
 
 
     public AutoTurnToAngleR(double pAngle, double speed) {
-        super("AutoTurnToAngle");
+        super("AutoTurnToAngleR");
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
         angle = pAngle % 360;
@@ -36,7 +36,7 @@ public class AutoTurnToAngleR extends Command {
         lSpeed = gSpeed;
         rSpeed = gSpeed;
         maxTol = 15;
-        minTol = 5;
+        minTol = 3;
 
     }
 
