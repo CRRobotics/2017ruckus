@@ -38,11 +38,9 @@ public class AutoTurnToAngleR extends Command {
         rSpeed = gSpeed;
         maxTol = 15;
         minTol = 3;
-<<<<<<< HEAD
-=======
         sign = shortestDirection(driveTrain.getRobotYaw(), angle);
 
->>>>>>> 10332e7f4f2a8e5b81e937e1c22213a2123de129
+
     }
 
     protected void initialize() {

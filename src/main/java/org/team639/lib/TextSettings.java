@@ -48,6 +48,18 @@ public class TextSettings {
     }
 
     /**
+     * an number accessor for values in the config file
+     * @param key
+     * @param def value
+     * @return keys value
+     */
+    public static Double getDouble(String key, double def) {
+        if(getDouble(key) != null)
+            return getDouble(key);
+        return def;
+    }
+
+    /**
      * an string accessor for values in the config file
      * @param key
      * @return keys value
@@ -62,5 +74,16 @@ public class TextSettings {
                 word = prop.getProperty(key);
 
         return word;
+    }
+    /**
+     * a string accessor for values in the config file
+     * @param key
+     * @param def value
+     * @return keys value
+     */
+    public static String getString(String key, String def) {
+        if(getString(key) != null)
+            return getString(key);
+        return def;
     }
 }
