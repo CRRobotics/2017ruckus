@@ -3,8 +3,9 @@ package org.team639.lib.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Created by Jack Greenberg <theProgrammerJack@gmail.com> on 1/7/2018.
- * Part of 2017ruckus.
+ * A command subclass for use with {@link DriveThread} via {@link ThreadedDriveCommand}.
+ * @see ThreadedDriveCommand
+ * @see DriveThread
  */
 public abstract class DriveCommand extends Command {
 

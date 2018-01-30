@@ -23,7 +23,7 @@ public class Approach extends Command {
 
 
     public Approach(double pdistance, double speed) {
-        super("AutoTurnToAngle");
+        super("Approach");
         driveTrain = Robot.getDriveTrain();
         requires(driveTrain);
         sonar = RobotMap.getFrontSonar();
@@ -32,8 +32,8 @@ public class Approach extends Command {
         rSpeed = gSpeed;
         distance = pdistance;
         tolerance = 1;
-        tolerance = pdistance < tolerance ? pdistance : tolerance;
-        slow = tolerance * 3;
+        distance = pdistance < tolerance ? tolerance*2 : distance;
+        slow = 12;
 
 
     }
@@ -51,10 +51,17 @@ public class Approach extends Command {
     protected void execute() {
         if(sonar.getDistanceInches() > distance + slow)
             driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//        account for MIN_DRIVE_PERCENT
+//        else if(sonar.getDistanceInches() > distance + tolerance) {
+//            double multiplier = (sonar.getDistanceInches() - (distance + tolerance))/slow;
+//            lSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+//            rSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+//            driveTrain.setSpeedsPercent(lSpeed, rSpeed);
+//        }
         else if(sonar.getDistanceInches() > distance + tolerance) {
             double multiplier = (sonar.getDistanceInches() - (distance + tolerance))/slow;
-            lSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
-            rSpeed = (gSpeed - MIN_DRIVE_PERCENT)*multiplier + MIN_DRIVE_PERCENT;
+            lSpeed = gSpeed * multiplier;
+            rSpeed = gSpeed * multiplier;
             driveTrain.setSpeedsPercent(lSpeed, rSpeed);
         }
 

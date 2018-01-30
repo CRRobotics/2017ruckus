@@ -20,25 +20,25 @@ public abstract class JoystickManager {
      * Returns the Y axis value of the left drive Joystick with forward being 1 and backward being -1
      * @return The Y axis value of the left drive Joystick
      */
-    public abstract double getLeftDriveY();
+    public abstract double getLeftStickY();
 
     /**
      * Returns the Y axis value of the right drive Joystick with forward being 1 and backward being -1
      * @return The Y axis value of the right drive Joystick
      */
-    public abstract double getRightDriveY();
+    public abstract double getRightStickY();
 
     /**
      * Returns the X axis value of the left driveJoystick with to the right being 1 and to the left being -1
      * @return The X axis value of the left drive Joystick
      */
-    public abstract double getLeftDriveX();
+    public abstract double getLeftStickX();
 
     /**
      * Returns the X axis value of the left drive Joystick with to the right being 1 and to the left being -1
      * @return The X axis value of the left drive Joystick
      */
-    public abstract double getRightDriveX();
+    public abstract double getRightStickX();
 
     /**
      * Maps the specified command to the specified button
@@ -67,8 +67,8 @@ public abstract class JoystickManager {
      * @return The angle of the left drive joystick
      */
     public double getLeftDriveAngle() {
-        double x = getLeftDriveX();
-        double y = getLeftDriveY();
+        double x = getLeftStickX();
+        double y = getLeftStickY();
         double angle = Math.atan2(y,x);
         angle = Math.toDegrees(angle);
         return angle;
@@ -79,8 +79,8 @@ public abstract class JoystickManager {
      * @return The angle of the right drive joystick
      */
     public double getRightDriveAngle() {
-        double x = getRightDriveX();
-        double y = getRightDriveY();
+        double x = getRightStickX();
+        double y = getRightStickY();
         double angle = Math.atan2(y,x);
         angle = Math.toDegrees(angle);
         if (angle < 0) angle = 360 + angle;

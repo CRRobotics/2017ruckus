@@ -4,9 +4,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * A separate thread for running drive commands. After starting in RobotInit, access via ThreadedDriveCommand.
- * Created by Jack Greenberg <theProgrammerJack@gmail.com> on 1/7/2018.
- * Part of 2017ruckus.
+ * A separate thread for running drive commands. After starting in RobotInit, access via {@link ThreadedDriveCommand}.
+ * @see ThreadedDriveCommand
+ * @see DriveCommand
  */
 public class DriveThread extends Thread {
 

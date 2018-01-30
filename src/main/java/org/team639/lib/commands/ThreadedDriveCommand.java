@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team639.lib.subsystem.DriveSubsystem;
 
 /**
- * Created by Jack Greenberg <theProgrammerJack@gmail.com> on 1/7/2018.
- * Part of 2017ruckus.
+ * A command that runs a {@link DriveCommand} in the {@link DriveThread}.
+ * @see DriveCommand
+ * @see DriveThread
  */
 public class ThreadedDriveCommand extends Command {
     private DriveCommand command;
