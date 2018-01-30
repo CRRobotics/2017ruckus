@@ -60,10 +60,10 @@ public class DriveToDistanceAwayFront extends Command {
         SmartDashboard.putNumber("diff", diff);
         double val = pid.compute(diff);
 //
-        double angleError = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
-        double output = turnPID.compute(angleError);
-        driveTrain.setSpeedsPercent(val - output, val + output);
-        done = (val == 0) && (output == 0);
+//        double angleError = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
+//        double output = turnPID.compute(angleError);
+        driveTrain.setSpeedsPercent(val /*- output*/, val /*+ output*/);
+        done = (val == 0);
     }
 
     @Override

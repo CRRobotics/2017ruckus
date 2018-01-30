@@ -36,8 +36,7 @@ public class AutoTurnToAngleR extends Command {
         lSpeed = gSpeed;
         rSpeed = gSpeed;
         maxTol = 15;
-        minTol = 5;
-
+        minTol = 3;
     }
 
     protected void initialize() {

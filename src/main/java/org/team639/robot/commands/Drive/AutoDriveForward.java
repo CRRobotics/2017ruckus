@@ -84,10 +84,10 @@ public class AutoDriveForward extends Command {
         double val = pid.compute(lTickDiff);
         System.out.println(lTickDiff + ", " + val);
 //
-        double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
-        double output = turnPID.compute(error);
+//        double error = AngleMath.shortestAngle(driveTrain.getRobotYaw(), angle);
+//        double output = turnPID.compute(error);
 ////        System.out.println((val - output) + ", " + (val + output));
-        driveTrain.setSpeedsPercent(val - output, val + output);
+        driveTrain.setSpeedsPercent(val/* - output */, val /*+ output*/);
         done = (val == 0);
 
 //        if (Math.abs(lTickDiff) <= startSlow) {
